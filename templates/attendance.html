@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="row">
+    <div class="col-md-12">
+        <form  method="post" name="attendance" id="attendance"  action="" enctype="multipart/form-data">{% csrf_token %}
+            <input type="text" value="" name="rootid" class="form-control form-control-sm" placeholder="Member ID"><br />
+            <input type="text" value="" name="service" class="form-control form-control-sm" placeholder="Service"><br />
+            <input type="text" value="" name="zone" class="form-control form-control-sm" placeholder="Zone"><br />
+            <input type="hidden" value="{{user.id}}" name="user">
+            <button type="submit" class="btn btn-lg btn-info">Save</button>
+       
+        </form>
+    </div>
+</div>      
+{% endblock %}

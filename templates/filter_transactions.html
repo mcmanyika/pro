@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-md-12">
+    <form  method="POST" name="form"  action="{% url 'filter-trans' %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-6 padAll">
+                    <input type="date" class="form-control" value="" id="period_from" name="period_from" placeholder="From Date">
+                </div>
+                <div class="col-6 padAll">
+                    <div class="input-group">
+                          <input type="date" class="form-control" value="" id="period_to" name="period_to" placeholder="To Date" aria-label="To Date">
+                          <span class="input-group-btn">
+                            <button class="btn btn-info" type="submit">Filter!</button>
+                          </span>
+                          <span class="input-group-btn">
+                            <a href="{% url 'excel' %}" class="btn btn-warning"> CSV</a>
+                          </span>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {% if transactions %}
+                        <div class="col-md-3"><strong>Purpose</strong></div>
+                            <div class="col-md-1"><strong>BOND</strong></div>
+                            <div class="col-md-1"><strong>USD</strong></div>
+                            <div class="col-md-1"><strong>RAND</strong></div>
+                            <div class="col-md-1"><strong>PULA</strong></div>
+                            <div class="col-md-5"><strong>Timestamp</strong></div>
+                        {% for rw in transactions %}
+                            <div class="col-md-3">{{rw.PURPOSE}}</div>
+                            <div class="col-md-1">{{rw.BOND}}</div>
+                            <div class="col-md-1">{{rw.USD}}</div>
+                            <div class="col-md-1">{{rw.RAND}}</div>
+                            <div class="col-md-1">{{rw.PULA}}</div>
+                            <div class="col-md-5">{{rw.TIMESTAMP}}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </form>  
+    <div class="container" style="padding-top: 10px">
+        
+    </div>  
+</div> 
+
+{% endblock %}

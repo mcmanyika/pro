@@ -1,0 +1,44 @@
+{% extends "base_login.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block container %}
+    
+  <div class="row">
+  	<div class="col-sm-7">
+	  	<form  method="post" name="form" id="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+	    
+	    <input type="hidden" value="{{rootid}}" name="rootid">
+	    <label name="access_level">Access Level
+	    	<input type="text" value="{{access_level}}" name="access_level" class="form-control form-control-sm">
+		</label><br />
+	    <label name="zone"> Zone
+	    	<select name="zone" class="form-control form-control-lg">
+	    		{% for rw in dictionary %}
+	    			{% if rw.category == 'zone' %}
+	    				<option value="{{rw.name}}">{{rw.name}}</option>
+	    			{% endif %}
+	    		{% endfor %}
+	    	</select>
+		</label><br />
+		<label name="department">Department
+	    	<select name="department" class="form-control form-control-lg">
+	    		<option>{{department}}</option>
+	    		{% for rw in dictionary %}
+	    			{% if rw.category == 'department' %}
+	    				<option value="{{rw.name}}">{{rw.name}}</option>
+	    			{% endif %}
+	    		{% endfor %}
+	    	</select>
+		</label><br />
+	    {{form.avatar}}<br />
+	    <input type="submit" value="Save" class="btn btn-lg btn-info">
+	    </form>
+	</div>
+	<div class="col-sm-5">
+		<img src="{% if avatar %}/media/{{avatar}}{% else %} {% static 'img/avatar1.png' %}{% endif %}" class="img-circle" width="150" height="170">
+		
+	</div>
+  </div>
+
+{% endblock %}

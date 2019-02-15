@@ -1,0 +1,10 @@
+{% extends "base_login.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block container %}
+    You have succefully updated <b>user information</b>.
+    <br />
+    <a href="{% url 'users' %}" class="btn btn-info btn-info"><< Back</a>
+
+{% endblock %}

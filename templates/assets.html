@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+ {% block container %}
+
+<div class="container">
+  <div class="col-md-12" style="padding-bottom: 10px">
+    <a href="{% url 'upload-asset' %}" class="btn btn-sm btn-info">Upload Asset</a>
+  </div>
+    <div class="col-md-12">
+
+  <table id="myTable" width="100%" class="table table-hover">
+    <tr class="header">
+      <th style="width:30%;">Asset name</th>
+      <th style="width:20%;">Serial</th>
+      <th style="width:20%;">Department</th>
+      <th style="width:20%;">Zone</th>
+      </tr>
+    {% for rw in row %}
+      <tr>
+        <td style="text-transform:capitalize"></span><a href="{% url 'asset-detail' rw.id %}">{{rw.name}}</a></td>
+        <td>{{rw.serial_no}}</td>
+       <td>{{rw.department}}</td>
+       <td>{{rw.zone}}</td>
+        </tr>
+      {% endfor %}
+
+    </table>
+
+    <div class="row">
+        <div class="col-12">
+        <nav>
+            <ul class="pagination">
+              <li>{% if row.has_previous %}
+                <a href="?{{page_request_var}}={{ row.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+                 {% endif %}
+              </li>
+
+              <li><a href="#">{{ row.number }} of {{ row.paginator.num_pages }}</a></li>
+
+              <li>{% if row.has_next %}
+                <a href="?{{page_request_var}}={{ row.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+      </nav>
+    </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+
+{% endblock %}
+<!-- InstanceEndEditable -->
+

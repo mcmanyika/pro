@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-12">
+    <form method="POST" name="form" id="form" >{% csrf_token %}
+      <div class="row">
+          <div class="col-12 padAll">
+            <input type="text" class="form-control" value="" name="name" placeholder="Group Name"><br />
+            <select name="sub_category" class="form-control">
+              <option value="cellgroup">Cell Group</option>
+              <option value="department">Department</option>
+            </select>
+          </div>
+           <div class="col-md-12 padAll">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+          </div>
+          <input type="hidden" name="user" value="{{user.id}}">
+          <input type="hidden" name="category" value="group">
+    </form>
+</div> 
+{% endblock container %}
+
+{% block javascript %}
+  
+{% endblock javascript %}

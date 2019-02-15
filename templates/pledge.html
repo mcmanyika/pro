@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+
+{% if balance > 0 %}
+<div class="row">
+  <div class="col-12">
+  <h5>{{fname}} {{lname}}</h5>
+</div>
+  <div class="col-4" style="padding: 15px;">
+    
+      <form  method="post" name="payform" id="payform"  action="" enctype="multipart/form-data">{% csrf_token %}
+          <input type="hidden" class="form-control" name="rootid" value="{{rootid}}">
+          <input type="hidden" class="form-control" name="pledgeid" value="{{id}}">
+          <div class="pad">
+            {% for rw in c %}
+                <label class="custom-control custom-radio">
+                  <input id="{{rw.id}}" value="{{rw.name}}" name="currency" type="radio" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">{{rw.name}}</span>
+                </label>
+                  {% endfor %}
+          </div>
+          <div class="pad">
+          <input type="text" class="form-control" value="" size="10" name="amount" placeholder="Amount">
+          </div>
+          <div class="pad">
+            <input type="hidden" class="form-control" name="purpose" value="{{purpose}}">
+         
+          </div>
+          <div class="pad">
+            <input type="hidden" class="form-control" name="commitment" value="Cash">
+            
+          </div>
+          <input type="hidden" class="form-control" value="1" size="10" name="user">
+
+           <div class="col-md-12 pad">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+          </div>
+      </form>
+      
+      
+    </div>
+    <div class="col-8">
+       <table id="myTable" class="table table-stripped table-hover" width="100%">
+        {% if pledge%}
+        <tr>
+          <td colspan="3" style="font-size: 16px; height: 40px">Payments made to clear <strong>{{currency}} {{amount}} </strong> pledge</td>
+        </tr>
+        {% else %}
+        Yet to fullfil pledge commitment
+        {% endif %}
+          <tr class="header">
+            <th style="width:20%;">Amount</th>
+            <th style="width:30%;">Purpose</th>
+            <th style="width:30%;">Date</th>
+          </tr>
+          {% for rw in pledge %}
+          <tr>
+            <td><a href="{% url 'single_rec' rw.id %}">{{rw.currency}}{{rw.amount}}</a></td>
+            <td>{{rw.purpose}}</td>
+            <td>{{rw.timestamp}}</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="3"><strong>Tota : {{currency}} {{totalpaid}}</strong></td>
+          </tr>
+          <tr>
+            <td colspan="3"><strong>Balance : {{currency}} {{balance}}</strong></td>
+          </tr>
+          
+      </table>
+    </div>
+    {% else %}
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <h5>{{fname}} {{lname}}</h5>
+        </div>
+        <div class="col-12">
+         <table id="myTable" class="table table-stripped table-hover" width="100%">
+          {% if pledge%}
+          <tr>
+            <td colspan="3" style="font-size: 16px; height: 40px">Payments made to clear <strong>{{currency}} {{amount}} </strong> pledge</td>
+          </tr>
+          {% else %}
+          Yet to fullfil pledge commitment
+          {% endif %}
+            <tr class="header">
+              <th style="width:20%;">AMOUNT</th>
+              <th style="width:30%;">PURPOSE</th>
+              <th style="width:30%;">DATE</th>
+            </tr>
+            {% for rw in pledge %}
+            <tr>
+              <td><a href="{% url 'single_rec' rw.id %}">{{rw.currency}}{{rw.amount}}</a></td>
+              <td>{{rw.purpose}}</td>
+              <td>{{rw.timestamp}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td><strong>Total : {{currency}} {{totalpaid}}</strong></td>
+            </tr>
+            
+            
+        </table>
+      </div>
+    </div>
+
+    {% endif %}
+</div>  
+{% endblock %}

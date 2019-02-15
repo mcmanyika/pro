@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+
+<div class="col-12">
+  <form  method="post" name="form" id="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+            <div class="col-12">
+            <div class="row">
+              <div class="col-12 padAll">
+                <input type="text" class="form-control" value="" name="name" placeholder="Asset Name">
+              </div>
+              <div class="col-12 padAll">
+                <input type="text" class="form-control" value="" name="serial_no" placeholder="Serial Number">
+              </div>
+              <div class="col-12 padAll">
+                <select name="department" class="form-control">
+                  {% for rw in dict %}
+                    {% if rw.category == 'department' %}
+                  <option value="{{rw.name}}">{{rw.name}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+                </div>
+              <div class="col-12 padAll">
+                <select name="zone" class="form-control">
+                  {% for rw in dict %}
+                    {% if rw.category == 'zone' %}
+                  <option value="{{rw.name}}">{{rw.name}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-12 padAll">
+                <select name="equip_type" class="form-control">
+                  {% for rw in dict %}
+                    {% if rw.category == 'equip_type' %}
+                  <option value="{{rw.name}}">{{rw.name}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+             <div class="col-12 padAll">
+                <button type="submit" class="btn btn-lg btn-info">Save</button>
+                <button type="reset" class="btn btn-lg btn-info">Clear</button>
+            </div>
+
+              <div class="col-12">
+                  <input type="hidden" name="user" value="{{user.id}}">
+            </div>
+          </div>
+          </div>
+    </form>
+  </div>  
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+
+<div class="col-md-12" style="font-size: 12px !important; text-transform: uppercase;">
+  
+      <div class="col-md-12" style="text-transform: uppercase !important;">
+        <div class="col-md-12">
+        <h5><button class="btn btn-md btn-success" style="text-transform: uppercase !important;">Payments</button>
+            </h5>
+      </div>
+    </div>
+      
+      <div class="col-md-12" style="padding-top: 10px;">  
+       <form  method="post" name="Seedform" id="Seedform"  action="" enctype="multipart/form-data">{% csrf_token %}
+           <div class="col-md-12">
+                <p>
+                    <select name="purpose" class="form-control">
+                      <option>CHOOSE PAYMENT TYPE</option>
+                      {% for rw in raw %}
+                      {% if rw.category == 'income_head' %}
+                      <option value="{{rw.name}}">{{rw.name}}</option>
+                      {% endif %}
+                      {% endfor %}
+                    </select>
+                </p>
+              </div>
+
+              <div class="padAll">
+                <input type="hidden" class="form-control" name="rootid" value="{{m_id}}">
+                <div class="col-md-4"><strong>Currency</strong></div>
+                <div class="col-md-4">
+                </div>
+                {% for rw in raw %}
+                  {% if rw.category == 'currency' %}
+                  <label class="custom-control custom-radio">
+                  <input id="{{rw.id}}" value="{{rw.name}}"  name="currency" type="radio" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">{{rw.name}}</span>
+                </label>
+                {% endif %}
+                  {% endfor %}
+              </div>
+
+
+              <div class="col-md-12">
+                <input type="number" class="form-control" value=""  ng-model="amount" name="amount" placeholder="Amount Paid">
+              </div>
+
+               <div class="col-md-12" style="padding-top: 40px">
+
+                {% for rw in d %}
+                  {% if rw.category == 'commitment' %}
+                <label class="custom-control custom-radio">
+                  <input id="{{rw.id}}" value="{{rw.name}}"  name="commitment" type="radio" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">{{rw.name}}</span>
+                </label>
+                {% endif %}
+                  {% endfor %}
+              </div>
+              <div class="col-md-12">
+                <input type="text" class="form-control" value="" name="ref" placeholder="Transaction Referrence">
+              </div>
+              <div class="padAll"> 
+              <input type="hidden" class="form-control" value="1" name="user">
+              <input type="hidden" class="form-control" value="cash" name="commitment">
+              <input type="hidden" class="form-control" value="1000000" name="rootid">
+               <div class="padAll" style="width: 100px; float: left;">
+                  <button type="submit" style="font-size: 16px !important" class="btn btn-lg btn-success">PROCESS PAYMENT</button>
+                </div>
+                
+            </div>
+            </div>  
+        </form>
+      </div>
+  </div>  
+
+  <script type="text/javascript">
+
+    function update() {
+//Add additional country with id and city array
+        var countriesArray = [
+                ["weekly", "1", [{% for rw in weekly %}"{{rw.name}}",{% endfor %}]],
+                ["monthly", "2", [{% for rw in monthly %}"{{rw.name}}",{% endfor %}]],
+                ["onceoff", "3", [{% for rw in onceoff %}"{{rw.name}}",{% endfor %}]]
+
+        ];
+//Get country dropdown
+        var countries = document.getElementById("1");
+
+//Get city dropdown
+        var cities = document.getElementById("2");
+
+//Get country selected item
+        var selected = countries.options[countries.selectedIndex].value;
+
+//If country is not "Select Country"
+        if (selected != "0") {
+
+//Clear previous cities - this can be moved outside of if condition, and remove the else, if wanted.
+            Clear(cities);
+
+//For each country, if it is selected, populate the cities dropdown with its associated city array.
+
+            var country;
+            var cityArray;
+            for (var i = 0; i < countriesArray.length; i++) {
+
+//Get country
+                country = countriesArray[i];
+                if (country[1] == selected) {
+
+//Get city array
+                    cityArray = country[2];
+
+//Populate options with city array
+                    for (var p = 0; p < cityArray.length; p++) {
+                        var opt1 = document.createElement('option');
+                        opt1.innerHTML = cityArray[p];
+                        opt1.value = cityArray[p];
+                        cities.appendChild(opt1);
+                    }
+                }
+            }
+        }
+        else
+        {
+            Clear(cities);
+        }
+    }
+
+    function Clear(ctrl)
+    {
+        ctrl.options.length = 1;
+    }
+</script>
+{% endblock %}

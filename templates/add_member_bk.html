@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-12">
+      <form  method="post" name="form" id="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+                <div class="col-12">
+                <div class="row">
+                  <div class="col-6 padAll"><input type="text" class="form-control" value="" name="fname" placeholder="First Name"></div>
+                  <div class="col-6 padAll"><input type="text" class="form-control" value="" name="lname" placeholder="Last Name"></div>
+                  <div class="col-6 padAll">
+                    <select name="gender" class="form-control">
+                      {% for r in g %}
+                      <option value="{{r.name}}">{{r.name}}</option>
+                      {% endfor %}
+                    </select></div>
+                  <div class="col-6 padAll">
+                    <select name="division" class="form-control">
+                      {% for r in d %}
+                      <option value="{{r.name}}">{{r.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-6 padAll"><input type="text" class="form-control" value="" name="phone" placeholder="Phone"></div>
+                  <div class="col-6 padAll"><input type="email" class="form-control" value="" name="email" placeholder="Email"></div>
+                  <div class="col-12">
+                    {{form.image|as_crispy_field:"bootstrap"}}
+                  </div>
+                 <div class="col-6 padAll">
+                    <button type="submit" class="btn btn-lg btn-info">Save</button>
+                    <button type="reset" class="btn btn-lg btn-info">Clear</button>
+                </div>
+
+                  <div class="col-12">
+                    {% for r in u %}
+                      {% if r.root == user %}
+                        <input type="hidden" name="department" value="{{r.department}}">
+                        <input type="hidden" name="user" value="{{user.id}}">
+                      {% endif %}
+                    {% endfor %}    
+                </div>
+              </div>
+              </div>
+        </form>
+  </div>  
+{% endblock %}

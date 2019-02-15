@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+
+<div class="col-md-12 small_font">
+    <form  method="POST" name="form"  action="{% url 'filter-trans' %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 padAll">
+                    <input type="date" class="form-control" value="" id="period_from" name="period_from" placeholder="From Date">
+                </div>
+                <div class="col-md-6 padAll">
+                    <div class="input-group">
+                          <input type="date" class="form-control" value="" id="period_to" name="period_to" placeholder="To Date" aria-label="To Date">
+                          <span class="input-group-btn">
+                            <button class="btn btn-info" type="submit">Filter!</button>
+                          </span>
+                          <span class="input-group-btn">
+                            <a href="{% url 'csv' %}" class="btn btn-warning"> CSV</a>
+                          </span>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {% for rw in ihead %}
+                        <div class="col-md-5">{{rw.purpose}}</div>
+                        <div class="col-md-2">{{rw.currency}}</div>
+                        <div class="col-md-2">{{rw.amount}}</div>
+                        <div class="col-md-2">{{rw.commitment}}</div>
+                        <div class="col-md-2">{{rw.ref}}</div>
+                      {% endfor %} 
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </form>  
+     
+</div>  
+
+{% endblock %}

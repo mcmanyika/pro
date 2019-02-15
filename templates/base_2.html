@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+<title>ProFaith</title>
+<!-- InstanceEndEditable -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="{% static 'css/jquery.mobile-1.4.5.min.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{% static 'b3/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/dump.css' %}" rel="stylesheet">
+  <script src="{% static 'b3/js/jquery.min.js'%}"></script>
+  <script src="{% static 'js/angular.min.js'%}"></script>
+  <script src="{% static 'b3/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/plugin.js' %}"></script>
+
+  <!-- Highcharts -->
+<script src="{% static 'highcharts/code/highcharts.js' %}"></script>
+<script src="{% static 'highcharts/code/modules/exporting.js' %}"></script>
+<script src="{% static 'highcharts/code/modules/export-data.js' %}"></script>
+
+<style>
+  
+</style>
+  </head>
+<body>
+<div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <h4 class="text-white">&nbsp;</a></h4>
+      <span class="text-muted">  {% if user.is_authenticated %} 
+        <font class="text-white"><a href="{% url 'home' %}" class="text-white"> Hi {{user}} </a></font>
+         | <a href="{% url 'logout'%}">Log out</a>
+        {% else %}
+        {% endif %}</span>
+    </div>
+  </div>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="col-md-3">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="true" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+  </div>
+  <div class="col-md-6"><center><h3 style="color: #fff">
+    <a href="{% url 'home' %}" style="color: #fff;">
+    {% for rw in headings %}
+    {% if rw.category == 'title' %}
+      {{rw.name}}
+      {% endif %}
+    {% endfor %}</a></h3>
+  </center></div>
+    <div class="col-md-3 pad">
+         <form method="GET" role="search">
+                <div class="input-group">
+                    <input type="search" class="form-control" id="myInput" onkeyup="tableSearch()" name="q" placeholder="Search Member"  value="{{ request.GET.q }}" id="search-input">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </span>
+                </div>
+            </form>
+    </div>
+
+  </nav>
+</div>
+  <div class="col-md-12" style="; background-color: #343a40e8;">
+    <div style="float:left; width:150px; padding-top:50px; min-height: 700px">
+      <nav class="navbar navbar-inverse sidebar" role="navigation">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'home' %}">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+
+        {% for r in a %}
+        {% if r.root == user %}
+
+        <li><a href="{% url 'members' r.department %}">Small Groups<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-users fa-lg"></span></a></li>
+        {% endif %}
+              
+      {% endfor %}  
+      <li><a href="#calendar" data-toggle="modal">Calendar <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a></li>
+
+        <li ><a href="#settings" data-toggle="modal">Settings <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+        
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+     
+  </div>  <div class="main">
+<!-- Content Here -->
+ 
+  <div class="col-sm-12 pad" style="; background-color: #fff; min-height: 600px">
+    <div class="col-md-12" style="padding-top: 25px;">
+      <div class="jumbotron">
+        <div class="row">
+          {% block header %}
+
+          {% endblock header %}
+        </div>
+      </div>
+    </div>  
+        {% block container %}
+
+
+        {% endblock %}
+  </div>
+</div>   
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="col-12" style="font-size: 12px; padding: 15px; color: #fff; text-align: right">
+        <span class="text-white">© 2019 Professional Faith Management System. All Rights Reserved.</span>
+      </div>
+    </nav>
+
+
+<!-- Member information -->
+{% for rw in members %}
+<div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onmouseover ="closeSide()">&times;</a>
+  <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
+    
+</div>   
+{% endfor %}
+
+ <div class="modal right fade"  id="addMember"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body" style="padding: 10px 0 ">
+          <iframe src="{% url 'ajax-add-member' %}" frameborder="0" height="615" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+ <div class="modal right2 fade"  id="calendar"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body" style="padding: 0 ">
+          <iframe src="{% url 'calendar' %}" frameborder="0" height="627" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+<div class="modal right fade"  id="settings"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        </div>
+        <div class="modal-body">
+          <iframe src="{% url 'site-title' %}" frameborder="0" height="600" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+  
+
+
+<div class="modal fade bd-upload-modal-lg" id="upload" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                   </div>
+                    <div class="modal-body" style="color:#000">
+                        <iframe src="{% url 'upload-sermon' %}" frameborder="0" height="630" width="100%"></iframe>
+                    </div>
+
+              </div>
+         </div>
+    </div>
+
+
+
+{% for rw in members %}
+<!-- Modal -->
+  <div class="modal right fade"  id="member{{rw.id}}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+        <div class="modal-body">
+          <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+{% endfor %}
+    
+
+
+{% for rw in transactions %}
+<div class="modal fade bd-finance-modal-lg" id="receipt{{rw.id}}" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header bg-dark">
+                    <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                 </div>
+                    <div class="modal-body" style="color:#000">
+                        <iframe src="{% url 'single_rec' rw.id %}" frameborder="0" height="550" width="100%"></iframe>
+                    </div>
+
+              </div>
+         </div>
+    </div>    
+{% endfor %}
+
+{% for rw in row %}
+<div id="editSermon{{rw.id}}"  class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                   </div>
+
+                    <div class="modal-body" style="color:#000; height: 670px">
+                        <iframe src="{% url 'edit-sermon' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
+                    </div>
+              </div>
+         </div>
+    </div>
+{% endfor %}
+
+{% for rw in row %}
+<div id="viewSermon{{rw.id}}"  class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+
+                    <div class="modal-header bg-dark">
+                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                   </div>
+
+                    <div class="modal-body" style="color:#000; height: 670px">
+                            <div class="col-md-12">
+                                <iframe src="{% url 'sermon' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
+                            </div>
+                    </div>
+              </div>
+         </div>
+    </div>
+{% endfor %}
+
+
+<div class="modal fade bd-upload-modal-lg" id="merchandise" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                   </div>
+                    <div class="modal-body" style="color:#000">
+                            <div class="row container">
+                                <div class="col-md-12" style="min-height:500px">
+                                    <iframe src="{% url 'stocks' %}" frameborder="0" height="630" width="100%"></iframe>
+                                </div>
+                        </div>
+                    </div>
+
+              </div>
+         </div>
+    </div>
+
+<div id="incomehead" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+       </div>
+      <div class="modal-body">
+        <iframe src="{% url 'add-incomehead' %}" frameborder="0" width="100%"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addCommitment" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+       </div>
+      <div class="modal-body">
+        <iframe src="{% url 'add-commitment' %}" frameborder="0" width="100%"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bd-currency" id="currency" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+      <div class="modal-body" style="color:#000">
+        <iframe src="{% url 'add-currency' %}" frameborder="0" width="100%"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal right fade"  id="addGroup"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+        <div class="modal-body">
+          <iframe src="{% url 'add-group' %}" frameborder="0" height="600" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+    
+<script type="text/javascript">
+    function openSide() {
+        document.getElementById("mySidenav").style.width = "45%";
+    }
+
+    function closeSide() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    function openleftSide() {
+        document.getElementById("leftSidenav").style.width = "150px";
+    }
+
+    function closeleftSide() {
+        document.getElementById("leftSidenav").style.width = "0";
+    }
+</script>
+
+
+<script src="{% static 'bootstrap/js/jquery-slim.min.js' %}"></script>
+    <!-- <script src="{% static 'bootstrap/js/popper.min.js' %}"></script> -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="{% static 'bootstrap/js/holder.min.js' %}"></script>
+
+<script type="text/javascript">
+    // using jQuery
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+</script>
+<script type="text/javascript">
+  function tableSearch() {
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    function htmlbodyHeightUpdate(){
+    var height3 = $( window ).height()
+    var height1 = $('.nav').height()+50
+    height2 = $('.main').height()
+    if(height2 > height3){
+      $('html').height(Math.max(height1,height3,height2)+10);
+      $('body').height(Math.max(height1,height3,height2)+10);
+    }
+    else
+    {
+      $('html').height(Math.max(height1,height3,height2));
+      $('body').height(Math.max(height1,height3,height2));
+    }
+    
+  }
+  $(document).ready(function () {
+    htmlbodyHeightUpdate()
+    $( window ).resize(function() {
+      htmlbodyHeightUpdate()
+    });
+    $( window ).scroll(function() {
+      height2 = $('.main').height()
+        htmlbodyHeightUpdate()
+    });
+  });
+    </script>
+</body>
+</html>

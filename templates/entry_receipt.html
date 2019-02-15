@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<style type="text/css">
+    #printable { display: none; }
+
+    @media print
+    {
+        #non-printable { display: none; }
+        #printable { display: block; }
+    }
+</style>
+
+<div class="col-md-12" style="font-size: 14px !important;">
+  <div id="non-printable">
+    <div class="col-md-4">
+  <a href="{% url 'all_receipts' acct_id %}" class="btn btn-info">View All Receipts</a>
+</div>
+   <div class="col-md-4">
+    <button class="btn btn-md btn-warning"  onclick="myFunction()">Print Receipt</button>
+  </div>
+</div>
+
+  <div id="printable">
+    <div id="print_area">
+        <center>
+          <img src="{% static '/img/logo.png' %}" class="img-fluid" width="50%"><br />
+        <strong>RECEIPT</strong><br />
+
+        {% for rw in single_rec %}
+          <strong>{{rw.fname}} {{rw.lname}}</strong><br />
+          <strong>Amount</strong> : {{rw.currency}} {{rw.amount}} <br />
+          <strong>Purpose</strong> : {{rw.purpose}}<br />
+          <strong>Commitment</strong>: {{rw.commitment}} <br />
+          {% if rw.ref %}
+        <strong>Payment Referrence</strong>: {{rw.ref}} 
+        {% endif %}<br />
+          <strong>Cashier</strong> : {{rw.user}}
+        {% endfor %}
+          </center>  
+      </div> 
+    </div> 
+  </div> 
+
+ 
+<script>
+function myFunction() {
+    window.print();
+}
+</script>
+{% endblock %}

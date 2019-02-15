@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-md-12">
+    <form  method="post" name="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+      <div class="row">
+          <div class="col-md-12 padAll">
+              <input type="text" class="form-control" value="" name="name" placeholder="Income Head">
+              <input type="hidden" name="category" value="income_head">
+          </div>
+           <div class="col-md-12 padAll">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+          </div>
+          <input type="hidden" name="user_id" value="{{user.id}}">
+    </form>
+</div>  
+{% endblock %}

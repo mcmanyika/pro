@@ -1,0 +1,8 @@
+{% extends "base_login.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block container %}
+    Hello <strong>{{user.username}} </strong>your request was successful, its being reviewed by the Administrator.
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+
+<div class="col-12">
+      <form  method="post" name="form" id="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+                <div class="col-12">
+                <div class="row">
+                  <div class="col-12 padAll"><input type="text" class="form-control" value="" name="fname" placeholder="First Name"></div>
+                  <div class="col-12 padAll"><input type="text" class="form-control" value="" name="lname" placeholder="Last Name"></div>
+                  <div class="col-12 padAll">
+                    <h6>Gender</h6>
+                      {% for r in cate %}
+                      {% if r.category == 'gender' %}
+                      <label class="toggle">
+                        <input id="{{r.id}}" value="{{r.name}}" type="radio"  name="gender"> <span class="label-text">{{r.name}}</span>
+                      </label>
+                       
+                      {% endif %}
+                      {% endfor %}
+                    </div>
+                  <div class="col-12 padAll">
+                    <input type="text" class="form-control" value="" name="phone" placeholder="Phone">
+                  </div>
+                 <div class="col-12 padAll">
+                    <button type="submit" class="btn btn-lg btn-info">Save</button>
+                    <button type="reset" class="btn btn-lg btn-info">Clear</button>
+                </div>
+
+                  <div class="col-12">
+                      <input type="hidden" name="user" value="{{user.id}}">
+                </div>
+              </div>
+              </div>
+        </form>
+  </div>  
+{% endblock %}

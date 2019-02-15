@@ -1,0 +1,21 @@
+{% extends "base_forms.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="ui-grid-a">
+<div class="ui-block-d">
+      <fieldset data-role="controlgroup" data-type="vertical" data-mini="false">
+          {% for rw in rows %}
+              <input type="radio" name="a" id="{{rw.id}}" value="{{rw.name}}">
+              <label for="{{rw.id}}">{{rw.name}}</label>
+          {% endfor %}    
+      </fieldset>
+</div>    
+
+<div class="ui-block-b">
+  <div class="ui-body ui-body-d">
+      kjkkkk
+    </div>
+</div>    
+</div>
+{% endblock %}

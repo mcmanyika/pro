@@ -1,0 +1,366 @@
+{% extends "shop/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block header %}
+  <style type="text/css">
+    #container {
+      height:  260px !important;
+    }
+    .pad {
+      padding: 2px;
+    }
+
+
+
+    
+    </style>
+
+  
+
+{% endblock header %}
+
+ {% block content %}
+ <style type="text/css">
+   .col-md-12, .col-md-6, .col-md-4 {
+    padding-left: 0 !important;
+   }
+ </style>
+{% if user_p %}
+        {% if user_p.access_level >= 2 %}
+ <div class="padAll">
+  <div class="col-md-6">
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <div class="counter">
+      <i class="fa fa-users fa-lg"></i>
+      <h2 class="count-title">{{totalCount}}</h2>
+       <p class="count-text ">Total Members</p>
+    </div>
+          </div>
+              <div class="col-md-4">
+               <div class="counter">
+      <i class="fa fa-female fa-2x"></i>
+      <h2 class="count-title">{{totalFemale}}</h2>
+      <p class="count-text ">Women</p>
+    </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="counter">
+      <i class="fa fa-male fa-2x"></i>
+      <h2 class="count-title">{{totalMen}}</h2>
+      <p class="count-text ">Men</p>
+    </div>
+  </div>
+ 
+</div>
+
+
+<div class="col-md-12">
+ <!--  <div class="container" style="padding: 0 !important">
+    <div class="row"> -->
+      
+        <div class="panel-body" style="padding-left: 0 !important; ">
+          <div class="row">
+            
+              <div style="width:50%; float:left; padding-top: 20px">
+
+                <a  href="#addMember" data-toggle="modal" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>New Member</a>
+                {% if user_p.department == 'finance' or user.is_superuser  %}
+                
+                <a data-toggle="modal"  href="#seed_payment" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Payments</a>
+                
+
+                <a data-toggle="modal" href="#currency"  class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-usd"></span> <br/>Currencies</a>
+
+              
+                <a data-toggle="modal" href="#incomehead"  class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-bookmark"></span> <br/>Payment Purpose</a>            
+                {% endif %}
+                {% if user_p.department == 'Media' or user.is_superuser  %}
+                
+                <a data-toggle="modal"  href="#upload" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Upload Sermons</a>
+                {% endif %}
+
+                <a data-toggle="modal"  href="#attendance" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Attendance</a>
+              </div>
+
+              <div style="width:50%; float:left; padding-top: 20px">
+                <a href="#users" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Users</a>
+                {% if user_p.department == 'Sales' or user.is_superuser  %}
+                <a href="{% url 'shop:product_list' %}" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-shopping-cart"></span> <br/>Merchandise</a>
+                {% endif %}
+
+                {% if user_p.department == 'finance' or user.is_superuser  %}
+                <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br/>Reports</a>
+                {% endif %}
+                
+                <a href="#assets" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Asset Register</a>
+                {% if user.is_superuser %} 
+                <a href="#settings" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-cog"></span> <br/>Settings</a>
+                {% endif %}
+              </div>
+            
+
+
+
+       </div>
+        
+    </div>
+    
+
+
+  <!-- <div id="container" style="min-width: 200px; height: 300px; margin: 0 auto"></div> -->
+</div>
+</div>
+
+<div class="col-md-6" style="font-size: 12px !important; padding-top: 2px;">
+    <table width="100%" class="table table-striped table-hover">
+      <tr class="header">
+        <th style="width:12%;"></th>
+        <th style="width:38%;">Full Name</th>
+        <th style="width:15%;"></th>
+        {% if user_p.department == 'finance' or user.is_superuser  %}
+        <th style="width:15%;"></th>
+        {% endif %}
+        </tr>
+        <tbody id="search">
+            {% for rw in members %}
+              <tr>
+                <td>
+                  <center>{% if rw.image %}
+                    <a href="#member{{rw.id}}" data-toggle="modal">
+                    <img src="/media/{{rw.image}}" height="30" class="img-fluid rounded"></a>
+                    {% else %}
+                    <a href="#member{{rw.id}}" data-toggle="modal">
+                    <img src="{% if rw.gender == 'Female' %}{% static '/img/avatar4.png' %}{% else %}{% static '/img/avatar1.png' %}{% endif %} " height="25" class="img-fluid rounded"></a>
+                    {% endif %}
+                </center></td>
+                <td style="text-transform:capitalize; padding: 10px 0 10px 0"></span><a href="#member{{rw.id}}" data-toggle="modal">{{rw.fname}} 
+                  {% if not rw.lname %}
+                {% else %}
+              {{rw.lname}}
+              {% endif %}</td>
+                <td> <a href="#member{{rw.id}}" data-toggle="modal" class="btn-sm btn-info">Profile</a></td>
+                {% if user_p.department == 'finance' or user.is_superuser  %}
+                <td><a href="#finance{{rw.id}}" data-toggle="modal" class="btn-sm btn-success">Payment</a></td>
+                {% endif %}
+                
+              </tr>
+          {% endfor %} 
+        </tbody>
+    </table>
+    <div class="col-md-12" style="padding-bottom: 30px;">
+        <nav>
+            <ul class="pagination">
+              <li>{% if members.has_previous %}
+                <a href="?{{page_request_var}}={{ members.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+                 {% endif %}
+              </li>
+
+              <li><a href="#">{{ members.number }} of {{ members.paginator.num_pages }}</a></li>
+
+              <li>{% if members.has_next %}
+                <a href="?{{page_request_var}}={{ members.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+        </nav>
+      </div>
+</div>
+
+
+</div></a>
+ {% else %}
+  <center style="font-size: 22px; padding-top: 200px">Hello <strong style="text-transform: capitalize;">{{user.username}} </strong>your account is still under review. For more information contact the administrator.</center>
+  {% endif %}
+  {% endif %}
+
+{% for rw in members %}
+<!-- Modal -->
+  <div class="modal right fade"  id="finance{{rw.id}}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <!-- <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button> -->
+     </div>
+        <div class="modal-body" style="padding: 10px 0 ">
+          <iframe src="{% url 'transaction' rw.id %}" frameborder="0" height="615" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+{% endfor%}
+
+
+<!-- Modal -->
+  <div class="modal right fade"  id="seed_payment"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+        <div class="modal-body" style="padding: 10px 0 ">
+          <iframe src="{% url 'seed-payment'  %}" frameborder="0" height="615" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+<div class="modal right fade"  id="assets"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+        <div class="modal-body" style="padding: 10px 0 ">
+          <iframe src="{% url 'assets'  %}" frameborder="0" height="615" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+<div class="modal right2 fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <iframe src="{% url 'filter-trans' %}" frameborder="0" height="600" width="100%"></iframe>
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade"  id="users"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-bod" style="min-height: 550px !important">
+          <div class="col-md-4" style="padding: 50px">
+              <center>
+                <div class="col-md-10  col-sm-offset-1" style="padding-bottom: 40px">
+                  <strong>Current User</strong>
+                </div>
+                <div class="col-md-10  col-sm-offset-1 capitalize">
+                  <img src="{% if user_avatar %}/media/{{user_avatar}}{% else %} {% static 'img/avatar.png' %}{% endif %}" class="img-circle" style="height: 150px; width: 170px"><br />
+                  {% if request.user.is_authenticated %}{{ request.user.username }}{% endif %}
+                </div>  
+                <div class="col-md-10  col-sm-offset-1" style="padding-top: 40px">
+                  <a href="{% url 'logout'%}" style="color: red">Log out</a>
+                </div>
+                <div class="col-md-10  col-sm-offset-1" style="padding-top: 40px">
+                {% if not user_avatar %}  
+                <form  method="post" name="img_form" id="img_form"  action="" enctype="multipart/form-data">{% csrf_token %}
+                {{img_form.avatar}}
+                <input type="hidden" name="rootid" value="{{user.id}}">
+              <button type="submit" class="btn btn-sm btn-info">Upload Your Image</button>
+              </form>
+              {% else %}{% endif %}
+              </div>
+              </center>
+          </div>
+          <div class="col-md-8" style="padding: 0;">
+            <iframe src="{% url 'users'  %}" frameborder="0" height="550" width="100%"></iframe>
+          </div>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+
+<script type="text/javascript">
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: ''
+    },
+   
+    xAxis: {
+        categories: [{% for rw in s %}'{{rw.purpose}}',{% endfor %}],
+        title: {
+            text: null
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+    plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        shadow: true
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'USD',
+        data: [{% for rw in s %}{{rw.amount}},{% endfor %}]
+    }, ]
+});
+    </script>
+
+<script>
+$(document).ready(function(){
+    var $myForm = $('.my-ajax-form')
+    $myForm.submit(function(event){
+        event.preventDefault()
+        var $formData = $(this).serialize()
+        var $thisURL = $myForm.attr('data-url') || window.location.href // or set your own url
+        $.ajax({
+            method: "POST",
+            url: $thisURL,
+            data: $formData,
+            success: handleFormSuccess,
+            error: handleFormError,
+        })
+    })
+
+    function handleFormSuccess(data, textStatus, jqXHR){
+        console.log(data)
+        console.log(textStatus)
+        console.log(jqXHR)
+        $myForm.reset(); // reset form data
+    }
+
+    function handleFormError(jqXHR, textStatus, errorThrown){
+        console.log(jqXHR)
+        console.log(textStatus)
+        console.log(errorThrown)
+    }
+})
+</script> 
+</div>
+{% endblock %}
+<!-- InstanceEndEditable -->
+

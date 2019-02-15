@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+ {% block container %}
+ 
+<nav class="nav nav-tabs" id="myTab" role="tablist">
+  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Header</a>
+  <a class="nav-item nav-link" id="nav-contributions-tab" data-toggle="tab" href="#nav-contributions" role="tab" aria-controls="nav-contributions" aria-selected="false">Footer</a>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="col-md-4" style="padding:20px">
+          <form name="form" method="POST">{% csrf_token %}
+            <input class="form-control" value="{{name}}" name="name">
+            <div style="padding-top: 10px;">
+              <input type="submit" class="btn btn-lg btn-info" value="Publish">
+            </div>
+          </form>  
+        </div>
+    </div>
+    
+    <div class="tab-pane fade" id="nav-contributions" role="tabpanel" aria-labelledby="nav-contributions-tab">
+          <div class="row">
+            
+            <div class="col-12" style="padding: 15px; width:500px;">
+               
+            </div>
+          </div>
+    </div>
+
+    <div class="tab-pane" id="nav-pledge" role="tabpanel" aria-labelledby="nav-pledge-tab">
+        <div class="col-md-8 pad">
+          <div class="col-md-12">
+            
+          </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="nav-family" role="tabpanel" aria-labelledby="nav-family-tab">
+        <div class="col-md-8 pad">
+
+          <div class="btn-group open">
+              <a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i> Add Family</a>
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                
+              </a>
+              <ul class="dropdown-menu" style="padding: 10px">
+                
+              </ul>
+            </div>
+
+               <div class="col-12 padAll">
+                  
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+<!-- InstanceEndEditable -->
+

@@ -1,0 +1,24 @@
+{% extends "base_2.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block header %}
+  <ul class="object-tools">
+    <li>
+        <a href={{ previous_month }}>
+            Previous month
+        </a>
+    </li>
+    <li>
+        <a href={{ next_month }}>
+            Next month
+        </a>
+    </li>
+  </ul>
+{% endblock header %}
+
+{% block container %}
+<div id="content-main" style="height: 300px">
+  {{ calendar }}
+</div>
+{% endblock %}
+

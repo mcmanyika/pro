@@ -1,0 +1,56 @@
+{% extends "base_2.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+ {% block container %}
+
+<div class="row" style="padding-top: 50px">
+      <div class="col-md-5">
+        <div class="row">
+          <nav class="nav nav-tabs" id="myTab" role="tablist">
+          {% for rw in rows %}
+            <div class="col-sm-6 padAll">
+              <a id="nav-{{rw.name}}-tab" data-toggle="tab" href="#nav-{{rw.name}}" role="tab" aria-controls="nav-{{rw.name}}" aria-selected="false" class="btn btn-info btn-lg" style="padding:30px; width: 200px">{{rw.name}}</a>
+            </div>
+          {% endfor %}
+        </nav>
+        </div>  
+    </div>
+    <div class="col-sm-7">
+    <div class="tab-content" id="nav-tabContent">
+      {% for rw in rows %}
+      <div class="tab-pane" id="nav-{{rw.name}}" role="tabpanel" aria-labelledby="nav-{{rw.name}}-tab">
+        {{rw.name}}
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+
+
+
+
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+
+{% endblock %}
+<!-- InstanceEndEditable -->
+

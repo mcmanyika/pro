@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-12">
+    <form id="currency" name="currency">{% csrf_token %}
+      <div class="row">
+          <div class="col-12 pad">
+              <input type="text" class="form-control" value="" name="name" placeholder="Currency">
+              <input type="hidden" name="category" value="currency">
+          </div>
+           <div class="col-md-12 pad">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+          </div>
+          <input type="hidden" name="user_id" value="{{user.id}}">
+    </form>
+</div> 
+ 
+  <!-- <script type="text/javascript">
+  $(document).on('submit','#currency',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url : '/currency/',
+      data : {
+        name : $('#name').val(),
+        category : $('#category').val(),
+        user_id : $('#user_id').val(),
+        csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+      },
+      success:function(){
+        alert('Created New Currency');
+      }
+    });
+  });
+</script>  -->
+
+ 
+{% endblock container %}
+
+{% block javascript %}
+  
+{% endblock javascript %}

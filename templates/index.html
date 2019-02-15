@@ -1,0 +1,59 @@
+{% extends "base_2.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+ {% block container %}
+
+<div class="row">
+    <div class="col-12">
+  
+  </div>
+<!-- Modal -->
+{% for rw in row %}
+<div class="modal" id="video{{rw.id}}" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+                    <div class="modal-body">
+                        <center><h1>{{rw.title}}</h1></center>
+                        <div class="col-md-12" style="padding: 40px">
+                          <video id="bgvid"  height="300" controls> <!-- replace **image link** with your own file -->
+                            <source src="{% static 'img/' %}{{rw.video}}" type="video/mp4"><!-- replace **video link** with your own file -->
+                          </video>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                   </div>
+              </div>
+         </div>
+    </div>
+{% endfor %}
+
+
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+
+{% endblock %}
+<!-- InstanceEndEditable -->
+

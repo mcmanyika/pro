@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+<title>ProFaith</title>
+<!-- InstanceEndEditable -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- 
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{% static 'css/jquery.mobile-1.4.5.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jqm-demos.css' %}"> 
+  </head>
+<body>
+    {% block container %}
+
+    {% endblock %}
+</body>
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/jquery.mobile-1.4.5.min.js' %}"></script>
+</html>

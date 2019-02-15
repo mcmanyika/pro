@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+ {% block container %}
+
+     <form  method="post" name="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+    {{form | crispy }}
+     <div class="col-md-12 padAll">
+        <button type="submit" class="btn btn-lg btn-info">Save</button>
+    </div>
+ </form>
+
+{% endblock %}
+<!-- InstanceEndEditable -->
+

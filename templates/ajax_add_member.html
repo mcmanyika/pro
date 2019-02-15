@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block container %}
+<div class="col-12">
+      <form method="POST" >{% csrf_token %}
+                <div class="col-12">
+                <div class="row">
+                  <div class="col-12 padAll"><input type="text" class="form-control" value="" name="fname" placeholder="First Name"></div>
+                  <div class="col-12 padAll"><input type="text" class="form-control" value="" name="lname" placeholder="Last Name"></div>
+                  <div class="col-12 padAll">
+                    <h6>Gender</h6>
+                      {% for r in row %}
+                      {% if r.category == 'gender' %}
+                       <label class="custom-control custom-radio">
+                        <input id="{{r.id}}" value="{{r.name}}"  name="gender" type="radio" class="form-control custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">{{r.name}}</span>
+                      </label>
+                      {% endif %}
+                      {% endfor %}
+                    </div>
+                  <div class="col-12">
+                      <input type="hidden" name="user" value="{{user.id}}">
+                </div>
+                 <div class="col-12 padAll">
+                    <button type="submit" class="btn btn-lg btn-info">Save</button><!-- 
+                    <button type="reset" class="btn btn-lg btn-info">Clear</button> -->
+                </div>
+
+                  
+              </div>
+              </div>
+        </form>
+  </div>  
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+    
+</script>
+    
+{% endblock javascript %} 

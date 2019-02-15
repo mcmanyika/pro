@@ -1,0 +1,343 @@
+{% extends "base_2.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block header %}
+<script src="{% static 'highcharts/code/highcharts.js' %}"></script>
+<script src="{% static 'highcharts/code/highcharts-3d.js' %}"></script>
+<script src="{% static 'highcharts/code/modules/exporting.js' %}"></script>
+<script src="{% static 'highcharts/code/modules/export-data.js' %}"></script>
+<style type="text/css">
+  .counter {
+    background-color:#f5f5f5;
+    padding: 20px 0;
+    border-radius: 5px;
+}
+
+.count-title {
+    font-size: 40px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.count-text {
+    font-size: 13px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-2x {
+    margin: 0 auto;
+    float: none;
+    display: table;
+    color: #4ad1e5;
+}
+</style>
+  <div class="container">
+  
+    <div class="row text-center">
+      <div class="col-md-7">
+          <div class="col-md-4">
+          <div class="counter">
+      <i class="fa fa-code fa-2x"></i>
+      <h2 class="timer count-title count-number" data-to="{{totalCount}}" data-speed="1500"></h2>
+       <p class="count-text ">Total Members</p>
+    </div>
+          </div>
+              <div class="col-md-4">
+               <div class="counter">
+      <i class="fa fa-coffee fa-2x"></i>
+      <h2 class="timer count-title count-number" data-to="{{girls}}" data-speed="1500"></h2>
+      <p class="count-text ">Girls</p>
+    </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="counter">
+      <i class="fa fa-lightbulb-o fa-2x"></i>
+      <h2 class="timer count-title count-number" data-to="{{boys}}" data-speed="1500"></h2>
+      <p class="count-text ">Boys</p>
+    </div></div></div>
+
+    <div class="col-md-5">
+              <div class="col-md-12">
+              <div id="container" style="height: 150px"></div>
+              </div>
+         </div>
+       </div>
+</div>
+{% endblock header %}
+ {% block container %}
+<div class="col-md-12 pad">
+  <a  href="#addChildren" data-toggle="modal" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-plus"> </span> CHILDREN</a> 
+</div>
+
+  <div class="col-md-12">
+    <table id="myTable" class="table table-striped table-hover" width="100%">
+      <tr class="header">
+        <th style="width:5%;"></th>
+        <th style="width:15%;">Full Name</th>
+        <th style="width:5%;">Gender</th>
+        <th style="width:10%;">Email</th>
+        <th style="width:10%;">Mobile</th>
+        <th style="width:10%;">Parent/Guardian</th>
+        <th style="width:10%;">Site</th>
+        
+        </tr>
+        {% for rw in members %}
+          <tr>
+            <td>
+              <center>{% if rw.image %}
+                <img src="{% static '/img/' %}{{rw.image}}" width="30" class="img-fluid rounded">
+                {% else %}
+                <img src="{% static '/img/avatar.png' %}" width="30" class="img-fluid rounded">
+                {% endif %}
+            </center>
+          </td>
+            <!-- <td style="text-transform:capitalize; padding: 10px 0 10px 0"></span>
+              <a href="#member{{rw.id}}" data-toggle="modal">{{rw.fname}} {{rw.lname}}</a></td> -->
+              <td>
+              <a href="#member{{rw.id}}" data-toggle="modal">{{rw.fname}} 
+              {% if not rw.lname %}
+                {% else %}
+              {{rw.lname}}
+              {% endif %}</a></td>
+            <td>{{rw.gender}}</td>
+            
+            <td>{% if not rw.email %}
+                {% else %}
+              {{rw.email}}
+              {% endif %}</td>
+            <td>{% if not rw.phone %}
+                {% else %}
+              {{rw.phone}}
+              {% endif %}</td>
+              <td><a href="#member{{rw.parent_id}}" data-toggle="modal">{{rw.parent_fname}} {{rw.parent_lname}}</a></td>
+            <td>{{rw.site}}</td>
+            
+          </tr>
+      {% endfor %} 
+    </table>
+  </div>
+      <div class="col-md-12" style="padding-bottom: 30px;">
+        <nav>
+            <ul class="pagination">
+              <li>{% if members.has_previous %}
+                <a href="?{{page_request_var}}={{ members.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+                 {% endif %}
+              </li>
+
+              <li><a href="#">{{ members.number }} of {{ members.paginator.num_pages }}</a></li>
+
+              <li>{% if members.has_next %}
+                <a href="?{{page_request_var}}={{ members.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+        </nav>
+      </div>
+
+<div class="modal right fade"  id="addChildren"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body" style="padding: 10px 0 ">
+          <form method="POST" class="my-ajax-form" data-url="/save-child/">{% csrf_token %}
+            <div class="col-md-12 pad">
+              <div class="pad">
+              <input type="number" class="form-control" value="" name="rootid" placeholder="Guardian ID">
+            </div>
+            <div class="pad">
+              <input type="number" class="form-control" value="" name="childid" placeholder="Child ID">
+            </div>  
+            <div class="col-md-12 pad">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+          </div>
+          </form>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
+
+
+<script type="text/javascript">
+  (function ($) {
+  $.fn.countTo = function (options) {
+    options = options || {};
+    
+    return $(this).each(function () {
+      // set options for current element
+      var settings = $.extend({}, $.fn.countTo.defaults, {
+        from:            $(this).data('from'),
+        to:              $(this).data('to'),
+        speed:           $(this).data('speed'),
+        refreshInterval: $(this).data('refresh-interval'),
+        decimals:        $(this).data('decimals')
+      }, options);
+      
+      // how many times to update the value, and how much to increment the value on each update
+      var loops = Math.ceil(settings.speed / settings.refreshInterval),
+        increment = (settings.to - settings.from) / loops;
+      
+      // references & variables that will change with each update
+      var self = this,
+        $self = $(this),
+        loopCount = 0,
+        value = settings.from,
+        data = $self.data('countTo') || {};
+      
+      $self.data('countTo', data);
+      
+      // if an existing interval can be found, clear it first
+      if (data.interval) {
+        clearInterval(data.interval);
+      }
+      data.interval = setInterval(updateTimer, settings.refreshInterval);
+      
+      // initialize the element with the starting value
+      render(value);
+      
+      function updateTimer() {
+        value += increment;
+        loopCount++;
+        
+        render(value);
+        
+        if (typeof(settings.onUpdate) == 'function') {
+          settings.onUpdate.call(self, value);
+        }
+        
+        if (loopCount >= loops) {
+          // remove the interval
+          $self.removeData('countTo');
+          clearInterval(data.interval);
+          value = settings.to;
+          
+          if (typeof(settings.onComplete) == 'function') {
+            settings.onComplete.call(self, value);
+          }
+        }
+      }
+      
+      function render(value) {
+        var formattedValue = settings.formatter.call(self, value, settings);
+        $self.html(formattedValue);
+      }
+    });
+  };
+  
+  $.fn.countTo.defaults = {
+    from: 0,               // the number the element should start at
+    to: 0,                 // the number the element should end at
+    speed: 1000,           // how long it should take to count between the target numbers
+    refreshInterval: 100,  // how often the element should be updated
+    decimals: 0,           // the number of decimal places to show
+    formatter: formatter,  // handler for formatting the value before rendering
+    onUpdate: null,        // callback method for every time the element is updated
+    onComplete: null       // callback method for when the element finishes updating
+  };
+  
+  function formatter(value, settings) {
+    return value.toFixed(settings.decimals);
+  }
+}(jQuery));
+
+jQuery(function ($) {
+  // custom formatting example
+  $('.count-number').data('countToOptions', {
+  formatter: function (value, options) {
+    return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+  }
+  });
+  
+  // start all the timers
+  $('.timer').each(count);  
+  
+  function count(options) {
+  var $this = $(this);
+  options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+  $this.countTo(options);
+  }
+});
+
+</script>
+
+
+
+
+    <script type="text/javascript">
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'pie',
+        options3d: {
+            enabled: true,
+            alpha: 45,
+            beta: 0
+        }
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            depth: 35,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+            }
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'share',
+        data: [
+            
+            ['Girls', {{girls}}],
+            {
+                name: 'Boys',
+                y: {{boys}},
+                sliced: true,
+                selected: true
+            },
+        ]
+    }]
+});
+
+    </script>
+
+    <script type="text/javascript">
+      function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("Table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+    </script>
+{% endblock %}
+<!-- InstanceEndEditable -->
+

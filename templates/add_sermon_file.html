@@ -1,0 +1,25 @@
+{% extends "base_2.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+        <form  method="post"  action="" enctype="multipart/form-data">{% csrf_token %}
+            <p class="pad">
+                <input type="text" class="form-control" value="" name="id">
+            </p>
+
+            <p class="pad">
+                {{form.sermonFile}}
+            </p>
+         <p style="padding-top:10px">
+            <button type="submit" class="btn btn-default btn-lg">Save</button>
+             <button type="reset" class="btn btn-default btn-lg">Clear</button>
+        </p>
+        </form>
+{% endblock%}
+<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+<script src="{% static 'js/jquery.mobile-1.4.5.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+     
+</body>
+<!-- InstanceEnd --></html>

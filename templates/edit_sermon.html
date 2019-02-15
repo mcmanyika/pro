@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block container %}
+<div class="col-12">
+<form  method="post" name="form"  action="" enctype="multipart/form-data">{% csrf_token %}
+    <div class="row">
+    <div class="col-12 padAll">
+        <input type="text" name="title" value="{{title}}" class="form-control">
+    </div>
+    <div class="col-6 padAll">
+        <select name="event" class="form-control">
+            <option value="{{event}}">{{event}}</option>
+            {% for rw in d %}
+            {% if rw.category == 'event' %}
+            <option value="{{rw.name}}">{{rw.name}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 padAll">
+        <select name="venue" class="form-control">
+            <option value="{{venue}}">{{venue}}</option>
+            {% for rw in d %}
+            {% if rw.category == 'venue' %}
+            <option value="{{rw.name}}">{{rw.name}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 padAll">
+        <select name="preacher" class="form-control">
+            <option value="{{preacher}}">{{preacher}}</option>
+       {% for rw in d %}
+       {% if rw.category == 'preacher' %}
+        <option value="{{rw.name}}">{{rw.name}}</option>
+        {% endif %}
+       {% endfor %}
+    </select>
+    </div>
+    
+    
+    <div class="col-12 pad">
+            <textarea  name="notes" rows="15"  class="form-control">{{notes}}</textarea>
+    </div>
+    <div class="col-12 padAll">
+        {{form.audio|as_crispy_field:"bootstrap"}}
+    </div>
+    <div class="col-12 padAll">
+        {{form.video|as_crispy_field:"bootstrap"}}
+    </div>
+    
+ <div class="col-12 padAll">
+    <input type="hidden" name="user" value="{{user.id}}">
+    <button type="submit" class="btn btn-info btn-lg">Save</button>
+</div>
+</div>
+</form>
+</div>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+
+{% endblock %}
+<!-- InstanceEndEditable -->
+

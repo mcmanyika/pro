@@ -1,0 +1,50 @@
+{% extends "base_login.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block container %}
+  <style type="text/css">
+    body {
+      background-color: #dedede !important;
+    }
+  </style>  
+  <div class="row">
+  	
+    {% for rw in users %}
+      <div class="col-sm-3 padAll capitalize"><center>
+        {% if rw.avatar %}
+        <img src="/media/{{rw.avatar}}" class="img-circle" style="height: 100px; width: 120px">
+        {% else %}
+        <img src="{% static 'img/avatar.png' %}" class="img-circle img-responsive">
+        {% endif %}
+        <span>{% if user.is_superuser %}<a href="{% url 'user-details' rw.id %}">{{rw.username}}</a>
+          {% else %}
+          {{rw.username}}
+        {% endif %}</span></center>
+      </div>
+    {% endfor %}
+<div class="col-md-12" style="padding-top: 5px;">
+        <nav>
+            <ul class="pagination">
+              <li>{% if users.has_previous %}
+                <a href="?{{page_request_var}}={{ users.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+                 {% endif %}
+              </li>
+
+              <li><a href="#">{{ users.number }} of {{ users.paginator.num_pages }}</a></li>
+
+              <li>{% if users.has_next %}
+                <a href="?{{page_request_var}}={{ users.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif%}">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+        </nav>
+      </div>
+	
+  </div>
+
+{% endblock %}

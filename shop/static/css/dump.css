@@ -1,0 +1,606 @@
+  
+  body,html{
+    height: 100%;
+  }
+
+body {
+  font-size: 12px !important;
+}
+.jumbotron {
+
+    padding: 10px !important;
+
+}
+
+.padAll {
+  padding:10px;
+}
+
+.blue-gradient {
+
+    background: linear-gradient(50deg,#ddd,#7cb5ec) !important;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+    font-weight: 300;
+    border-style: none;
+    font-size: 12px; 
+    min-width: 150px;
+    text-transform: uppercase;
+  }
+  
+
+
+ul {
+  list-style-type: none !important;
+}
+
+.bar {
+    background-color : #555;
+    padding : 15px;
+    color: #fff;
+}
+
+.head {
+    color : #fff;
+    font-size : 30px;
+}
+    .lftBk {
+        background-color : #ddd;
+        min-height : 700px;
+        padding: 0 20px 0 20px
+    }
+    .btmPd {
+    padding : 5px 0 10px 0;
+    }
+    .pad {
+    padding : 8px;
+    }
+    .padAll {
+    padding : 10px;
+    }
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color:  #ccc;
+    color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    font-size: 18px;
+}
+
+.leftsidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color:  #343a40e8;
+    color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    font-size: 18px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a {
+  color: #fff !important;
+}
+.sidebar a:hover {
+  color: #000 !important;
+  text-decoration: none;
+}
+
+.sidenav a:hover {
+    color: #333;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 40px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+.leftsidenav .leftclosebtn {
+    position: absolute;
+    top: 40px;
+    left: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.fixed-bottom {
+    padding: 20px !important;
+}
+
+
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+  .modal.left .modal-dialog,
+  .modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 650px;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+         -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+  }
+    .modal.right2 .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 83%;;
+    -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+         -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+  }
+
+  .modal.left .modal-content,
+  .modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .modal.left .modal-body,
+  .modal.right2 .modal-body,
+  .modal.right .modal-body {
+    padding: 15px 15px 80px;
+  }
+
+/*Left*/
+  .modal.left.fade .modal-dialog{
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+       -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+         -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+            transition: opacity 0.3s linear, left 0.3s ease-out;
+  }
+  
+  .modal.left.fade.in .modal-dialog{
+    left: 0;
+  }
+        
+/*Right*/
+  .modal.right2.fade .modal-dialog,
+  .modal.right.fade .modal-dialog {
+    right: -500px;
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+       -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+         -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+            transition: opacity 0.3s linear, right 0.3s ease-out;
+  }
+  .modal.right2.fade.in .modal-dialog,
+  .modal.right.fade.in .modal-dialog {
+    right: 0;
+  }
+
+/* ----- MODAL STYLE ----- */
+  .modal-content {
+    border-radius: 0;
+    border: none;
+  }
+
+  .modal-header {
+    border-bottom-color: #EEEEEE;
+    background-color: #FAFAFA;
+  }
+
+/* ----- v CAN BE DELETED v ----- */
+
+
+.demo {
+  padding-top: 60px;
+  padding-bottom: 110px;
+}
+
+.btn-demo {
+  margin: 15px;
+  padding: 10px 15px;
+  border-radius: 0;
+  font-size: 16px;
+  background-color: #FFFFFF;
+}
+
+.btn-demo:focus {
+  outline: 0;
+}
+
+.demo-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background-color: #212121;
+  text-align: center;
+}
+
+.demo-footer > a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+}
+
+
+/*#sidebar*/
+  /* remove outer padding */
+  .main .row{
+    padding: 0px;
+    margin: 0px;
+  }
+
+  /*Remove rounded coners*/
+
+  nav.sidebar.navbar {
+    border-radius: 0px;
+  }
+
+  nav.sidebar, .main{
+    -webkit-transition: margin 200ms ease-out;
+      -moz-transition: margin 200ms ease-out;
+      -o-transition: margin 200ms ease-out;
+      transition: margin 200ms ease-out;
+  }
+
+  /* Add gap to nav and right windows.*/
+  .main{
+    padding: 10px 10px 0 10px;
+  }
+
+  /* .....NavBar: Icon only with coloring/layout.....*/
+
+  /*small/medium side display*/
+  @media (min-width: 768px) {
+
+    /*Allow main to be next to Nav*/
+    .main{
+      position: absolute;
+      width: calc(100% - 40px); /*keeps 100% minus nav size*/
+      margin-left: 40px;
+      float: right;
+    }
+
+    /*lets nav bar to be showed on mouseover*/
+    nav.sidebar:hover + .main{
+      margin-left: 200px;
+    }
+
+    /*Center Brand*/
+    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+      margin-left: 0px;
+    }
+    /*Center Brand*/
+    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+      text-align: center;
+      width: 100%;
+      margin-left: 0px;
+    }
+
+    /*Center Icons*/
+    nav.sidebar a{
+      padding-right: 13px;
+    }
+
+    /*adds border top to first nav box */
+    nav.sidebar .navbar-nav > li:first-child{
+      border-top: 1px #e5e5e5 solid;
+    }
+
+    /*adds border to bottom nav boxes*/
+    nav.sidebar .navbar-nav > li{
+      border-bottom: 1px #e5e5e5 solid;
+    }
+
+    /* Colors/style dropdown box*/
+    nav.sidebar .navbar-nav .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    /*allows nav box to use 100% width*/
+    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+      padding: 0 0px 0 0px;
+    }
+
+    /*colors dropdown box text */
+    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+      color: #777;
+    }
+
+    /*gives sidebar width/height*/
+    nav.sidebar{
+      width: 200px;
+      height: 100%;
+      margin-left: -180px;
+      float: left;
+      z-index: 8000;
+      margin-bottom: 0px;
+    }
+
+    /*give sidebar 100% width;*/
+    nav.sidebar li {
+      width: 100%;
+    }
+
+    /* Move nav to full on mouse over*/
+    nav.sidebar:hover{
+      margin-left: -20px;
+    }
+    /*for hiden things when navbar hidden*/
+    .forAnimate{
+      opacity: 0;
+    }
+  }
+
+  /* .....NavBar: Fully showing nav bar..... */
+
+  @media (min-width: 1330px) {
+
+    /*Allow main to be next to Nav*/
+    .main{
+      width: calc(100% - 200px); /*keeps 100% minus nav size*/
+      margin-left: 290px;
+    }
+
+    /*Show all nav*/
+    nav.sidebar{
+      margin-left: 0px;
+      float: left;
+    }
+    /*Show hidden items on nav*/
+    nav.sidebar .forAnimate{
+      opacity: 1;
+    }
+  }
+
+  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #CCC;
+    background-color: transparent;
+  }
+
+  nav:hover .forAnimate{
+    opacity: 1;
+  }
+  section{
+    padding-left: 15px;
+  }
+
+
+  body {
+        font-size: 12px;
+      }
+      .footer_b {
+       position: fixed;
+       right: 0;
+       bottom: 20px;
+       padding: 10px;
+       width: 100%;
+       background-color: #5AC8FA;
+       color: white;
+       text-align: center;
+       border-radius: 4px;
+    }
+
+    .bg {
+      background-color: #ddd !important;
+    }
+
+     .counter {
+    background-color:#f5f5f5;
+    padding: 20px 0;
+    border-radius: 5px;
+}
+
+.count-title {
+    font-size: 40px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.count-text {
+    font-size: 13px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-2x {
+    margin: 0 auto;
+    float: none;
+    display: table;
+    color: #4ad1e5;
+}
+
+
+
+.row{
+    margin-left:0px;
+    margin-right:0px;
+}
+
+#wrapper {
+    padding-left: 70px;
+    transition: all .4s ease 0s;
+    height: 100%
+}
+
+#sidebar-wrapper {
+    margin-left: -180px;
+    left: 70px;
+    width: 150px;
+    background: #222;
+    position: fixed;
+    height: 100%;
+    z-index: 10000;
+    transition: all .4s ease 0s;
+}
+
+.sidebar-nav {
+    display: block;
+    float: left;
+    width: 150px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#page-content-wrapper {
+    padding-left: 0;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+}
+#wrapper.active {
+    padding-left: 150px;
+}
+#wrapper.active #sidebar-wrapper {
+    left: 170px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+}
+
+#sidebar_menu li a, .sidebar-nav li a {
+    color: #999;
+    display: block;
+    float: left;
+    text-decoration: none;
+    width: 150px;
+    background: #252525;
+    border-top: 1px solid #373737;
+    border-bottom: 1px solid #1A1A1A;
+    -webkit-transition: background .5s;
+    -moz-transition: background .5s;
+    -o-transition: background .5s;
+    -ms-transition: background .5s;
+    transition: background .5s;
+}
+.sidebar_name {
+    padding-top: 25px;
+    color: #fff;
+    opacity: .7;
+}
+
+.sidebar-nav li {
+  line-height: 40px;
+  text-indent: 20px;
+}
+
+.sidebar-nav li a {
+  color: #999999;
+  display: block;
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+  text-decoration: none;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+  height: 65px;
+  line-height: 60px;
+  font-size: 18px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+#main_icon
+{
+    float:right;
+   padding-right: 65px;
+   padding-top:20px;
+}
+.sub_icon
+{
+    float:right;
+   padding-right: 65px;
+   padding-top:10px;
+}
+.content-header {
+  height: 65px;
+  line-height: 65px;
+}
+
+.content-header h1 {
+  margin: 0;
+  margin-left: 20px;
+  line-height: 65px;
+  display: inline-block;
+}
+
+@media (max-width:767px) {
+    #wrapper {
+    padding-left: 70px;
+    transition: all .4s ease 0s;
+}
+#sidebar-wrapper {
+    left: 70px;
+}
+#wrapper.active {
+    padding-left: 150px;
+}
+#wrapper.active #sidebar-wrapper {
+    left: 150px;
+    width: 150px;
+    transition: all .4s ease 0s;
+}
+}
+
+  .panel-body .btn:not(.btn-block) { 
+    width:125px;
+    margin-bottom:10px; 
+    padding: 20px 0;
+    font-size: 13px !important;
+  } 
+  .capitalize {
+    text-transform: capitalize !important;
+  }

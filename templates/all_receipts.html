@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-md-12" style="font-size: 14px !important;">
+  <table id="myTable" cellpadding="0" cellspacing="0" width="100%">
+      <tr class="header">
+        <th style="width:60%;">Purpose</th>
+        <th style="width:20%;">Amount</th>
+        <th style="width:20%;">Commitment</th>
+        </tr>
+
+  {% for rw in rc %}
+  <tr>
+    <td><a href="{% url 'single_rec' rw.id %}">
+      {{rw.purpose}}
+    </a></td>
+    <td>
+      {{rw.currency}} {{rw.amount}} </td>
+    <td>
+      {{rw.commitment}} 
+  </td>
+  </tr>
+  {% endfor %} 
+</table>
+  </div>  
+{% endblock %}

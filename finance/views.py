@@ -1,0 +1,397 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+# import xlwt
+import json
+import math
+import csv
+import xlwt
+from django.utils.encoding import smart_str
+from django.utils.datastructures import MultiValueDictKeyError
+# from libs.base import Base
+from django.http import HttpResponse, JsonResponse
+from django.http import StreamingHttpResponse
+from django.db import connection
+from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.shortcuts import render, HttpResponseRedirect, Http404
+from datetime import datetime, date
+import hashlib
+import string
+from django.forms import DateField, IntegerField, CharField
+from django.contrib import auth
+from django.contrib.auth.models import User
+from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+# from libs.base import Base
+from joins.models import *
+from joins.forms import *
+from libs.models import *
+from libs.forms import *
+from .forms import *
+from finance.models import *
+from .resources import DailyTransactions
+from siteInfo.models import t_dictionary
+# Create your views here.
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+
+def ajax_incomehead(request):
+    form = IncomeHeadForm()
+    if request.is_ajax():
+        form = IncomeHeadForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            data = {
+            'message':'form is saved'
+            }
+            return JsonResponse(data)
+    context = {
+    'form':form,
+    }
+    template = "add_incomehead.html"
+    return render(request, template, context)
+
+
+def ajax_currency(request):
+    form = IncomeHeadForm()
+    if request.is_ajax():
+        form = IncomeHeadForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            data = {
+            'message':'form is saved'
+            }
+            return JsonResponse(data)
+    context = {
+    'form':form,
+    }
+    template = "add_currency.html"
+    return render(request, template, context)
+
+def ajax_commitment(request):
+    form = IncomeHeadForm()
+    if request.is_ajax():
+        form = IncomeHeadForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            data = {
+            'message':'form is saved'
+            }
+            return JsonResponse(data)
+    context = {
+    'form':form,
+    }
+    template = "add_commitment.html"
+    return render(request, template, context)
+
+
+def ajax_group(request):
+    form = GroupForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        messages.success(request, "Saved")
+        
+    context = {
+    'form':form,
+    }
+    template = "add_group.html"
+    return render(request, template, context)
+
+
+def transaction(request, id):
+    weekly = t_dictionary.objects.filter(category='weekly')
+    monthly = t_dictionary.objects.filter(category='monthly')
+    onceoff = t_dictionary.objects.filter(category='onceoff')
+    d = t_dictionary.objects.all().order_by('id')
+    rw = t_dict.objects.all().order_by('name')
+    instance = get_object_or_404(t_acct, id=id)
+    rendered = 0
+    total = 0 
+    Payform = PaymentForm(request.POST or None, request.FILES or None)
+    if Payform.is_valid():
+        f = Payform.save(commit=False)
+        f.save()
+        messages.success(request, "Saved")
+        return HttpResponseRedirect('/finance/receipt/%s' % instance.id)
+    
+    context = {
+        "Payform" : Payform,
+        "d" : d,
+        "rw" :rw,
+        "m_id" : instance.id,
+        "fname" : instance.fname,
+        "lname" : instance.lname,
+        "image" : instance.image,
+        "gender" : instance.gender,
+        "rendered" : rendered,
+        "total" : total,
+        "weekly" : weekly,
+        "monthly" : monthly,
+        "onceoff" : onceoff,
+
+    }
+    template = "upload_transaction.html"
+    return render(request, template, context)
+
+def all_receipts(request, id):
+    t = t_payment.objects.raw("""SELECT p.id,
+                            a.fname as fname, 
+                            a.lname as lname, p.currency as currency, 
+                            p.amount as amount, p.purpose, p.commitment as commitment
+                            FROM libs_t_payment p
+                            INNER JOIN joins_t_acct a ON a.id = p.rootid
+                            WHERE p.rootid = %s  
+                            order by p.id desc""", [id])
+    
+    
+    context = {
+        "rc" : t,
+    }        
+    template = "all_receipts.html"
+    return render(request, template, context)
+
+def receipt(request, id):
+
+    t = t_payment.objects.raw("""SELECT p.id, 
+                            a.fname as fname, 
+                            a.lname as lname, p.currency as currency, 
+                            p.amount as amount, p.purpose, p.commitment as commitment
+                            FROM libs_t_payment p
+                            INNER JOIN joins_t_acct a ON a.id = p.rootid
+                            WHERE p.rootid = %s  
+                            order by p.id desc limit 1""", [id])
+    
+    
+    all_rec = t_payment.objects.raw("""SELECT p.id,
+                            a.fname as fname, 
+                            a.lname as lname, p.currency as currency, 
+                            p.amount as amount, p.purpose, p.commitment as commitment
+                            FROM libs_t_payment p
+                            INNER JOIN joins_t_acct a ON a.id = p.rootid
+                            WHERE p.id = %s  
+                            order by p.id desc""", [id])
+
+    context = {
+        "rc" : t,
+        "all_rec" : all_rec,
+        "client_id" : id,
+    }        
+    template = "receipt.html"
+    return render(request, template, context)
+
+def single_rec(request, id):
+    single_rec = t_payment.objects.raw("""SELECT p.id, a.id as acct_id,
+                            a.fname as fname, 
+                            a.lname as lname, p.currency as currency, 
+                            p.amount as amount, p.purpose, p.commitment as commitment
+                            FROM libs_t_payment p
+                            INNER JOIN joins_t_acct a ON a.id = p.rootid
+                            WHERE p.id = %s  
+                            order by p.id desc""", [id])
+    for rw in single_rec:
+        rw.acct_id
+    
+    context = {
+        "single_rec" : single_rec,
+        "acct_id" : rw.acct_id,
+    }        
+    template = "entry_receipt.html"
+    return render(request, template, context)   
+
+def filter_trans(self):
+
+    try:
+        fdate = request.POST['period_from']
+        tdate = request.POST['period_to']
+        
+    except:
+
+        fdate = datetime.now().date()
+        tdate = datetime.now().date()
+    
+
+    t = connection.cursor()
+    t.cursor.execute("""Select 
+                        p.purpose as PURPOSE,
+                        sum(case when p.currency = 'BOND' then p.id else 0 end) as BOND,
+                        sum(case when p.currency = 'USD' then p.id else 0 end) as USD,
+                        sum(case when p.currency = 'RAND' then p.id else 0 end) as RAND,
+                        sum(case when p.currency = 'PULA' then p.id else 0 end) as PULA,
+                        p.timestamp as TIMESTAMP
+                    FROM libs_t_payment p
+                     WHERE p.timestamp BETWEEN %s AND %s
+                    GROUP BY p.purpose
+                    """,[fdate, tdate])
+
+    t = dictfetchall(t) 
+
+    # def export_data(request):
+    #     trans_resource = t()
+    #     dataset = trans_resource.export()
+    #     response = HttpResponse(dataset.csv, content_type='text/csv')
+    #     response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
+    #     return response 
+    
+
+    context = {
+        "transactions" : t,
+
+    }
+    return render(self, "filter_transactions.html", context)
+
+   
+def download_excel_data():
+    # content-type of response
+    response = HttpResponse(content_type='application/ms-excel')
+
+    #decide file name
+    response['Content-Disposition'] = 'attachment; filename="DailyTransactions.xls"'
+
+    #creating workbook
+    wb = xlwt.Workbook(encoding='utf-8')
+
+    #adding sheet
+    ws = wb.add_sheet("sheet1")
+
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    # headers are bold
+    font_style.font.bold = True
+
+    #column header names, you can use your own headers here
+    columns = ['Column 1', 'Column 2', 'Column 3', 'Column 4', ]
+
+    #write column headers in sheet
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    #get your data, from database or from a text file...
+    d = filter_trans()
+    
+    data = d #dummy method to fetch data.
+    for my_row in data:
+        row_num = row_num + 1
+        ws.write(row_num, 0, my_row.PURPOSE, font_style)
+        ws.write(row_num, 1, my_row.start_date_time, font_style)
+        ws.write(row_num, 2, my_row.end_date_time, font_style)
+        ws.write(row_num, 3, my_row.notes, font_style)
+
+    wb.save(response)
+    return response
+
+
+def export_data(request):
+
+    trans_resource = DailyTransactions()
+    dataset = trans_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
+    return response   
+
+
+def filter_income_head(self):
+    
+    if self.method == "POST":
+        fdate = request.POST['period_from']
+        tdate = request.POST['period_to']
+
+    s = connection.cursor()
+    s.cursor.execute("""Select
+                            p.currency as currency, sum(p.amount) as amount, p.purpose as purpose, 
+                            p.commitment as commitment
+                            FROM libs_t_payment p
+                            Group By p.currency, purpose, commitment
+                            """)
+
+    ihead = dictfetchall(s) 
+
+    context = {
+        "ihead" : ihead,
+
+    }
+    return render(self, "filter_by_income_head.html", context)
+
+
+
+
+class Echo:    
+    """An object that implements just the write method of the file-like
+    interface.
+    """
+    def write(self, value):
+        """Write the value by returning it, instead of storing in a buffer."""
+        return value
+
+def csv_view(request):
+
+    
+
+    t = connection.cursor()
+    t.cursor.execute("""Select
+                            a.fname as fname, 
+                            a.lname as lname, p.currency as currency, p.amount as amount, p.purpose, 
+                            p.commitment as commitment
+                            FROM libs_t_payment p
+                            INNER JOIN joins_t_acct a ON a.id = p.rootid
+                            ORDER BY -p.id 
+                            """)
+
+    t = dictfetchall(t) 
+
+    """A view that streams a large CSV file."""
+    # Generate a sequence of rows. The range is based on the maximum number of
+    # rows that can be handled by a single sheet in most spreadsheet
+    # applications.
+
+    rows = (["".format(idx), str(idx)] for idx in t)
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    response = StreamingHttpResponse((writer.writerow(row) for row in rows),
+                                     content_type="text/csv")
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+
+    return response
+
+
+
+
+
+
+
+def get_one_row(sql='', prms=tuple()):
+    found = tuple()
+    if not sql: return found
+
+    try:
+        csr = connection.cursor()
+
+        if prms: csr.execute(sql, prms)
+        else: csr.execute(sql)
+
+        found = csr.fetchone()
+    except: found = tuple()
+
+    return found

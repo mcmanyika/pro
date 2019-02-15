@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block container %}
+<div class="col-12">
+    <form method="POST" class="my-ajax-form" data-url="/save/">{% csrf_token %}
+      <div class="row">
+          <div class="col-12 padAll">
+            <!-- {{form.as_p}} -->
+              <input type="text" class="form-control" value="" name="name" placeholder="Enter Purpose">
+              <input type="hidden" name="category" value="income_head">
+          </div>
+           <div class="col-md-12 padAll">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+          </div>
+          <input type="hidden" name="user_id" value="{{user.id}}">
+    </form>
+</div> 
+{% endblock container %}
+
+{% block javascript %}
+  
+{% endblock javascript %}
