@@ -877,3 +877,12 @@ def attendance(request):
     template = "attendance.html"
     return render(request, template, context)    
 
+
+def download_bk(request):
+
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
+
+    return response  
+
+

@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 import json
 import math
 import csv
-import xlwt
 from django.utils.encoding import smart_str
 from django.utils.datastructures import MultiValueDictKeyError
 # from libs.base import Base
@@ -216,7 +215,7 @@ def single_rec(request, id):
     template = "entry_receipt.html"
     return render(request, template, context)   
 
-def filter_trans(self):
+def filter_trans(request):
 
     try:
         fdate = request.POST['period_from']
@@ -243,64 +242,19 @@ def filter_trans(self):
 
     t = dictfetchall(t) 
 
-    # def export_data(request):
-    #     trans_resource = t()
-    #     dataset = trans_resource.export()
-    #     response = HttpResponse(dataset.csv, content_type='text/csv')
-    #     response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
-    #     return response 
+    def export_data(request):
+        trans_resource = t()
+        dataset = trans_resource.export()
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
+        return response 
     
 
     context = {
         "transactions" : t,
 
     }
-    return render(self, "filter_transactions.html", context)
-
-   
-def download_excel_data():
-    # content-type of response
-    response = HttpResponse(content_type='application/ms-excel')
-
-    #decide file name
-    response['Content-Disposition'] = 'attachment; filename="DailyTransactions.xls"'
-
-    #creating workbook
-    wb = xlwt.Workbook(encoding='utf-8')
-
-    #adding sheet
-    ws = wb.add_sheet("sheet1")
-
-    # Sheet header, first row
-    row_num = 0
-
-    font_style = xlwt.XFStyle()
-    # headers are bold
-    font_style.font.bold = True
-
-    #column header names, you can use your own headers here
-    columns = ['Column 1', 'Column 2', 'Column 3', 'Column 4', ]
-
-    #write column headers in sheet
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)
-
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
-
-    #get your data, from database or from a text file...
-    d = filter_trans()
-    
-    data = d #dummy method to fetch data.
-    for my_row in data:
-        row_num = row_num + 1
-        ws.write(row_num, 0, my_row.PURPOSE, font_style)
-        ws.write(row_num, 1, my_row.start_date_time, font_style)
-        ws.write(row_num, 2, my_row.end_date_time, font_style)
-        ws.write(row_num, 3, my_row.notes, font_style)
-
-    wb.save(response)
-    return response
+    return render(request, "filter_transactions.html", context)
 
 
 def export_data(request):
@@ -327,6 +281,8 @@ def filter_income_head(self):
                             """)
 
     ihead = dictfetchall(s) 
+
+    
 
     context = {
         "ihead" : ihead,
@@ -375,9 +331,7 @@ def csv_view(request):
 
     return response
 
-
-
-
+    
 
 
 
