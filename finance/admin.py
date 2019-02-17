@@ -12,3 +12,9 @@ class DictModelAdmin(admin.ModelAdmin):
 		model = t_dict
 admin.site.register(t_dict, DictModelAdmin)
 
+class SubModelAdmin(admin.ModelAdmin):
+	list_display = ['rootid','name','timestamp']
+	class Meta:
+		model = t_sub
+admin.site.register(t_sub, SubModelAdmin)
+

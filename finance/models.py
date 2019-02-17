@@ -14,3 +14,14 @@ class t_dict(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class t_sub(models.Model):
+	rootid = models.ForeignKey(t_dict, on_delete=models.CASCADE)
+	name = models.CharField(max_length=120,)
+	user_id = models.IntegerField()
+	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+	def __unicode__(self):
+	    return self.name
