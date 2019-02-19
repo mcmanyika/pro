@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_b.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% block container %}
@@ -20,9 +20,6 @@
               {% endif %}</button>
             </h5>
       </div>
-      <!-- <div style="width: 40%; float: left; text-align: right">
-              <a href="{% url 'all_receipts' m_id %}" style="font-size: 12px !important" class="btn btn-lg btn-info">View All Receipts</a>
-      </div>  --> 
     </div>
       <div class="col-md-12" style="padding-top: 10px;">  
        <form  method="post" name="payform" id="payform"  action="" enctype="multipart/form-data">{% csrf_token %}
@@ -42,11 +39,7 @@
                   {% endfor %}
               </div>
 
-
               <div data-ng-app="" data-ng-init="rendered=;amount=">
-                <!-- <div class="padAll" style="width: 30%; float: left; padding: 5px">
-                <input type="hidden" class="form-control" value=""  ng-model="rendered" name="amount" placeholder="Tendered">
-                </div> -->
                 <div class="padAll" style="width: 30%; float: left; padding: 5px">
                 <input type="text"  class="form-control" value=""  ng-model="amount" name="amount" placeholder="Amount Paid">
                 </div>
@@ -56,15 +49,7 @@
               </div>
 
               <div class="padAll" style="padding-top:60px;">
-                <!-- <p>
-                    <select name="purpose" class="form-control">
-                      {% for rw in rw %}
-                      {% if rw.category == 'income_head' %}
-                      <option value="{{rw.name}}">{{rw.name}}</option>
-                      {% endif %}
-                      {% endfor %}
-                    </select>
-                </p> -->
+               
               </div>
              
               <div class="col-md-12">
@@ -119,63 +104,5 @@
       </div>
   </div>  
 
-  <script type="text/javascript">
 
-    function update() {
-//Add additional country with id and city array
-        var countriesArray = [
-                ["weekly", "1", [{% for rw in weekly %}"{{rw.name}}",{% endfor %}]],
-                ["monthly", "2", [{% for rw in monthly %}"{{rw.name}}",{% endfor %}]],
-                ["onceoff", "3", [{% for rw in onceoff %}"{{rw.name}}",{% endfor %}]]
-
-        ];
-//Get country dropdown
-        var countries = document.getElementById("1");
-
-//Get city dropdown
-        var cities = document.getElementById("2");
-
-//Get country selected item
-        var selected = countries.options[countries.selectedIndex].value;
-
-//If country is not "Select Country"
-        if (selected != "0") {
-
-//Clear previous cities - this can be moved outside of if condition, and remove the else, if wanted.
-            Clear(cities);
-
-//For each country, if it is selected, populate the cities dropdown with its associated city array.
-
-            var country;
-            var cityArray;
-            for (var i = 0; i < countriesArray.length; i++) {
-
-//Get country
-                country = countriesArray[i];
-                if (country[1] == selected) {
-
-//Get city array
-                    cityArray = country[2];
-
-//Populate options with city array
-                    for (var p = 0; p < cityArray.length; p++) {
-                        var opt1 = document.createElement('option');
-                        opt1.innerHTML = cityArray[p];
-                        opt1.value = cityArray[p];
-                        cities.appendChild(opt1);
-                    }
-                }
-            }
-        }
-        else
-        {
-            Clear(cities);
-        }
-    }
-
-    function Clear(ctrl)
-    {
-        ctrl.options.length = 1;
-    }
-</script>
 {% endblock %}

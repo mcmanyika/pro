@@ -13,9 +13,9 @@
     {% for rw in users %}
       <div class="col-sm-3 padAll capitalize"><center>
         {% if rw.avatar %}
-        <img src="/media/{{rw.avatar}}" class="img-circle" style="height: 100px; width: 120px">
+        <img src="{% static '/img/' %}{{rw.avatar}}" class="img-circle" style="height: 100px; width: 120px">
         {% else %}
-        <img src="{% static 'img/avatar.png' %}" class="img-circle img-responsive">
+        <img src="{% static '/img/avatar1.png' %}" class="img-circle img-responsive">
         {% endif %}
         <span>{% if user.is_superuser %}<a href="{% url 'user-details' rw.id %}">{{rw.username}}</a>
           {% else %}

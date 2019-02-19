@@ -1,4 +1,4 @@
-{% extends "shop/base.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% block header %}
@@ -246,7 +246,7 @@
                   <strong>Current User</strong>
                 </div>
                 <div class="col-md-10  col-sm-offset-1 capitalize">
-                  <img src="{% if user_avatar %}/media/{{user_avatar}}{% else %} {% static 'img/avatar.png' %}{% endif %}" class="img-circle" style="height: 150px; width: 170px"><br />
+                  <img src="{% if user_avatar %}{% static '/img/' %}{{user_avatar}}{% else %} {% static 'img/avatar1.png' %}{% endif %}" class="img-circle" style="height: 150px; width: 170px"><br />
                   {% if request.user.is_authenticated %}{{ request.user.username }}{% endif %}
                 </div>  
                 <div class="col-md-10  col-sm-offset-1" style="padding-top: 40px">
@@ -273,62 +273,6 @@
   </div><!-- modal -->
 
 
-<script type="text/javascript">
-
-Highcharts.chart('container', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: ''
-    },
-   
-    xAxis: {
-        categories: [{% for rw in s %}'{{rw.purpose}}',{% endfor %}],
-        title: {
-            text: null
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: '',
-            align: 'high'
-        },
-        labels: {
-            overflow: 'justify'
-        }
-    },
-    tooltip: {
-        valueSuffix: ''
-    },
-    plotOptions: {
-        bar: {
-            dataLabels: {
-                enabled: true
-            }
-        }
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'top',
-        x: -40,
-        y: 80,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-        shadow: true
-    },
-    credits: {
-        enabled: false
-    },
-    series: [{
-        name: 'USD',
-        data: [{% for rw in s %}{{rw.amount}},{% endfor %}]
-    }, ]
-});
-    </script>
 
 <script>
 $(document).ready(function(){

@@ -136,8 +136,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'products/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static', 'static_dirs'),
+
+)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'static_dirs', 'img')
+
+MEDIA_URL = '/img/'
+
 
 
 CART_SESSION_ID = 'cart'
