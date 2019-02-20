@@ -8,6 +8,7 @@ import csv
 from django.utils.encoding import smart_str
 from django.utils.datastructures import MultiValueDictKeyError
 # from libs.base import Base
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
 from django.http import StreamingHttpResponse
 from django.db import connection
@@ -213,7 +214,69 @@ def single_rec(request, id):
         "acct_id" : rw.acct_id,
     }        
     template = "entry_receipt.html"
-    return render(request, template, context)   
+    return render(request, template, context)  
+
+def seed_payments(request):
+    leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
+    lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
+    raw = t_dict.objects.all().order_by('name')
+    # instance = get_object_or_404(t_acct, id=id)
+
+    Seedform = PaymentForm(request.POST or None, request.FILES or None)
+    if Seedform.is_valid():
+        f = Seedform.save(commit=False)
+        f.save()
+        messages.success(request, "Saved")
+        return HttpResponseRedirect('/finance/all-seeds/')
+
+    context = {
+        "leftlinks" : leftlinks,
+        "lftlinks" : lftlinks,
+        "form" : Seedform,
+        "raw" : raw,
+
+
+    }
+    template = "seed_payment.html"
+    return render(request, template, context)    
+
+def all_seeds(request):
+    row = t_payment.objects.all().order_by('-id')
+
+    paginator = Paginator(row, 15)  # Show 25 contacts per page
+    page_request_var = "page"
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        queryset = paginator.page(paginator.num_pages)
+
+    context = {
+        "row": queryset,
+        "page_request_var": page_request_var,
+
+    }
+    template = "all_seeds.html"
+
+    return render(request, template, context)
+
+def seed_receipt(request, id):
+    instance = get_object_or_404(t_payment, id=id)
+
+    context = {
+        "purpose" : instance.purpose,
+        "currency" : instance.currency,
+        "amount" : instance.amount,
+        "commitment" : instance.commitment,
+        "ref" : instance.ref,
+        "timestamp" : instance.timestamp,
+    }
+    template = "seed_receipt.html"
+    return render(request, template, context)
 
 def filter_trans(request):
 

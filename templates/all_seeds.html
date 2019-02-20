@@ -1,0 +1,58 @@
+{% extends "base_login.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block container %}
+ <style type="text/css">
+   body {
+    padding-top: 5px !important
+   }
+ </style>
+ <center>
+    <a href="{% url 'seed-payment' %}" class="btn btn-info">Make Payments</a>
+  </center><br />
+    <table width="100%" class="table table-striped table-hover" style="font-size: 12px">
+      <tr class="header">
+        <th>Purpose</th>
+        <th>Amount</th>
+        <th>Payment Type</th>
+        <th>Time Stamp</th>
+      </tr>
+      <tbody>
+        {% for rw in row %}
+          {% if rw.rootid == 1000000 %}
+          <tr>
+            <td><a href="{% url 'seed' rw.id %}">{{rw.purpose}}</a></td>
+            <td>{{rw.currency}} {{rw.amount}}</td>
+            <td>{{rw.commitment}}</td>
+            <td>{{rw.timestamp}}</td>
+          </tr>
+          {% endif %}
+        {% endfor %}  
+        </tbody>
+      </table>
+<div class="col-md-12" style="padding-top: 5px;">
+        <nav>
+            <ul class="pagination">
+              <li>{% if row.has_previous %}
+                <a href="?{{page_request_var}}={{ row.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+                 {% endif %}
+              </li>
+
+              <li><a href="#">{{ row.number }} of {{ row.paginator.num_pages }}</a></li>
+
+              <li>{% if row.has_next %}
+                <a href="?{{page_request_var}}={{ row.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+        </nav>
+      </div>
+	
+  </div>
+
+{% endblock %}

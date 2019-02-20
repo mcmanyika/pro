@@ -17,6 +17,10 @@ urlpatterns = [
     url(r'^filter-by-incomehead/', filter_income_head, name='filter-by-incomehead'),
     url(r'^transaction/(?P<id>.*)$', transaction, name='transaction'),
 
+    url(r'^seed-payment/', seed_payments, name='seed-payment'),
+    url(r'^all-seeds/', all_seeds, name='all-seeds'),
+    url(r'^seed/(?P<id>.*)$', seed_receipt, name='seed'),
+
     
     
 ]

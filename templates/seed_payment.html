@@ -6,45 +6,30 @@
   
       <div class="col-md-12" style="text-transform: uppercase !important;">
         <div class="col-md-12">
-        <h5><button class="btn btn-md btn-success" style="text-transform: uppercase !important;">Payments</button>
+        <h5><a href="{% url 'all-seeds' %}" class="btn btn-md btn-success" style="text-transform: uppercase !important;">All Payments</a>
             </h5>
       </div>
     </div>
       
       <div class="col-md-12" style="padding-top: 10px;">  
        <form  method="post" name="Seedform" id="Seedform"  action="" enctype="multipart/form-data">{% csrf_token %}
-           <div class="col-md-12">
-            <!-- <p><select  id= "1" class="form-control">
-               <option selected = "selected" >CHOOSE PAYMENT TYPE</option>
-               <option value="1">Offering</option>
-               <option value="2">Tithe</option>
-               <option value="3">Partnership</option>
-               <option value="4">Departmental</option>
-               </select>
-               </p>
-                    
-              <p>
-                <select  id="2" name="purpose"  class="form-control">
-                  <option selected = "selected" ></option>
+          <div class="col-md-12">
+            <p>
+              <select id="1" onchange="update()" class="form-control">
+                <option value="0" selected="selected">CHOOSE PAYMENT TYPE</option>
+                <option value="1">Offering</option>
+                <option value="2">Departmental</option>
+                <option value="3">Partnership</option>
+                <option value="4">Tithe</option>
+              </select>
+            </p>
+
+            <p>
+                <select id="2" name="purpose" class="form-control">
+                    <option value="0" selected="selected"></option>
                 </select>
-                <p> -->
-
-                  <p>
-     <select id="1" onchange="update()" class="form-control">
-        <option value="0" selected="selected">CHOOSE PAYMENT TYPE</option>
-        <option value="1">Offering</option>
-        <option value="2">Departmental</option>
-        <option value="3">Partnership</option>
-        <option value="4">Tithe</option>
-    </select>
-</p>
-
-<p>
-    <select id="2" name="purpose" class="form-control">
-        <option value="0" selected="selected"></option>
-    </select>
-</p>
-              </div>
+            </p>
+          </div>
 
               <div class="padAll">
                 <input type="hidden" class="form-control" name="rootid" value="{{m_id}}">

@@ -712,29 +712,7 @@ def member_payments(request, id):
     return render(request, template, context)
 
 
-def seed_payments(request):
-    leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
-    lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
-    raw = t_dict.objects.all().order_by('name')
-    # instance = get_object_or_404(t_acct, id=id)
 
-    Seedform = PaymentForm(request.POST or None, request.FILES or None)
-    if Seedform.is_valid():
-        f = Seedform.save(commit=False)
-        f.save()
-        messages.success(request, "Saved")
-        # return HttpResponseRedirect('/finance/receipt')
-
-    context = {
-        "leftlinks" : leftlinks,
-        "lftlinks" : lftlinks,
-        "form" : Seedform,
-        "raw" : raw,
-
-
-    }
-    template = "seed_payment.html"
-    return render(request, template, context)    
 
 
 def upload_sermon(request):

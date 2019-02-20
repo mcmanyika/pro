@@ -50,7 +50,7 @@ urlpatterns = [
     url(r'^ajax-search/', ajax_search, name='ajax-search'),
     url(r'^save-child/$', children,name='save-child'),
 
-    url(r'^seed-payment/', seed_payments, name='seed-payment'),
+    
 
     url(r'^', include('joins.urls')),
     url(r'^login/', include('joins.urls')),
