@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+from django.shortcuts import render, get_object_or_404,  redirect
 from django.db import connection
 from django.contrib import auth
 from django.shortcuts import render, HttpResponseRedirect, Http404
@@ -17,6 +17,7 @@ from sale.forms import *
 
 # Create your views here.
 
+
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
@@ -26,9 +27,9 @@ def dictfetchall(cursor):
     ]
 
 
-
 def stocks(request):
-    leftlinks = t_dictionary.objects.filter(category='leftlinks').order_by('id')
+    leftlinks = t_dictionary.objects.filter(
+        category='leftlinks').order_by('id')
     lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
 
     row = t_product.objects.all().order_by('-id')
@@ -38,13 +39,12 @@ def stocks(request):
         f = form.save(commit=False)
         f.save()
         messages.success(request, "Saved")
-       
-    
+
     context = {
-        "leftlinks" : leftlinks,
-        "lftlinks" : lftlinks,
-        "form" : form,
+        "leftlinks": leftlinks,
+        "lftlinks": lftlinks,
+        "form": form,
         "rows": row,
-        }
+    }
     template = "stocks.html"
     return render(request, template, context)

@@ -5,7 +5,7 @@ from django.db import connection
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+from django.shortcuts import render, get_object_or_404,  redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect, Http404
@@ -27,6 +27,7 @@ from django.utils.translation import ugettext as _
 
 # Create your views here.
 
+
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
@@ -34,6 +35,7 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
+
 
 def register_view(request):
 
@@ -48,10 +50,10 @@ def register_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                user_p = get_object_or_404(UserProfile, rootid=request.user.id) 
-                if user_p.department == 'Media' :
+                user_p = get_object_or_404(UserProfile, rootid=request.user.id)
+                if user_p.department == 'Media':
                     return HttpResponseRedirect('/allmembers/')
-                
+
                 else:
                     return HttpResponseRedirect('/allmembers/')
             else:
@@ -62,20 +64,19 @@ def register_view(request):
         if form.is_valid():
             passchange_user = user.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _('Your password was successfully updated!'))
+            messages.success(request, _(
+                'Your password was successfully updated!'))
             return redirect('change_password')
         else:
             messages.error(request, _('Please correct the error below.'))
     else:
-        passchange = PasswordChangeForm(request.user)            
-
-      
+        passchange = PasswordChangeForm(request.user)
 
     context = {
-        "form" : form,
-        "form2" : form2,
-        "passchange" : passchange,
-        
+        "form": form,
+        "form2": form2,
+        "passchange": passchange,
+
 
     }
     return render(request, "login.html", context)
@@ -95,8 +96,9 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+
 def user_img(request):
- 
+
     img_form = AvatarForm(request.POST or None, request.FILES or None)
     if img_form.is_valid():
         f = img_form.save(commit=False)
@@ -105,14 +107,16 @@ def user_img(request):
         return redirect('signup-confirmation')
 
     context = {
-        "img_form" : img_form,
-    }    
+        "img_form": img_form,
+    }
     template = 'user_img.html'
     return render(request, template, context)
 
+
 def signup_confirmation(request):
-    
+
     return render(request, 'signup_confirmation.html')
+
 
 def change_password(request):
     if request.method == 'POST':
@@ -120,7 +124,8 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _('Your password was successfully updated!'))
+            messages.success(request, _(
+                'Your password was successfully updated!'))
             return redirect('change_password')
         else:
             messages.error(request, _('Please correct the error below.'))
@@ -128,12 +133,9 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {
         'form': form
-}) 
+    })
+
 
 def Logout(request):
     logout(request)
     return redirect("/login/")
-
-
-
-

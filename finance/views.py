@@ -14,7 +14,7 @@ from django.http import StreamingHttpResponse
 from django.db import connection
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+from django.shortcuts import render, get_object_or_404,  redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect, Http404
@@ -37,6 +37,7 @@ from .resources import DailyTransactions
 from siteInfo.models import t_dictionary
 # Create your views here.
 
+
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
@@ -55,11 +56,11 @@ def ajax_incomehead(request):
             instance.user = request.user
             instance.save()
             data = {
-            'message':'form is saved'
+                'message': 'form is saved'
             }
             return JsonResponse(data)
     context = {
-    'form':form,
+        'form': form,
     }
     template = "add_incomehead.html"
     return render(request, template, context)
@@ -74,14 +75,15 @@ def ajax_currency(request):
             instance.user = request.user
             instance.save()
             data = {
-            'message':'form is saved'
+                'message': 'form is saved'
             }
             return JsonResponse(data)
     context = {
-    'form':form,
+        'form': form,
     }
     template = "add_currency.html"
     return render(request, template, context)
+
 
 def ajax_commitment(request):
     form = IncomeHeadForm()
@@ -92,11 +94,11 @@ def ajax_commitment(request):
             instance.user = request.user
             instance.save()
             data = {
-            'message':'form is saved'
+                'message': 'form is saved'
             }
             return JsonResponse(data)
     context = {
-    'form':form,
+        'form': form,
     }
     template = "add_commitment.html"
     return render(request, template, context)
@@ -108,9 +110,9 @@ def ajax_group(request):
         f = form.save(commit=False)
         f.save()
         messages.success(request, "Saved")
-        
+
     context = {
-    'form':form,
+        'form': form,
     }
     template = "add_group.html"
     return render(request, template, context)
@@ -124,32 +126,33 @@ def transaction(request, id):
     rw = t_dict.objects.all().order_by('name')
     instance = get_object_or_404(t_acct, id=id)
     rendered = 0
-    total = 0 
+    total = 0
     Payform = PaymentForm(request.POST or None, request.FILES or None)
     if Payform.is_valid():
         f = Payform.save(commit=False)
         f.save()
         messages.success(request, "Saved")
         return HttpResponseRedirect('/finance/receipt/%s' % instance.id)
-    
+
     context = {
-        "Payform" : Payform,
-        "d" : d,
-        "rw" :rw,
-        "m_id" : instance.id,
-        "fname" : instance.fname,
-        "lname" : instance.lname,
-        "image" : instance.image,
-        "gender" : instance.gender,
-        "rendered" : rendered,
-        "total" : total,
-        "weekly" : weekly,
-        "monthly" : monthly,
-        "onceoff" : onceoff,
+        "Payform": Payform,
+        "d": d,
+        "rw": rw,
+        "m_id": instance.id,
+        "fname": instance.fname,
+        "lname": instance.lname,
+        "image": instance.image,
+        "gender": instance.gender,
+        "rendered": rendered,
+        "total": total,
+        "weekly": weekly,
+        "monthly": monthly,
+        "onceoff": onceoff,
 
     }
     template = "upload_transaction.html"
     return render(request, template, context)
+
 
 def all_receipts(request, id):
     t = t_payment.objects.raw("""SELECT p.id,
@@ -160,13 +163,13 @@ def all_receipts(request, id):
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             WHERE p.rootid = %s  
                             order by p.id desc""", [id])
-    
-    
+
     context = {
-        "rc" : t,
-    }        
+        "rc": t,
+    }
     template = "all_receipts.html"
     return render(request, template, context)
+
 
 def receipt(request, id):
 
@@ -178,8 +181,7 @@ def receipt(request, id):
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             WHERE p.rootid = %s  
                             order by p.id desc limit 1""", [id])
-    
-    
+
     all_rec = t_payment.objects.raw("""SELECT p.id,
                             a.fname as fname, 
                             a.lname as lname, p.currency as currency, 
@@ -190,12 +192,13 @@ def receipt(request, id):
                             order by p.id desc""", [id])
 
     context = {
-        "rc" : t,
-        "all_rec" : all_rec,
-        "client_id" : id,
-    }        
+        "rc": t,
+        "all_rec": all_rec,
+        "client_id": id,
+    }
     template = "receipt.html"
     return render(request, template, context)
+
 
 def single_rec(request, id):
     single_rec = t_payment.objects.raw("""SELECT p.id, a.id as acct_id,
@@ -208,13 +211,14 @@ def single_rec(request, id):
                             order by p.id desc""", [id])
     for rw in single_rec:
         rw.acct_id
-    
+
     context = {
-        "single_rec" : single_rec,
-        "acct_id" : rw.acct_id,
-    }        
+        "single_rec": single_rec,
+        "acct_id": rw.acct_id,
+    }
     template = "entry_receipt.html"
-    return render(request, template, context)  
+    return render(request, template, context)
+
 
 def seed_payments(request):
     leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
@@ -230,15 +234,16 @@ def seed_payments(request):
         return HttpResponseRedirect('/finance/all-seeds/')
 
     context = {
-        "leftlinks" : leftlinks,
-        "lftlinks" : lftlinks,
-        "form" : Seedform,
-        "raw" : raw,
+        "leftlinks": leftlinks,
+        "lftlinks": lftlinks,
+        "form": Seedform,
+        "raw": raw,
 
 
     }
     template = "seed_payment.html"
-    return render(request, template, context)    
+    return render(request, template, context)
+
 
 def all_seeds(request):
     row = t_payment.objects.all().order_by('-id')
@@ -264,31 +269,32 @@ def all_seeds(request):
 
     return render(request, template, context)
 
+
 def seed_receipt(request, id):
     instance = get_object_or_404(t_payment, id=id)
 
     context = {
-        "purpose" : instance.purpose,
-        "currency" : instance.currency,
-        "amount" : instance.amount,
-        "commitment" : instance.commitment,
-        "ref" : instance.ref,
-        "timestamp" : instance.timestamp,
+        "purpose": instance.purpose,
+        "currency": instance.currency,
+        "amount": instance.amount,
+        "commitment": instance.commitment,
+        "ref": instance.ref,
+        "timestamp": instance.timestamp,
     }
     template = "seed_receipt.html"
     return render(request, template, context)
+
 
 def filter_trans(request):
 
     try:
         fdate = request.POST['period_from']
         tdate = request.POST['period_to']
-        
+
     except:
 
         fdate = datetime.now().date()
         tdate = datetime.now().date()
-    
 
     t = connection.cursor()
     t.cursor.execute("""Select 
@@ -301,20 +307,19 @@ def filter_trans(request):
                     FROM libs_t_payment p
                      WHERE p.timestamp BETWEEN %s AND %s
                     GROUP BY p.purpose
-                    """,[fdate, tdate])
+                    """, [fdate, tdate])
 
-    t = dictfetchall(t) 
+    t = dictfetchall(t)
 
     def export_data(request):
         trans_resource = t()
         dataset = trans_resource.export()
         response = HttpResponse(dataset.csv, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
-        return response 
-    
+        return response
 
     context = {
-        "transactions" : t,
+        "transactions": t,
 
     }
     return render(request, "filter_transactions.html", context)
@@ -326,11 +331,11 @@ def export_data(request):
     dataset = trans_resource.export()
     response = HttpResponse(dataset.csv, content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
-    return response   
+    return response
 
 
 def filter_income_head(self):
-    
+
     if self.method == "POST":
         fdate = request.POST['period_from']
         tdate = request.POST['period_to']
@@ -343,30 +348,26 @@ def filter_income_head(self):
                             Group By p.currency, purpose, commitment
                             """)
 
-    ihead = dictfetchall(s) 
-
-    
+    ihead = dictfetchall(s)
 
     context = {
-        "ihead" : ihead,
+        "ihead": ihead,
 
     }
     return render(self, "filter_by_income_head.html", context)
 
 
-
-
-class Echo:    
+class Echo:
     """An object that implements just the write method of the file-like
     interface.
     """
+
     def write(self, value):
         """Write the value by returning it, instead of storing in a buffer."""
         return value
 
-def csv_view(request):
 
-    
+def csv_view(request):
 
     t = connection.cursor()
     t.cursor.execute("""Select
@@ -378,7 +379,7 @@ def csv_view(request):
                             ORDER BY -p.id 
                             """)
 
-    t = dictfetchall(t) 
+    t = dictfetchall(t)
 
     """A view that streams a large CSV file."""
     # Generate a sequence of rows. The range is based on the maximum number of
@@ -394,21 +395,22 @@ def csv_view(request):
 
     return response
 
-    
-
-
 
 def get_one_row(sql='', prms=tuple()):
     found = tuple()
-    if not sql: return found
+    if not sql:
+        return found
 
     try:
         csr = connection.cursor()
 
-        if prms: csr.execute(sql, prms)
-        else: csr.execute(sql)
+        if prms:
+            csr.execute(sql, prms)
+        else:
+            csr.execute(sql)
 
         found = csr.fetchone()
-    except: found = tuple()
+    except:
+        found = tuple()
 
     return found
