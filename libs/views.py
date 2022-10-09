@@ -152,7 +152,7 @@ def members(request, department):
     leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
     lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
     a = t_user_attribute.objects.filter(department=department)
-    row = t_acct.objects.filter(department=department).order_by('division')
+    row = t_acct.objects.filter(department=department).order_by('-id')
     headings = t_dictionary.objects.all().order_by('id')
     user_p = get_object_or_404(UserProfile, rootid=request.user.id)
 

@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^password/$', change_password, name='change_password'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^signup-confirmation/$', signup_confirmation, name='signup-confirmation'),
-    url(r'^user-img/$', user_img, name='user-img'),	
+    url(r'^user-img/$', user_img, name='user-img'),
 
 ]
