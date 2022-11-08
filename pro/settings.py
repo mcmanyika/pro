@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'm5-b!sm9i*(4@20b1*ly#peo$ex+8+)2dy^pp*@7@-qmejtpl0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = ['127.0.0.1', '178.128.157.144',
                      'profaith.co', 'www.profaith.co']
@@ -105,6 +105,10 @@ else:
 
     DATABASES = {
         'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        },
+        'backup': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'bigboy',
             'USER': 'db_admin',
