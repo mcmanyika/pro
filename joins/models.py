@@ -66,7 +66,7 @@ class t_acct(models.Model):
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20, null=True, blank=True)
     gender = models.CharField(max_length=10, choices=g, null=True, blank=True)
-    dob = models.DateField(default='2019-01-01', null=True, blank=True)
+    dob = models.DateField(default='2022-01-01', null=True, blank=True)
     marital_status = models.CharField(default='', max_length=20)
     image = models.FileField(upload_to=upload_location, null=True, blank=True)
     phone = models.CharField(max_length=25, default='', null=True, blank=True)

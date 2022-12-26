@@ -17,6 +17,20 @@ class SermonForm(forms.ModelForm):
                   'notes',
                   'user',
                   ]
+
+class SongForm(forms.ModelForm):
+    class Meta:
+        model = t_song
+        fields = ['SongTitle',
+                  'Genre',
+                  'date',
+                  'Artist',
+                  'audio',
+                  'video',
+                  'notes',
+                  'user',
+                  ]
+                  
 class FilterAcctForm(forms.ModelForm):
     class Meta:
         model = t_acct

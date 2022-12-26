@@ -7,7 +7,7 @@ import datetime
 import calendar
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-# from utils import EventCalendar
+from events.utils import EventCalendar
 
 # Register your models here.
 

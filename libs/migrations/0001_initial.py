@@ -46,6 +46,23 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='t_song',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('SongTitle', models.CharField(blank=True, default='', max_length=50, null=True)),
+                ('Genre', models.CharField(blank=True, default='', max_length=50, null=True)),
+                ('Date', models.CharField(default='25/12/2022', max_length=50)),
+                ('Artist', models.CharField(default='Apostle T Vutabwashe', max_length=50)),
+                ('audio', models.FileField(blank=True, null=True, upload_to=libs.models.upload_location)),
+                ('video', models.FileField(blank=True, null=True, upload_to=libs.models.upload_location)),
+                ('notes', models.TextField()),
+                ('date', models.DateField(blank=True, null=True)),
+                ('user', models.IntegerField(default=1)),
+                ('timestamp', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='t_stationary',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),

@@ -26,6 +26,22 @@ class t_sermon(models.Model):
     def __unicode__(self):
         return self.title
 
+class t_song(models.Model):
+    SongTitle = models.CharField(max_length=50, default='', null=True, blank=True)
+    Genre = models.CharField(max_length=50, default='', null=True, blank=True)
+    Date = models.CharField(max_length=50, default='25/12/2022')
+    Artist = models.CharField(max_length=50, default='')
+    audio = models.FileField(upload_to=upload_location, null=True, blank=True)
+    video = models.FileField(upload_to=upload_location, null=True, blank=True)
+    notes = models.TextField()
+    date = models.DateField(null=True, blank=True)
+    user = models.IntegerField(default=1)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self):
+        return self.SongTitle
+
 class t_payment(models.Model):
     rootid = models.IntegerField()
     pledgeid = models.IntegerField(default='0')

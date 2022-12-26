@@ -29,3 +29,9 @@ class AttendanceModelAdmin(admin.ModelAdmin):
 	class Meta:
 		model = t_attendance
 admin.site.register(t_attendance, AttendanceModelAdmin)
+
+class SongModelAdmin(admin.ModelAdmin):
+	list_display = ['SongTitle', 'date']
+	class Meta:
+		model = t_song
+admin.site.register(t_song, SongModelAdmin)

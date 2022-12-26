@@ -147,6 +147,88 @@ def edit_sermon(request, id):
     template = "edit_sermon.html"
     return render(request, template, context)
 
+def hymnal(request):
+    leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
+    lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
+    a = t_user_attribute.objects.all()
+
+    row = t_song.objects.all().order_by('-id')
+
+    paginator = Paginator(row, 13)  # Show 25 contacts per page
+    page_request_var = "page"
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        queryset = paginator.page(paginator.num_pages)
+
+    context = {
+        "leftlinks": leftlinks,
+        "lftlinks": lftlinks,
+        "a": a,
+        "row": queryset,
+        "page_request_var": page_request_var,
+    }
+    template = "hymnals.html"
+    return render(request, template, context)
+
+
+def hymnal(request, id):
+    leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
+    instance = get_object_or_404(t_song, id=id)
+
+    form = SongForm(request.POST or None,
+                      request.FILES or None, instance=instance)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        messages.success(request, "Saved")
+        return HttpResponseRedirect('/confirmation/')
+
+    context = {
+        "leftlinks": leftlinks,
+        "SongTitle": instance.SongTitle,
+        "Genre": instance.Genre,
+        "Date": instance.Date,
+        "Artist": instance.Artist,
+        "notes": instance.notes,
+
+    }
+    template = "hymnal.html"
+    return render(request, template, context)
+
+
+def edit_hymnal(request, id):
+    leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
+    instance = get_object_or_404(t_song, id=id)
+    d = t_dictionary.objects.all()
+
+    form = SongForm(request.POST or None,
+                      request.FILES or None, instance=instance)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        messages.success(request, "Saved")
+        return HttpResponseRedirect('/confirmation/')
+
+    context = {
+        "leftlinks": leftlinks,
+        "form": form,
+        "SongTitle": instance.SongTitle,
+        "Genre": instance.Genre,
+        "Date": instance.Date,
+        "Artist": instance.Artist,
+        "notes": instance.notes,
+        "d": d,
+
+    }
+    template = "edit_hymnal.html"
+    return render(request, template, context)
+
 
 def members(request, department):
     leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
