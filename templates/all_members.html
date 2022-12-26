@@ -249,9 +249,9 @@
                   <img src="{% if user_avatar %}{% static '/img/' %}{{user_avatar}}{% else %} {% static 'img/avatar1.png' %}{% endif %}" class="img-circle" style="height: 150px; width: 170px"><br />
                   {% if request.user.is_authenticated %}{{ request.user.username }}{% endif %}
                   {% if user.is_authenticated %}
-                      <p>Welcome, {{ user.username }}. Thank you for logging in.</p>
+                    <p>Welcome, {{ user.username }}. Thank you for logging in.</p>
                   {% else %}
-                      <p>Welcome, new user. Please log in</p>
+                    <p>Welcome, new user. Please log in</p>
                   {% endif %}
                 </div>  
                 <div class="col-md-10  col-sm-offset-1" style="padding-top: 40px">
