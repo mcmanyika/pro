@@ -147,7 +147,7 @@ def edit_sermon(request, id):
     template = "edit_sermon.html"
     return render(request, template, context)
 
-def hymnal(request):
+def hymnals(request):
     leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
     lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
     a = t_user_attribute.objects.all()
@@ -810,6 +810,23 @@ def upload_sermon(request):
     template = "upload_sermon.html"
     return render(request, template, context)
 
+def upload_hymnal(request):
+    dictionary = t_dictionary.objects.all()
+
+    form = SongForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        messages.success(request, "Saved")
+        return HttpResponseRedirect('/hymnals/')
+
+    context = {
+        "form": form,
+        "d": dictionary,
+
+    }
+    template = "upload_hymnal.html"
+    return render(request, template, context)
 
 def add_member(request):
     cate = t_dict.objects.all().order_by('id')
