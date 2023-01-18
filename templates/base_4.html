@@ -7,249 +7,22 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" href="{% static 'css/jquery.mobile-1.4.5.min.css' %}"> -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="{% static 'b3/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/dump.css' %}" rel="stylesheet">
   <script src="{% static 'b3/js/jquery.min.js'%}"></script>
   <script src="{% static 'js/angular.min.js'%}"></script>
   <script src="{% static 'b3/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/plugin.js' %}"></script>
 
   <!-- Highcharts -->
-  <script src="{% static 'highcharts/code/highcharts.js' %}"></script>
-
+<script src="{% static 'highcharts/code/highcharts.js' %}"></script>
 <script src="{% static 'highcharts/code/modules/exporting.js' %}"></script>
 <script src="{% static 'highcharts/code/modules/export-data.js' %}"></script>
 
 <style>
-
-body {
-  font-size: 12px !important;
-}
-.jumbotron {
-
-    padding: 10px !important;
-
-}
-
-
-ul {
-  list-style-type: none !important;
-}
-
-.bar {
-    background-color : #555;
-    padding : 15px;
-    color: #fff;
-}
-
-.head {
-    color : #fff;
-    font-size : 30px;
-}
-    .lftBk {
-        background-color : #ddd;
-        min-height : 700px;
-        padding: 0 20px 0 20px
-    }
-    .btmPd {
-    padding : 5px 0 10px 0;
-    }
-    .pad {
-    padding : 8px;
-    }
-    .padAll {
-    padding : 10px;
-    }
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color:  #ccc;
-    color: #fff;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    font-size: 18px;
-}
-
-.leftsidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color:  #343a40e8;
-    color: #fff;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    font-size: 18px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 18px;
-    color: #fff;
-    display: block;
-    transition: 0.3s;
-}
-.sidebar a {
-  color: #fff !important;
-}
-.sidebar a:hover {
-  color: #000 !important;
-  text-decoration: none;
-}
-
-.sidenav a:hover {
-    color: #333;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 40px;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-.leftsidenav .leftclosebtn {
-    position: absolute;
-    top: 40px;
-    left: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-.fixed-bottom {
-    padding: 20px !important;
-}
-
-
-/*******************************
-* MODAL AS LEFT/RIGHT SIDEBAR
-* Add "left" or "right" in modal parent div, after class="modal".
-* Get free snippets on bootpen.com
-*******************************/
-  .modal.left .modal-dialog,
-  .modal.right .modal-dialog {
-    position: fixed;
-    margin: auto;
-    width: 650px;
-    height: 93%;
-    -webkit-transform: translate3d(0%, 0, 0);
-        -ms-transform: translate3d(0%, 0, 0);
-         -o-transform: translate3d(0%, 0, 0);
-            transform: translate3d(0%, 0, 0);
-  }
-    .modal.right2 .modal-dialog {
-    position: fixed;
-    margin: auto;
-    width: 83%;;
-    -webkit-transform: translate3d(0%, 0, 0);
-        -ms-transform: translate3d(0%, 0, 0);
-         -o-transform: translate3d(0%, 0, 0);
-            transform: translate3d(0%, 0, 0);
-  }
-
-  .modal.left .modal-content,
-  .modal.right .modal-content {
-    height: 100%;
-    overflow-y: auto;
-  }
   
-  .modal.left .modal-body,
-  .modal.right2 .modal-body,
-  .modal.right .modal-body {
-    padding: 15px 15px 80px;
-  }
-
-/*Left*/
-  .modal.left.fade .modal-dialog{
-    left: -320px;
-    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
-       -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
-         -o-transition: opacity 0.3s linear, left 0.3s ease-out;
-            transition: opacity 0.3s linear, left 0.3s ease-out;
-  }
-  
-  .modal.left.fade.in .modal-dialog{
-    left: 0;
-  }
-        
-/*Right*/
-  .modal.right2.fade .modal-dialog,
-  .modal.right.fade .modal-dialog {
-    right: -500px;
-    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
-       -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
-         -o-transition: opacity 0.3s linear, right 0.3s ease-out;
-            transition: opacity 0.3s linear, right 0.3s ease-out;
-  }
-  .modal.right2.fade.in .modal-dialog,
-  .modal.right.fade.in .modal-dialog {
-    right: 0;
-  }
-
-/* ----- MODAL STYLE ----- */
-  .modal-content {
-    border-radius: 0;
-    border: none;
-  }
-
-  .modal-header {
-    border-bottom-color: #EEEEEE;
-    background-color: #FAFAFA;
-  }
-
-/* ----- v CAN BE DELETED v ----- */
-
-
-.demo {
-  padding-top: 60px;
-  padding-bottom: 110px;
-}
-
-.btn-demo {
-  margin: 15px;
-  padding: 10px 15px;
-  border-radius: 0;
-  font-size: 16px;
-  background-color: #FFFFFF;
-}
-
-.btn-demo:focus {
-  outline: 0;
-}
-
-.demo-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 15px;
-  background-color: #212121;
-  text-align: center;
-}
-
-.demo-footer > a {
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  color: #fff;
-}
-
 </style>
   </head>
 <body>
@@ -266,16 +39,20 @@ ul {
   </div>
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="col-md-3">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="true" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-     <a style="cursor:pointer; color: #fff" onmouseover="openleftSide()">[ Menu ] </a>
 
   </div>
   <div class="col-md-6"><center><h3 style="color: #fff">
-    <a href="{% url 'home' %}" style="color: #fff;">Heartfelt International Ministries</a></h3></center></div>
+    <a href="{% url 'home' %}" style="color: #fff;">
+    {% for rw in headings %}
+    {% if rw.category == 'title' %}
+      {{rw.name}}
+      {% endif %}
+    {% endfor %}</a></h3>
+  </center></div>
     <div class="col-md-3 pad">
-        
          <form method="GET" role="search">
                 <div class="input-group">
                     <input type="search" class="form-control" id="myInput" onkeyup="tableSearch()" name="q" placeholder="Search Member"  value="{{ request.GET.q }}" id="search-input">
@@ -289,46 +66,45 @@ ul {
   </nav>
 </div>
   <div class="col-md-12" style="; background-color: #343a40e8;">
-    <div class="col-sm-2" style="padding-top:50px; min-height: 600px">
-      <div class="sidebar" style="font-size: 13px;">
-        <ul class="newnav nav nav-sidebar">
-          {% for rw in hlinks %}
-               <li class="">
-                <a href="{{rw.link}}">
-                <span class="{{rw.icon }}"></span> {{rw.Hname }} </a>
-              </li>
-              {% if rw.Subrootid %}
-              <li id="behaviour_sb">
-                <a data-toggle="collapse" data-parent="#announcement_sb" href="#announcement_sb_c" class="collapsed " >
-                <span class="glyphicon glyphicon-bullhorn sidebar-icon sidebar-icon-brown"></span> {{rw.Sname}}                   
-                <span class="plus-sidebar">
-                  <span class="glyphicon glyphicon-menu-right"></span>
-                </span>
-              </a>
-            <div id="announcement_sb_c" class="panel-collapse collapse sidebar-links-inner ">
-              <ul class="inner-sidebar-links">
-                <li class="pad"><a href=""> Announcements</a></li>
-              </ul>
-          </div>
-        </li>
-        {% endif %}
-        {% endfor %}  
-         {% for r in a %}
-        {% if r.root == user %}
-        <li class="">
-                <a href="#calendar" data-toggle="modal">
-                <span class="glyphicon glyphicon-calendar"></span> Calendar </a>
-              </li> 
-              <li class="">
-                <a href="#groups" data-toggle="modal">
-                <span class="fa fa-users fa-lg"></span> Small Groups </a>
-              </li>  
-              {% endif %}
-      {% endfor %}                                                                                                
-      </ul>    
+    <div style="float:left; width:150px; padding-top:50px; min-height: 700px">
+      <nav class="navbar navbar-inverse sidebar" role="navigation">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
-  </div>      
-  <div class="col-sm-10 pad" style="; background-color: #fff; min-height: 600px">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'home' %}">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+
+        {% for r in a %}
+        {% if r.root == user %}
+
+        <li><a href="{% url 'members' r.department %}">Small Groups<span style="font-size:16px;" class="pull-right hidden-xs showopacity fa fa-users fa-lg"></span></a></li>
+        {% endif %}
+              
+      {% endfor %}  
+      <li><a href="#calendar" data-toggle="modal">Calendar <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a></li>
+
+        <li ><a href="#settings" data-toggle="modal">Settings <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+        
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+     
+  </div>  <div class="main">
+<!-- Content Here -->
+ 
+  <div class="col-sm-12 pad" style="; background-color: #fff; min-height: 600px">
     <div class="col-md-12" style="padding-top: 25px;">
       <div class="jumbotron">
         <div class="row">
@@ -343,7 +119,7 @@ ul {
 
         {% endblock %}
   </div>
-
+</div>   
 
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
       <div class="col-12" style="font-size: 12px; padding: 15px; color: #fff; text-align: right">
@@ -385,17 +161,21 @@ ul {
     </div><!-- modal-dialog -->
   </div><!-- modal -->
 
-  <div class="modal right2 fade"  id="groups"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+<div class="modal right fade"  id="settings"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-body" style="padding: 0 ">
-          <iframe src="{% url 'members' r.department %}" frameborder="0" height="627" width="100%"></iframe>
+        <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        </div>
+        <div class="modal-body">
+          <iframe src="{% url 'site-title' %}" frameborder="0" height="600" width="100%"></iframe>
           </p>
         </div>
 
       </div><!-- modal-content -->
     </div><!-- modal-dialog -->
   </div><!-- modal -->
+  
 
 
 <div class="modal fade bd-upload-modal-lg" id="upload" role="dialog">
@@ -406,7 +186,7 @@ ul {
                       <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
                    </div>
                     <div class="modal-body" style="color:#000">
-                        <iframe src="{% url 'upload-sermon' %}" frameborder="0" height="630" width="100%"></iframe>
+                        <iframe src="{% url 'upload-hymnal' %}" frameborder="0" height="630" width="100%"></iframe>
                     </div>
 
               </div>
@@ -420,6 +200,9 @@ ul {
   <div class="modal right fade"  id="member{{rw.id}}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
         <div class="modal-body">
           <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
           </p>
@@ -438,6 +221,9 @@ ul {
         <div class="modal-dialog">
           <!-- Modal content-->
               <div class="modal-content">
+                <div class="modal-header bg-dark">
+                    <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                 </div>
                     <div class="modal-body" style="color:#000">
                         <iframe src="{% url 'single_rec' rw.id %}" frameborder="0" height="550" width="100%"></iframe>
                     </div>
@@ -448,17 +234,16 @@ ul {
 {% endfor %}
 
 {% for rw in row %}
-<div id="editSermon{{rw.id}}"  class="modal fade" role="dialog">
+<div id="editHymnal{{rw.id}}"  class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
           <!-- Modal content-->
               <div class="modal-content">
-
                     <div class="modal-header bg-dark">
                       <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
                    </div>
 
                     <div class="modal-body" style="color:#000; height: 670px">
-                        <iframe src="{% url 'edit-sermon' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
+                        <iframe src="{% url 'edit-hymnal' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
                     </div>
               </div>
          </div>
@@ -466,7 +251,7 @@ ul {
 {% endfor %}
 
 {% for rw in row %}
-<div id="viewSermon{{rw.id}}"  class="modal fade" role="dialog">
+<div id="viewHymnal{{rw.id}}"  class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
           <!-- Modal content-->
               <div class="modal-content">
@@ -477,7 +262,7 @@ ul {
 
                     <div class="modal-body" style="color:#000; height: 670px">
                             <div class="col-md-12">
-                                <iframe src="{% url 'sermon' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
+                                <iframe src="{% url 'hymnal' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
                             </div>
                     </div>
               </div>
@@ -507,29 +292,62 @@ ul {
 
 <div id="incomehead" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
+      <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+       </div>
       <div class="modal-body">
-            <iframe src="{% url 'add-incomehead' %}" frameborder="0" width="100%"></iframe>
-              </div>
-          </div>
+        <iframe src="{% url 'add-incomehead' %}" frameborder="0" width="100%"></iframe>
       </div>
+    </div>
+  </div>
+</div>
 
+<div id="addCommitment" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+       </div>
+      <div class="modal-body">
+        <iframe src="{% url 'add-commitment' %}" frameborder="0" width="100%"></iframe>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 
 <div class="modal fade bd-currency" id="currency" role="dialog">
-        <div class="modal-dialog">
-          <!-- Modal content-->
-              <div class="modal-content">
-                    <div class="modal-body" style="color:#000">
-                      <iframe src="{% url 'add-currency' %}" frameborder="0" width="100%"></iframe>
-                    </div>
-              </div>
-         </div>
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+      <div class="modal-body" style="color:#000">
+        <iframe src="{% url 'add-currency' %}" frameborder="0" width="100%"></iframe>
+      </div>
     </div>
+  </div>
+</div>
+
+<div class="modal right fade"  id="addGroup"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+     </div>
+        <div class="modal-body">
+          <iframe src="{% url 'add-group' %}" frameborder="0" height="600" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
     
 <script type="text/javascript">
     function openSide() {
@@ -550,7 +368,7 @@ ul {
 
 
 <script src="{% static 'bootstrap/js/jquery-slim.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <!-- <script src="{% static 'bootstrap/js/popper.min.js' %}"></script> -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
@@ -606,6 +424,32 @@ ul {
         }
       }
     }
+
+    function htmlbodyHeightUpdate(){
+    var height3 = $( window ).height()
+    var height1 = $('.nav').height()+50
+    height2 = $('.main').height()
+    if(height2 > height3){
+      $('html').height(Math.max(height1,height3,height2)+10);
+      $('body').height(Math.max(height1,height3,height2)+10);
+    }
+    else
+    {
+      $('html').height(Math.max(height1,height3,height2));
+      $('body').height(Math.max(height1,height3,height2));
+    }
+    
+  }
+  $(document).ready(function () {
+    htmlbodyHeightUpdate()
+    $( window ).resize(function() {
+      htmlbodyHeightUpdate()
+    });
+    $( window ).scroll(function() {
+      height2 = $('.main').height()
+        htmlbodyHeightUpdate()
+    });
+  });
     </script>
 </body>
 </html>
