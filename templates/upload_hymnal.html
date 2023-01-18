@@ -11,7 +11,7 @@
             <div class="col-6 padAll">
                 <select name="Genre" class="form-control form-control-sm">
                     {% for r in d %}
-                    {% if r.category == 'Gene' %}
+                    {% if r.category == 'Genre' %}
                     <option value="{{r.name}}">{{r.name}}</option>
                     {% endif %}
                     {% endfor %}
