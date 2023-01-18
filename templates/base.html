@@ -137,6 +137,21 @@
     </div><!-- modal-dialog -->
   </div><!-- modal -->
 
+  <div class="modal right fade"  id="upload"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        </div>
+        <div class="modal-body">
+          <iframe src="{% url 'hymnals' %}" frameborder="0" height="600" width="100%"></iframe>
+          </p>
+        </div>
+
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal -->
+
 
 
 
@@ -195,6 +210,23 @@
 {% endfor %}
 
 {% for rw in row %}
+<div id="editHymnal{{rw.id}}"  class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                   </div>
+
+                    <div class="modal-body" style="color:#000; height: 670px">
+                        <iframe src="{% url 'edit-hymnal' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
+                    </div>
+              </div>
+         </div>
+    </div>
+{% endfor %}
+
+{% for rw in row %}
 <div id="viewSermon{{rw.id}}"  class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
           <!-- Modal content-->
@@ -207,6 +239,26 @@
                     <div class="modal-body" style="color:#000; height: 670px">
                             <div class="col-md-12">
                                 <iframe src="{% url 'sermon' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
+                            </div>
+                    </div>
+              </div>
+         </div>
+    </div>
+{% endfor %}
+
+{% for rw in row %}
+<div id="viewHymnal{{rw.id}}"  class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+              <div class="modal-content">
+
+                    <div class="modal-header bg-dark">
+                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                   </div>
+
+                    <div class="modal-body" style="color:#000; height: 670px">
+                            <div class="col-md-12">
+                                <iframe src="{% url 'hymnal' rw.id %}" frameborder="0" height="650" width="100%"></iframe>
                             </div>
                     </div>
               </div>
