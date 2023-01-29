@@ -29,7 +29,6 @@ class t_sermon(models.Model):
 class t_song(models.Model):
     SongTitle = models.CharField(max_length=50, default='', null=True, blank=True)
     Genre = models.CharField(max_length=50, default='', null=True, blank=True)
-    #Date = models.CharField(max_length=50, default='25/12/2022')
     Artist = models.CharField(max_length=50, default='')
     audio = models.FileField(upload_to=upload_location, null=True, blank=True)
     video = models.FileField(upload_to=upload_location, null=True, blank=True)
