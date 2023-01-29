@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('SongTitle', models.CharField(blank=True, default='', max_length=50, null=True)),
                 ('Genre', models.CharField(blank=True, default='', max_length=50, null=True)),
-                ('Date', models.CharField(default='25/12/2022', max_length=50)),
+                #('Date', models.CharField(default='25/12/2022', max_length=50)),
                 ('Artist', models.CharField(default='Apostle T Vutabwashe', max_length=50)),
                 ('audio', models.FileField(blank=True, null=True, upload_to=libs.models.upload_location)),
                 ('video', models.FileField(blank=True, null=True, upload_to=libs.models.upload_location)),
