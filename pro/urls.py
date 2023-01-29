@@ -65,7 +65,7 @@ urlpatterns = [
     url(r'^siteInfo/', include('siteInfo.urls')),
     url(r'^site-title/', title, name='site-title'),
     url(r'^csv/', export_data, name='csv'),
-    # url(r'^attendance/', attendance, name='attendance'),
+    #url(r'^attendance/', attendance, name='attendance'),
 
     url(r'^add-group/', ajax_group, name='add-group'),
     path('shop/', include('shop.urls')),

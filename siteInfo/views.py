@@ -44,3 +44,4 @@ def title(request):
     }
     template = "site_settings.html"
     return render(request, template, context)
+

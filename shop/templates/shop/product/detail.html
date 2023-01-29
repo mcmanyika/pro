@@ -11,9 +11,9 @@
         <div class="col-sm-8 blog-main">
           <div class="blog-post">
               <div class="row">
-                        <!-- <div style="width:45%; float: left">
+                        <div style="width:45%; float: left">
                             <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 170px; width: auto">
-                        </div> -->
+                        </div>
                         <div style="width:45%; float: left">
                             <h3>{{ product.name }}</h3>
                             <h6><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h6>
