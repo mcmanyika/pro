@@ -30,6 +30,7 @@ class t_song(models.Model):
     SongTitle = models.CharField(max_length=50, default='', null=True, blank=True)
     Genre = models.CharField(max_length=50, default='', null=True, blank=True)
     Artist = models.CharField(max_length=50, default='')
+    Album = models.CharField(max_length=50, default='Downloading Spiritual Songs')
     audio = models.FileField(upload_to=upload_location, null=True, blank=True)
     video = models.FileField(upload_to=upload_location, null=True, blank=True)
     notes = models.TextField()

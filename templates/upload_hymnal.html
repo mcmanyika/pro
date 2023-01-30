@@ -18,9 +18,9 @@
                 </select>
             </div>
             <div class="col-6 padAll">
-                <select name="Date" class="form-control form-control-sm">
+                <select name="Album" class="form-control form-control-sm">
                     {% for r in d %}
-                    {% if r.category == 'Date' %}
+                    {% if r.category == 'Album' %}
                     <option value="{{r.name}}">{{r.name}}</option>
                     {% endif %}
                     {% endfor %}

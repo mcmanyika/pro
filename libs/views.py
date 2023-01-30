@@ -193,7 +193,7 @@ def hymnal(request, id):
         "leftlinks": leftlinks,
         "SongTitle": instance.SongTitle,
         "Genre": instance.Genre,
-        "Date": instance.Date,
+        "Album": instance.Album,
         "Artist": instance.Artist,
         "notes": instance.notes,
 
@@ -220,7 +220,7 @@ def edit_hymnal(request, id):
         "form": form,
         "SongTitle": instance.SongTitle,
         "Genre": instance.Genre,
-        "Date": instance.Date,
+        "Album": instance.Album,
         "Artist": instance.Artist,
         "notes": instance.notes,
         "d": d,

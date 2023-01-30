@@ -51,6 +51,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('SongTitle', models.CharField(blank=True, default='', max_length=50, null=True)),
                 ('Genre', models.CharField(blank=True, default='', max_length=50, null=True)),
+                ('Album', models.CharField(default='Downloading Spiritual Songs', max_length=50)),
                 ('Artist', models.CharField(default='Apostle T Vutabwashe', max_length=50)),
                 ('audio', models.FileField(blank=True, null=True, upload_to=libs.models.upload_location)),
                 ('video', models.FileField(blank=True, null=True, upload_to=libs.models.upload_location)),

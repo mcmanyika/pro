@@ -23,6 +23,7 @@ class SongForm(forms.ModelForm):
         model = t_song
         fields = ['SongTitle',
                   'Genre',
+                  'Album',
                   'Artist',
                   'audio',
                   'video',
