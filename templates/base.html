@@ -46,6 +46,12 @@
           <li><a href="#upload" data-toggle="modal"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-camera"></span>Media </a></li>
           {% else %}
           {% endif %}
+
+          {% if user_p.department == 'Media' or user.is_superuser  %}
+          <li><a href="#uploadHymns" data-toggle="modal"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-camera"></span>Media </a></li>
+          {% else %}
+          {% endif %}
+
           {% if user.is_superuser %} 
           <li><a href="#settings" data-toggle="modal">Settings <span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
           {% endif %}
