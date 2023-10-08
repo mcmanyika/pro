@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "m5-b!sm9i*(4@20b1*ly#peo$ex+8+)2dy^pp*@7@-qmejtpl0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 if DEBUG:
-    ALLOWED_HOSTS = ["127.0.0.1", "178.128.157.144", "profaith.co", "www.profaith.co"]
+    ALLOWED_HOSTS = ["127.0.0.1", "67.205.152.161", "profaith.co", "www.profaith.co"]
 else:
-    ALLOWED_HOSTS = ["178.128.157.144", "profaith.co", "www.profaith.co"]
+    ALLOWED_HOSTS = ["67.205.152.161", "profaith.co", "www.profaith.co"]
 
 
 # Application definition
@@ -102,13 +102,17 @@ if DEBUG:
 else:
     DATABASES = {
         "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db2.sqlite3"),
+        },
+        "main": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
             "NAME": "bigboy",
-            "USER": "db_admin",
+            "USER": "admin",
             "PASSWORD": "focus@1",
             "HOST": "localhost",
             "PORT": "",
-        }
+        },
     }
 
 
