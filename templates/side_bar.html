@@ -1,0 +1,27 @@
+<div id="sidebar-wrapper">
+    <ul id="sidebar_menu" class="sidebar-nav">
+    </ul>
+      <ul class="sidebar-nav" id="sidebar">
+        <li class="sidebar-brand"><a id="menu-toggle" href="#">MENU<span id="main_icon"<span style="font-size:20px; padding-right: 10px;"  class="glyphicon glyphicon-align-justify"></span></a></li>
+        
+        <li><a href="{% url 'home' %}"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>Dashboard </a></li>
+      {% if user_p %}
+        {% if user_p.access_level == 1 %}  
+        
+        {% else %}
+        <li><a href="{% url 'members' r.department %}"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>People </a></li>
+        {% endif %}
+      {% endif %}  
+        {% if user_p.department == 'Sales' or user.is_superuser  %}
+        <li><a href="{% url 'shop:product_list' %}"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-shop"></span>Merchandise </a></li>
+        {% endif %}
+
+        {% if user_p.department == 'Media' or user.is_superuser  %}
+        <li><a href="#upload" data-toggle="modal"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-camera"></span>Media </a></li>
+        {% else %}
+        {% endif %}
+        {% if user.is_superuser %} 
+        <li><a href="#settings" data-toggle="modal">Settings <span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+        {% endif %}
+      </ul>
+    </div>

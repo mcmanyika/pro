@@ -26,90 +26,39 @@
    }
  </style>
 {% if user_p %}
-        {% if user_p.access_level >= 2 %}
- <div class="padAll">
-  <div class="col-md-6">
-      <div class="col-md-12">
+  {% if user_p.access_level >= 2 %}
+    <div class="padAll">
+      <div class="col-md-6">
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <div class="counter">
+              <i class="fa fa-users fa-lg"></i>
+              <h2 class="count-title">{{totalCount}}</h2>
+              <p class="count-text ">Total Members</p>
+            </div>
+          </div>
+      <div class="col-md-4">
+        <div class="counter">
+          <i class="fa fa-female fa-2x"></i>
+          <h2 class="count-title">{{totalFemale}}</h2>
+          <p class="count-text ">Women</p>
+        </div>
+      </div>
         <div class="col-md-4">
           <div class="counter">
-      <i class="fa fa-users fa-lg"></i>
-      <h2 class="count-title">{{totalCount}}</h2>
-       <p class="count-text ">Total Members</p>
+          <i class="fa fa-male fa-2x"></i>
+          <h2 class="count-title">{{totalMen}}</h2>
+          <p class="count-text ">Men</p>
+        </div>
+      </div>
     </div>
-          </div>
-              <div class="col-md-4">
-               <div class="counter">
-      <i class="fa fa-female fa-2x"></i>
-      <h2 class="count-title">{{totalFemale}}</h2>
-      <p class="count-text ">Women</p>
-    </div>
-              </div>
-              <div class="col-md-4">
-                  <div class="counter">
-      <i class="fa fa-male fa-2x"></i>
-      <h2 class="count-title">{{totalMen}}</h2>
-      <p class="count-text ">Men</p>
+
+
+  <div class="col-md-12">
+    <div class="panel-body" style="padding-left: 0 !important; ">
+      {% include 'menu.html' %}
     </div>
   </div>
- 
-</div>
-
-
-<div class="col-md-12">
- <!--  <div class="container" style="padding: 0 !important">
-    <div class="row"> -->
-      
-        <div class="panel-body" style="padding-left: 0 !important; ">
-          <div class="row">
-            
-              <div style="width:50%; float:left; padding-top: 20px">
-
-                <a  href="#addMember" data-toggle="modal" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>New Member</a>
-                {% if user_p.department == 'finance' or user.is_superuser  %}
-                
-                <a data-toggle="modal"  href="#seed_payment" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Payments</a>
-                
-
-                <a data-toggle="modal" href="#currency"  class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-usd"></span> <br/>Currencies</a>
-
-              
-                <a data-toggle="modal" href="#incomehead"  class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-bookmark"></span> <br/>Payment Purpose</a>            
-                {% endif %}
-                {% if user_p.department == 'Media' or user.is_superuser  %}
-                
-                <a data-toggle="modal"  href="#upload" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Upload Sermons</a>
-                {% endif %}
-
-                <a data-toggle="modal"  href="#attendance" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Attendance</a>
-              </div>
-
-              <div style="width:50%; float:left; padding-top: 20px">
-                <a href="#users" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Users</a>
-                {% if user_p.department == 'Sales' or user.is_superuser  %}
-                <a href="{% url 'shop:product_list' %}" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-shopping-cart"></span> <br/>Merchandise</a>
-                {% endif %}
-
-                {% if user_p.department == 'finance' or user.is_superuser  %}
-                <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br/>Reports</a>
-                {% endif %}
-                
-                <a href="#assets" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Asset Register</a>
-                {% if user.is_superuser %} 
-                <a href="#settings" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-cog"></span> <br/>Settings</a>
-                {% endif %}
-              </div>
-            
-
-
-
-       </div>
-        
-    </div>
-    
-
-
-  <!-- <div id="container" style="min-width: 200px; height: 300px; margin: 0 auto"></div> -->
-</div>
 </div>
 
 <div class="col-md-6" style="font-size: 12px !important; padding-top: 2px;">

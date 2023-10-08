@@ -2,10 +2,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block header %}
-<script src="{% static 'highcharts/code/highcharts.js' %}"></script>
-<script src="{% static 'highcharts/code/highcharts-3d.js' %}"></script>
-<script src="{% static 'highcharts/code/modules/exporting.js' %}"></script>
-<script src="{% static 'highcharts/code/modules/export-data.js' %}"></script>
 <style type="text/css">
   .counter {
     background-color:#f5f5f5;
@@ -152,7 +148,24 @@
       </div>
 
 
-
+      {% for rw in members %}
+      <!-- Modal -->
+        <div class="modal right fade"  id="member{{rw.id}}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-dark">
+              <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+           </div>
+              <div class="modal-body">
+                <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
+                </p>
+              </div> 
+      
+            </div><!-- modal-content -->
+          </div><!-- modal-dialog -->
+        </div><!-- modal -->
+      
+      {% endfor %}
 
 
 <script type="text/javascript">

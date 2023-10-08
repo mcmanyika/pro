@@ -8,8 +8,6 @@
       {{rw.name}}
       {% endif %}
     {% endfor %}{% endblock %}</title>
-    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
-<link href="{% static 'css/dump.css' %}" rel="stylesheet">
 <link href="{% static 'b3/css/bootstrap.min.css' %}" rel="stylesheet">
 <link href="{% static 'css/dump.css' %}" rel="stylesheet">
 
@@ -17,6 +15,7 @@
 <script src="{% static 'highcharts/code/highcharts.js' %}"></script>
 <script src="{% static 'highcharts/code/modules/exporting.js' %}"></script>
 <script src="{% static 'highcharts/code/modules/export-data.js' %}"></script>
+<script src="{% static 'highcharts/code/highcharts-3d.js' %}"></script>
 
 </head>
 <body>
@@ -24,33 +23,8 @@
         
 <div id="wrapper">
       <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-      <ul id="sidebar_menu" class="sidebar-nav">
-      </ul>
-        <ul class="sidebar-nav" id="sidebar">
-          <li class="sidebar-brand"><a id="menu-toggle" href="#">MENU<span id="main_icon"<span style="font-size:20px; padding-right: 10px;"  class="glyphicon glyphicon-align-justify"></span></a></li>
-          
-          <li><a href="{% url 'home' %}"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>Dashboard </a></li>
-        {% if user_p %}
-          {% if user_p.access_level == 1 %}  
-          
-          {% else %}
-          <li><a href="{% url 'members' r.department %}"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>People </a></li>
-          {% endif %}
-        {% endif %}  
-          {% if user_p.department == 'Sales' or user.is_superuser  %}
-          <li><a href="{% url 'shop:product_list' %}"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-shop"></span>Merchandise </a></li>
-          {% endif %}
-
-          {% if user_p.department == 'Media' or user.is_superuser  %}
-          <li><a href="#upload" data-toggle="modal"><span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-camera"></span>Media </a></li>
-          {% else %}
-          {% endif %}
-          {% if user.is_superuser %} 
-          <li><a href="#settings" data-toggle="modal">Settings <span style="font-size:20px; padding: 10px" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
-          {% endif %}
-        </ul>
-      </div>
+      {% include 'side_bar.html' %}
+      <!-- End Sidebar -->
 
 <!-- Page content -->
       <div id="page-content-wrapper">
@@ -71,20 +45,13 @@
   </div>
 </nav>
 
-<!-- Member information -->
-{% for rw in members %}
-<div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onmouseover ="closeSide()">&times;</a>
-  <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
-    
-</div>   
-{% endfor %}
+
 
  <div class="modal right fade"  id="addMember"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
       	<div class="modal-header bg-dark">
-        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
      </div>
         <div class="modal-body" style="padding: 10px 0 ">
           <iframe src="{% url 'ajax-add-member' %}" frameborder="0" height="615" width="100%"></iframe>
@@ -111,7 +78,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+          <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
         </div>
         <div class="modal-body">
           <iframe src="{% url 'site-title' %}" frameborder="0" height="600" width="100%"></iframe>
@@ -126,7 +93,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
         </div>
         <div class="modal-body">
           <iframe src="{% url 'sermons' %}" frameborder="0" height="600" width="100%"></iframe>
@@ -147,12 +114,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
      </div>
         <div class="modal-body">
           <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
           </p>
-        </div>
+        </div> 
 
       </div><!-- modal-content -->
     </div><!-- modal-dialog -->
@@ -166,7 +133,7 @@
           <!-- Modal content-->
               <div class="modal-content">
                 <div class="modal-header bg-dark">
-                    <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
                  </div>
                     <div class="modal-body" style="color:#000">
                         <iframe src="{% url 'single_rec' rw.id %}" frameborder="0" height="550" width="100%"></iframe>
@@ -183,7 +150,7 @@
           <!-- Modal content-->
               <div class="modal-content">
                     <div class="modal-header bg-dark">
-                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                      <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
                    </div>
 
                     <div class="modal-body" style="color:#000; height: 670px">
@@ -201,7 +168,7 @@
               <div class="modal-content">
 
                     <div class="modal-header bg-dark">
-                      <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+                      <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
                    </div>
 
                     <div class="modal-body" style="color:#000; height: 670px">
@@ -239,7 +206,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header bg-dark">
-          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
        </div>
       <div class="modal-body">
         <iframe src="{% url 'add-incomehead' %}" frameborder="0" width="100%"></iframe>
@@ -253,7 +220,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header bg-dark">
-          <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+          <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
        </div>
       <div class="modal-body">
         <iframe src="{% url 'add-commitment' %}" frameborder="0" width="100%"></iframe>
@@ -267,7 +234,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header bg-dark">
-        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
      </div>
       <div class="modal-body" style="color:#000">
         <iframe src="{% url 'add-currency' %}" frameborder="0" width="100%"></iframe>
@@ -280,7 +247,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
      </div>
         <div class="modal-body">
           <iframe src="{% url 'add-group' %}" frameborder="0" height="600" width="100%"></iframe>
@@ -295,7 +262,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
      </div>
         <div class="modal-body">
           <iframe src="{% url 'attendance' %}" frameborder="0" height="250" width="100%"></iframe>
