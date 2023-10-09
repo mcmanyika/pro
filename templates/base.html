@@ -8,8 +8,35 @@
       {{rw.name}}
       {% endif %}
     {% endfor %}{% endblock %}</title>
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="{% static 'css/animate-login.css' %}">
+<!-- Custom Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/style-login.css' %}">
+
+  <link rel="stylesheet" href="{% static 'css/all.css' %}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <!-- Flaticon CSS -->
+  <link rel="stylesheet" href="{% static 'fonts/flaticon.ttf' %}">
+  <!-- Full Calender CSS -->
+  <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css' %}">
+  <!-- Animate CSS -->
+  <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+  <!-- Custom CSS -->
+  <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+  <!-- Modernize js -->
+  <script src="{% static 'js/modernizr-3.6.0.min.js' %}"></script>
+
 <link href="{% static 'b3/css/bootstrap.min.css' %}" rel="stylesheet">
-<link href="{% static 'css/dump.css' %}" rel="stylesheet">
+<link href="{% static 'css1/dump.css' %}" rel="stylesheet">
 
   <!-- Highcharts -->
 <script src="{% static 'highcharts/code/highcharts.js' %}"></script>
@@ -26,7 +53,7 @@
       {% include 'side_bar.html' %}
       <!-- End Sidebar -->
 
-<!-- Page content -->
+      <!-- Page content -->
       <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         {% include 'shop/navbar.html' %}
@@ -108,24 +135,7 @@
 
 
 
-{% for rw in members %}
-<!-- Modal -->
-  <div class="modal right fade"  id="member{{rw.id}}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-dark">
-        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
-     </div>
-        <div class="modal-body">
-          <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
-          </p>
-        </div> 
 
-      </div><!-- modal-content -->
-    </div><!-- modal-dialog -->
-  </div><!-- modal -->
-
-{% endfor %}
     
 {% for rw in transactions %}
 <div class="modal fade bd-finance-modal-lg" id="receipt{{rw.id}}" role="dialog">
@@ -274,11 +284,6 @@
   </div><!-- modal -->
 
 
-
-<script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/angular.min.js'%}"></script>
-<script src="{% static 'js/plugin.js' %}"></script>
 <script>
 function openNav() {
   document.getElementById("mySidenav").style.width = "250px";
@@ -361,6 +366,35 @@ $("#menu-toggle").click(function(e) {
 });
 
 </script>
+
+<script src="{% static 'js1/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js1/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js1/angular.min.js'%}"></script>
+<script src="{% static 'js1/plugin.js' %}"></script>
+
+<!-- jquery-->
+    
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<!-- Plugins js -->
+<script src="{% static 'js/plugins.js' %}"></script>
+<!-- Popper js -->
+<script src="{% static 'js/popper.min.js' %}"></script>
+<!-- Bootstrap js -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Counterup Js -->
+<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+<!-- Moment Js -->
+<script src="{% static 'js/moment.min.js' %}"></script>
+<!-- Waypoints Js -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Scroll Up Js -->
+<script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+<!-- Full Calender Js -->
+<script src="{% static 'js/fullcalendar.min.js' %}"></script>
+<!-- Chart Js -->
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<!-- Custom Js -->
+<script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>

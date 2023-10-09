@@ -163,7 +163,7 @@
                   </tr>
                   {% for rw in pledge %}
                   <tr>
-                    <td><a href="{% url 'pledge' rw.id %}">{{rw.currency}} {{rw.amount}}</a></td>
+                    <td>{{rw.currency}} {{rw.amount}}</td>
                     <td>{{rw.purpose}}</td>
                     <td>{{rw.timestamp}}</td>
                   </tr>

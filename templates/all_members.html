@@ -29,34 +29,12 @@
   {% if user_p.access_level >= 2 %}
     <div class="padAll">
       <div class="col-md-6">
-        <div class="col-md-12">
-          <div class="col-md-4">
-            <div class="counter">
-              <i class="fa fa-users fa-lg"></i>
-              <h2 class="count-title">{{totalCount}}</h2>
-              <p class="count-text ">Total Members</p>
-            </div>
-          </div>
-      <div class="col-md-4">
-        <div class="counter">
-          <i class="fa fa-female fa-2x"></i>
-          <h2 class="count-title">{{totalFemale}}</h2>
-          <p class="count-text ">Women</p>
-        </div>
-      </div>
-        <div class="col-md-4">
-          <div class="counter">
-          <i class="fa fa-male fa-2x"></i>
-          <h2 class="count-title">{{totalMen}}</h2>
-          <p class="count-text ">Men</p>
-        </div>
-      </div>
-    </div>
+       {% include 'components/gender_counter.html'%}
 
 
   <div class="col-md-12">
     <div class="panel-body" style="padding-left: 0 !important; ">
-      {% include 'menu.html' %}
+      {% include 'components/menu.html' %}
     </div>
   </div>
 </div>
@@ -165,7 +143,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-        <button type="button" onclick="javascript:window.location.reload()" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
      </div>
         <div class="modal-body" style="padding: 10px 0 ">
           <iframe src="{% url 'assets'  %}" frameborder="0" height="615" width="100%"></iframe>
@@ -220,7 +198,24 @@
     </div><!-- modal-dialog -->
   </div><!-- modal -->
 
-
+  {% for rw in members %}
+  <!-- Modal -->
+    <div class="modal right fade"  id="member{{rw.id}}"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-dark">
+          <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+       </div>
+          <div class="modal-body">
+            <iframe src="{% url 'member-detail' rw.id %}" frameborder="0" height="600" width="100%"></iframe>
+            </p>
+          </div> 
+  
+        </div><!-- modal-content -->
+      </div><!-- modal-dialog -->
+    </div><!-- modal -->
+  
+  {% endfor %}
 
 <script>
 $(document).ready(function(){

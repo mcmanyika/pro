@@ -144,8 +144,6 @@ def edit_sermon(request, id):
 def members(request, department):
     leftlinks = t_dict.objects.filter(category="leftlinks").order_by("id")
     lftlinks = t_urls.objects.filter(category="leftlinks").order_by("id")
-    a = t_user_attribute.objects.filter(department=department)
-    row = t_acct.objects.filter(department=department).order_by("-id")
     headings = t_dictionary.objects.all().order_by("id")
     user_p = get_object_or_404(UserProfile, rootid=request.user.id)
 
@@ -202,7 +200,6 @@ def members(request, department):
         "hlinks": hlinks,
         "leftlinks": leftlinks,
         "lftlinks": lftlinks,
-        "a": a,
         "members": queryset,
         "page_request_var": page_request_var,
     }
@@ -413,7 +410,6 @@ def allmembers(request):
     headings = t_dictionary.objects.all().order_by("id")
     lftlinks = t_urls.objects.filter(category="leftlinks").order_by("id")
     users = User.objects.all()
-    a = t_user_attribute.objects.all()
 
     form = FilterAcctForm()
 
@@ -517,7 +513,6 @@ def allmembers(request):
         "hlinks": hlinks,
         "headings": headings,
         "lftlinks": lftlinks,
-        "a": a,
         "members": queryset,
         "page_request_var": page_request_var,
         "transactions": t,
