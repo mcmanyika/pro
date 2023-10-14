@@ -11,9 +11,6 @@
                             <div class="col-xs-6">
                                 <a href="#" class="active" id="login-form-link">Login</a>
                             </div>
-                            <div class="col-xs-6">
-                                <a href="#" id="register-form-link">Register</a>
-                            </div>
                         </div>
                         <hr>
                     </div>
@@ -29,34 +26,18 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="text-center">
-                                                    <!-- <a href="#" id="password-reset-link" tabindex="5" class="forgot-password">Reset Password</a> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
                                                 <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                </form>
-                                <form id="register-form" action="" method="post" role="form" style="display: none;">
-                                    <iframe src="{% url 'signup'  %}" frameborder="0" height="450" width="100%"></iframe>
-                                </form>
 
-                                <form id="password-reset" action="" method="post" role="form" style="display: none;">{% csrf_token %}
-                                    <div class="form-group">
-                                        {{passchange.as_p}}
-                                    </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Change Now">
+                                            <div class="col-lg-12">
+                                                <div class="text-center">
+                                                    <a href="{% url 'signup'  %}" style="text-decoration: none;">Click to register new account</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -1,8 +1,11 @@
-{% extends "base_login.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
 
- {% block container %}
+ {% block content %}
+ <div class="text-center" style="font-size: xx-large;">
     Hello <strong>{{user.username}} </strong>your request was successful, its being reviewed by the Administrator.
+ </div>
+
 
 {% endblock %}

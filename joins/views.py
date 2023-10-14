@@ -1,11 +1,11 @@
-#import requests
+# import requests
 import json
 import math
 from django.db import connection
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, get_object_or_404,  redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect, Http404
@@ -31,44 +31,39 @@ from django.utils.translation import ugettext as _
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
 
 def register_view(request):
-
     form = UserRegisterForm(request.POST or None)
     form2 = JoinForm2(request.POST or None)
 
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
         user = authenticate(username=username, password=password)
 
         if user is not None:
             if user.is_active:
                 login(request, user)
                 user_p = get_object_or_404(UserProfile, rootid=request.user.id)
-                if user_p.department == 'Media':
-                    return HttpResponseRedirect('/allmembers/')
+                if user_p.department == "Media":
+                    return HttpResponseRedirect("/allmembers/")
 
                 else:
-                    return HttpResponseRedirect('/allmembers/')
+                    return HttpResponseRedirect("/allmembers/")
             else:
                 messages.success(request, "Enter correct username or password")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         passchange = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             passchange_user = user.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _(
-                'Your password was successfully updated!'))
-            return redirect('change_password')
+            messages.success(request, _("Your password was successfully updated!"))
+            return redirect("change_password")
         else:
-            messages.error(request, _('Please correct the error below.'))
+            messages.error(request, _("Please correct the error below."))
     else:
         passchange = PasswordChangeForm(request.user)
 
@@ -76,64 +71,73 @@ def register_view(request):
         "form": form,
         "form2": form2,
         "passchange": passchange,
-
-
     }
     return render(request, "login.html", context)
 
 
 def signup(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('user-img')
+            return redirect("user-img")
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, "signup.html", {"form": form})
 
 
 def user_img(request):
-
     img_form = AvatarForm(request.POST or None, request.FILES or None)
     if img_form.is_valid():
         f = img_form.save(commit=False)
         f.save()
-        messages.success(request, "Saved")
-        return redirect('signup-confirmation')
+        # messages.success(request, "Saved")
+        return redirect("register-user-attributes")
 
     context = {
         "img_form": img_form,
     }
-    template = 'user_img.html'
+    template = "user_img.html"
+    return render(request, template, context)
+
+
+def RegisterUserAttributes(request):
+    form = UserAttributeForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form = form.save(commit=False)
+        form.save()
+        messages.success(request, "Saved")
+        return redirect("home")
+
+    context = {
+        "form": form,
+    }
+    template = "joins/RegisterUserAttributes.html"
+
     return render(request, template, context)
 
 
 def signup_confirmation(request):
-
-    return render(request, 'signup_confirmation.html')
+    return render(request, "signup_confirmation.html")
 
 
 def change_password(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _(
-                'Your password was successfully updated!'))
-            return redirect('change_password')
+            messages.success(request, _("Your password was successfully updated!"))
+            return redirect("change_password")
         else:
-            messages.error(request, _('Please correct the error below.'))
+            messages.error(request, _("Please correct the error below."))
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {
-        'form': form
-    })
+    return render(request, "change_password.html", {"form": form})
 
 
 def Logout(request):

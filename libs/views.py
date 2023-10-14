@@ -21,6 +21,7 @@ from siteInfo.views import *
 from libs.forms import *
 from libs.views import *
 from finance.models import *
+from libs.utils import *
 
 
 # Create your views here.
@@ -289,6 +290,7 @@ def pledge(request, id):
 
 
 def member_details(request, id):
+    membership = fetch_members()
     leftlinks = t_dict.objects.filter(category="leftlinks").order_by("id")
     purpose = t_dict.objects.filter(category="purpose").order_by("id")
     dictionary = t_dictionary.objects.all().order_by("id")
@@ -296,16 +298,17 @@ def member_details(request, id):
     grp = t_group.objects.filter(rootid=id).order_by("-id")
     grp_list = t_dictionary.objects.all().order_by("name")
 
-    edit_inst = get_object_or_404(t_acct, id=id)
+    edit_inst = get_object_or_404(t_acct_attributes, root=id)
+    member = get_object_or_404(User, id=edit_inst.root)
     payments = t_payment.objects.filter(rootid=id, commitment="Cash").order_by("-id")
     pledge = t_payment.objects.filter(rootid=id, commitment="Pledge").order_by("-id")
 
     t = connection.cursor()
     t.cursor.execute(
         """Select
-                            sum(p.amount) as amount
-                            FROM libs_t_payment p
-                            Where p.rootid = %s and p.commitment = 'Cash'""",
+            sum(p.amount) as amount
+            FROM libs_t_payment p
+            Where p.rootid = %s and p.commitment = 'Cash'""",
         [id],
     )
 
@@ -316,9 +319,9 @@ def member_details(request, id):
     pt = connection.cursor()
     pt.cursor.execute(
         """Select
-                            sum(p.amount) as amount
-                            FROM libs_t_payment p
-                            Where p.rootid = %s AND p.commitment = 'Pledge'""",
+            sum(p.amount) as amount
+            FROM libs_t_payment p
+            Where p.rootid = %s AND p.commitment = 'Pledge'""",
         [id],
     )
 
@@ -329,11 +332,11 @@ def member_details(request, id):
     child = connection.cursor()
     child.cursor.execute(
         """Select
-                            *
-                            FROM joins_t_children c
-                            INNER JOIN joins_t_acct a ON a.id = c.childid
-                            WHERE rootid = %s
-                            """,
+            *
+            FROM joins_t_children c
+            INNER JOIN joins_t_acct a ON a.id = c.childid
+            WHERE rootid = %s
+            """,
         [edit_inst.id],
     )
 
@@ -378,18 +381,16 @@ def member_details(request, id):
         "lftlinks": lftlinks,
         "Acctform": Acctform,
         "Payform": Payform,
-        "m_id": edit_inst.id,
-        "fname": edit_inst.fname,
-        "lname": edit_inst.lname,
+        "fname": member.first_name,
+        "lname": member.last_name,
         "gender": edit_inst.gender,
         "phone": edit_inst.phone,
-        "email": edit_inst.email,
-        "zone": edit_inst.zone,
-        "department": edit_inst.department,
+        # "email": edit_inst.email,
+        # "zone": edit_inst.zone,
+        # "department": edit_inst.department,
         "member_status": edit_inst.member_status,
-        "years_in_ministry": edit_inst.years_in_ministry,
         "baptised": edit_inst.baptised,
-        "image": edit_inst.image,
+        # "image": edit_inst.image,
         "child": child,
         "d": dictionary,
         "payments": payments,
@@ -410,6 +411,7 @@ def allmembers(request):
     headings = t_dictionary.objects.all().order_by("id")
     lftlinks = t_urls.objects.filter(category="leftlinks").order_by("id")
     users = User.objects.all()
+    queryset_list = fetch_members()
 
     form = FilterAcctForm()
 
@@ -427,12 +429,12 @@ def allmembers(request):
     t = connection.cursor()
     t.cursor.execute(
         """Select p.id,
-                            a.fname as fname, 
-                            a.lname as lname, p.currency as currency, p.amount as amount, p.purpose, p.commitment as commitment
-                            FROM libs_t_payment p
-                            INNER JOIN joins_t_acct a ON a.id = p.rootid
-                            ORDER BY -p.id LIMIT 4
-                            """
+            a.fname as fname, 
+            a.lname as lname, p.currency as currency, p.amount as amount, p.purpose, p.commitment as commitment
+            FROM libs_t_payment p
+            INNER JOIN joins_t_acct a ON a.id = p.rootid
+            ORDER BY -p.id LIMIT 4
+            """
     )
 
     t = dictfetchall(t)
@@ -440,16 +442,15 @@ def allmembers(request):
     s = connection.cursor()
     s.cursor.execute(
         """Select
-                            sum(p.amount) as amount, p.purpose as purpose, p.currency
-                            FROM libs_t_payment p
-                            WHERE p.currency = 'USD'
-                            Group By purpose
-                            """
+            sum(p.amount) as amount, p.purpose as purpose, p.currency
+            FROM libs_t_payment p
+            WHERE p.currency = 'USD'
+            Group By purpose
+            """
     )
 
     s = dictfetchall(s)
-
-    queryset_list = t_acct.objects.filter().order_by("-id")
+    # queryset_list = t_acct.objects.filter().order_by("-id")
     query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(
@@ -487,11 +488,11 @@ def allmembers(request):
     avator = connection.cursor()
     avator.cursor.execute(
         """Select
-                            au.username, u.avatar
-                            FROM joins_UserProfile u
-                            INNER JOIN auth_User au ON au.id = u.rootid
+            au.username, u.avatar
+            FROM joins_UserProfile u
+            INNER JOIN auth_User au ON au.id = u.rootid
 
-                            """
+            """
     )
 
     avator = dictfetchall(avator)
