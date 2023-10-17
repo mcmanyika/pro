@@ -151,13 +151,13 @@ def transaction(request, id):
 def all_receipts(request, id):
     t = t_payment.objects.raw(
         """SELECT p.id,
-                            a.fname as fname, 
-                            a.lname as lname, p.currency as currency, 
-                            p.amount as amount, p.purpose, p.commitment as commitment
-                            FROM libs_t_payment p
-                            INNER JOIN joins_t_acct a ON a.id = p.rootid
-                            WHERE p.rootid = %s  
-                            order by p.id desc""",
+            a.fname as fname, 
+            a.lname as lname, p.currency as currency, 
+            p.amount as amount, p.purpose, p.commitment as commitment
+            FROM libs_t_payment p
+            INNER JOIN joins_t_acct a ON a.id = p.rootid
+            WHERE p.rootid = %s  
+            order by p.id desc""",
         [id],
     )
 
