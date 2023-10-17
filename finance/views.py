@@ -7,6 +7,7 @@ import math
 import csv
 from django.utils.encoding import smart_str
 from django.utils.datastructures import MultiValueDictKeyError
+
 # from libs.base import Base
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
@@ -14,7 +15,7 @@ from django.http import StreamingHttpResponse
 from django.db import connection
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404,  redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect, Http404
@@ -26,6 +27,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+
 # from libs.base import Base
 from joins.models import *
 from joins.forms import *
@@ -35,16 +37,14 @@ from .forms import *
 from finance.models import *
 from .resources import DailyTransactions
 from siteInfo.models import t_dictionary
+
 # Create your views here.
 
 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
 
 def ajax_incomehead(request):
@@ -55,12 +55,10 @@ def ajax_incomehead(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            data = {
-                'message': 'form is saved'
-            }
+            data = {"message": "form is saved"}
             return JsonResponse(data)
     context = {
-        'form': form,
+        "form": form,
     }
     template = "add_incomehead.html"
     return render(request, template, context)
@@ -74,12 +72,10 @@ def ajax_currency(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            data = {
-                'message': 'form is saved'
-            }
+            data = {"message": "form is saved"}
             return JsonResponse(data)
     context = {
-        'form': form,
+        "form": form,
     }
     template = "add_currency.html"
     return render(request, template, context)
@@ -93,12 +89,10 @@ def ajax_commitment(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            data = {
-                'message': 'form is saved'
-            }
+            data = {"message": "form is saved"}
             return JsonResponse(data)
     context = {
-        'form': form,
+        "form": form,
     }
     template = "add_commitment.html"
     return render(request, template, context)
@@ -112,19 +106,20 @@ def ajax_group(request):
         messages.success(request, "Saved")
 
     context = {
-        'form': form,
+        "form": form,
     }
     template = "add_group.html"
     return render(request, template, context)
 
 
 def transaction(request, id):
-    weekly = t_dictionary.objects.filter(category='weekly')
-    monthly = t_dictionary.objects.filter(category='monthly')
-    onceoff = t_dictionary.objects.filter(category='onceoff')
-    d = t_dictionary.objects.all().order_by('id')
-    rw = t_dict.objects.all().order_by('name')
-    instance = get_object_or_404(t_acct, id=id)
+    weekly = t_dictionary.objects.filter(category="weekly")
+    monthly = t_dictionary.objects.filter(category="monthly")
+    onceoff = t_dictionary.objects.filter(category="onceoff")
+    d = t_dictionary.objects.all().order_by("id")
+    rw = t_dict.objects.all().order_by("name")
+    instance = get_object_or_404(t_acct_attributes, root=id)
+    member = get_object_or_404(User, id=instance.root)
     rendered = 0
     total = 0
     Payform = PaymentForm(request.POST or None, request.FILES or None)
@@ -132,37 +127,39 @@ def transaction(request, id):
         f = Payform.save(commit=False)
         f.save()
         messages.success(request, "Saved")
-        return HttpResponseRedirect('/finance/receipt/%s' % instance.id)
+        return HttpResponseRedirect("/finance/receipt/%s" % instance.id)
 
     context = {
         "Payform": Payform,
         "d": d,
         "rw": rw,
-        "m_id": instance.id,
-        "fname": instance.fname,
-        "lname": instance.lname,
-        "image": instance.image,
+        "m_id": instance.root,
+        "fname": member.first_name,
+        "lname": member.last_name,
+        # "image": instance.image,
         "gender": instance.gender,
         "rendered": rendered,
         "total": total,
         "weekly": weekly,
         "monthly": monthly,
         "onceoff": onceoff,
-
     }
     template = "upload_transaction.html"
     return render(request, template, context)
 
 
 def all_receipts(request, id):
-    t = t_payment.objects.raw("""SELECT p.id,
+    t = t_payment.objects.raw(
+        """SELECT p.id,
                             a.fname as fname, 
                             a.lname as lname, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
                             FROM libs_t_payment p
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             WHERE p.rootid = %s  
-                            order by p.id desc""", [id])
+                            order by p.id desc""",
+        [id],
+    )
 
     context = {
         "rc": t,
@@ -172,24 +169,29 @@ def all_receipts(request, id):
 
 
 def receipt(request, id):
-
-    t = t_payment.objects.raw("""SELECT p.id, 
+    t = t_payment.objects.raw(
+        """SELECT p.id, 
                             a.fname as fname, 
                             a.lname as lname, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
                             FROM libs_t_payment p
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             WHERE p.rootid = %s  
-                            order by p.id desc limit 1""", [id])
+                            order by p.id desc limit 1""",
+        [id],
+    )
 
-    all_rec = t_payment.objects.raw("""SELECT p.id,
+    all_rec = t_payment.objects.raw(
+        """SELECT p.id,
                             a.fname as fname, 
                             a.lname as lname, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
                             FROM libs_t_payment p
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             WHERE p.id = %s  
-                            order by p.id desc""", [id])
+                            order by p.id desc""",
+        [id],
+    )
 
     context = {
         "rc": t,
@@ -201,14 +203,17 @@ def receipt(request, id):
 
 
 def single_rec(request, id):
-    single_rec = t_payment.objects.raw("""SELECT p.id, a.id as acct_id,
+    single_rec = t_payment.objects.raw(
+        """SELECT p.id, a.id as acct_id,
                             a.fname as fname, 
                             a.lname as lname, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
                             FROM libs_t_payment p
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             WHERE p.id = %s  
-                            order by p.id desc""", [id])
+                            order by p.id desc""",
+        [id],
+    )
     for rw in single_rec:
         rw.acct_id
 
@@ -221,9 +226,9 @@ def single_rec(request, id):
 
 
 def seed_payments(request):
-    leftlinks = t_dict.objects.filter(category='leftlinks').order_by('id')
-    lftlinks = t_urls.objects.filter(category='leftlinks').order_by('id')
-    raw = t_dict.objects.all().order_by('name')
+    leftlinks = t_dict.objects.filter(category="leftlinks").order_by("id")
+    lftlinks = t_urls.objects.filter(category="leftlinks").order_by("id")
+    raw = t_dict.objects.all().order_by("name")
     # instance = get_object_or_404(t_acct, id=id)
 
     Seedform = PaymentForm(request.POST or None, request.FILES or None)
@@ -231,26 +236,24 @@ def seed_payments(request):
         f = Seedform.save(commit=False)
         f.save()
         messages.success(request, "Saved")
-        return HttpResponseRedirect('/finance/all-seeds/')
+        return HttpResponseRedirect("/finance/all-seeds/")
 
     context = {
         "leftlinks": leftlinks,
         "lftlinks": lftlinks,
         "form": Seedform,
         "raw": raw,
-
-
     }
     template = "seed_payment.html"
     return render(request, template, context)
 
 
 def all_seeds(request):
-    row = t_payment.objects.all().order_by('-id')
+    row = t_payment.objects.all().order_by("-id")
 
     paginator = Paginator(row, 15)  # Show 25 contacts per page
     page_request_var = "page"
-    page = request.GET.get('page')
+    page = request.GET.get("page")
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -263,7 +266,6 @@ def all_seeds(request):
     context = {
         "row": queryset,
         "page_request_var": page_request_var,
-
     }
     template = "all_seeds.html"
 
@@ -286,18 +288,17 @@ def seed_receipt(request, id):
 
 
 def filter_trans(request):
-
     try:
-        fdate = request.POST['period_from']
-        tdate = request.POST['period_to']
+        fdate = request.POST["period_from"]
+        tdate = request.POST["period_to"]
 
     except:
-
         fdate = datetime.now().date()
         tdate = datetime.now().date()
 
     t = connection.cursor()
-    t.cursor.execute("""Select 
+    t.cursor.execute(
+        """Select 
                         p.purpose as PURPOSE,
                         sum(case when p.currency = 'BOND' then p.id else 0 end) as BOND,
                         sum(case when p.currency = 'USD' then p.id else 0 end) as USD,
@@ -307,52 +308,52 @@ def filter_trans(request):
                     FROM libs_t_payment p
                      WHERE p.timestamp BETWEEN %s AND %s
                     GROUP BY p.purpose
-                    """, [fdate, tdate])
+                    """,
+        [fdate, tdate],
+    )
 
     t = dictfetchall(t)
 
     def export_data(request):
         trans_resource = t()
         dataset = trans_resource.export()
-        response = HttpResponse(dataset.csv, content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
+        response = HttpResponse(dataset.csv, content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="DailyTransactions.csv"'
         return response
 
     context = {
         "transactions": t,
-
     }
     return render(request, "filter_transactions.html", context)
 
 
 def export_data(request):
-
     trans_resource = DailyTransactions()
     dataset = trans_resource.export()
-    response = HttpResponse(dataset.csv, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="DailyTransactions.csv"'
+    response = HttpResponse(dataset.csv, content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="DailyTransactions.csv"'
     return response
 
 
 def filter_income_head(self):
-
     if self.method == "POST":
-        fdate = request.POST['period_from']
-        tdate = request.POST['period_to']
+        fdate = request.POST["period_from"]
+        tdate = request.POST["period_to"]
 
     s = connection.cursor()
-    s.cursor.execute("""Select
+    s.cursor.execute(
+        """Select
                             p.currency as currency, sum(p.amount) as amount, p.purpose as purpose, 
                             p.commitment as commitment
                             FROM libs_t_payment p
                             Group By p.currency, purpose, commitment
-                            """)
+                            """
+    )
 
     ihead = dictfetchall(s)
 
     context = {
         "ihead": ihead,
-
     }
     return render(self, "filter_by_income_head.html", context)
 
@@ -368,16 +369,17 @@ class Echo:
 
 
 def csv_view(request):
-
     t = connection.cursor()
-    t.cursor.execute("""Select
+    t.cursor.execute(
+        """Select
                             a.fname as fname, 
                             a.lname as lname, p.currency as currency, p.amount as amount, p.purpose, 
                             p.commitment as commitment
                             FROM libs_t_payment p
                             INNER JOIN joins_t_acct a ON a.id = p.rootid
                             ORDER BY -p.id 
-                            """)
+                            """
+    )
 
     t = dictfetchall(t)
 
@@ -389,14 +391,15 @@ def csv_view(request):
     rows = (["".format(idx), str(idx)] for idx in t)
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
-    response = StreamingHttpResponse((writer.writerow(row) for row in rows),
-                                     content_type="text/csv")
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    response = StreamingHttpResponse(
+        (writer.writerow(row) for row in rows), content_type="text/csv"
+    )
+    response["Content-Disposition"] = 'attachment; filename="somefilename.csv"'
 
     return response
 
 
-def get_one_row(sql='', prms=tuple()):
+def get_one_row(sql="", prms=tuple()):
     found = tuple()
     if not sql:
         return found

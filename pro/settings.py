@@ -161,3 +161,7 @@ MEDIA_URL = "/img/"
 CART_SESSION_ID = "cart"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+X_FRAME_OPTIONS = "ALLOW-FROM https://profaith.co"
+
+# X_FRAME_OPTIONS = 'ALLOWALL'
