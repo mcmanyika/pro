@@ -9,13 +9,7 @@
     .pad {
       padding: 2px;
     }
-
-
-
-    
     </style>
-
-  
 
 {% endblock header %}
 
@@ -61,10 +55,10 @@
                     <img src="{% if rw.gender == 'Female' %}{% static '/img/avatar4.png' %}{% else %}{% static '/img/avatar1.png' %}{% endif %} " height="25" class="img-fluid rounded"></a>
                     {% endif %}
                 </center></td>
-                <td style="text-transform:capitalize; padding: 10px 0 10px 0"></span><a href="#member{{rw.id}}" data-toggle="modal">{{rw.fname}} 
-                  {% if not rw.lname %}
+                <td style="text-transform:capitalize; padding: 10px 0 10px 0"></span><a href="#member{{rw.id}}" data-toggle="modal">{{rw.first_name}} 
+                  {% if not rw.last_name %}
                 {% else %}
-              {{rw.lname}}
+              {{rw.last_name}}
               {% endif %}</td>
                 <td> <a href="#member{{rw.id}}" data-toggle="modal" class="btn-sm btn-info">Profile</a></td>
                 {% if user_p.department == 'finance' or user.is_superuser  %}

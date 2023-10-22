@@ -12,10 +12,10 @@
       {% endif %}
       </div>
       <div class="col-9 padAll" style="text-transform: uppercase !important;">
-        <h5><button class="btn btn-md btn-default" style="text-transform: uppercase !important;">{{fname}} 
-                {% if not lname %}
+        <h5><button class="btn btn-md btn-default" style="text-transform: uppercase !important;">{{first_name}} 
+                {% if not last_name %}
                 {% else %}
-              {{lname}}
+              {{last_name}}
               {% endif %}</button></h5>
       </div>
   </div>  
@@ -37,12 +37,8 @@
             <form  method="post" name="acctform" id="acctform"  action="" enctype="multipart/form-data">{% csrf_token %}
                 <div class="col-12">
                 <div class="row">
-                  <div class="col-6 padAll">{{Acctform.fname|as_crispy_field:"bootstrap"}}</div>
-                  <div class="col-6 padAll">{{Acctform.lname|as_crispy_field:"bootstrap"}}</div>
-                 
                   <div class="col-6 padAll">
                     <select name="gender" class="form-control form-control-sm">
-
                       <option selected> {{gender}}</option>
                       {% for rw in d %}
                         {% if rw.category == 'gender' %}
@@ -53,33 +49,10 @@
                   </div>
                   
                   <div class="col-6 padAll">
-                    {{Acctform.phone|as_crispy_field:"bootstrap"}}
+                    {{Acctform.phone}}
                   </div> 
                  
                   
-                  <div class="col-6 padAll">
-                    {{Acctform.email|as_crispy_field:"bootstrap"}}
-                  </div>
-                  <div class="col-6 padAll">
-                    <select name="zone" class="form-control form-control-sm">
-                       <option selected> {{zone}}</option>
-                      {% for rw in d %}
-                        {% if rw.category == 'zone' %}
-                        <option value="{{zone}}">{{rw.name}}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                  </div> 
-                  <div class="col-6 padAll">
-                    <select name="department" class="form-control form-control-sm">
-                          <option>{{department}}</option>
-                      {% for rw in d %}
-                        {% if rw.category == 'department' %}
-                          <option value="{{rw.name}}">{{rw.name}}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                  </div> 
                   <div class="col-6 padAll">
                     <select name="baptised" class="form-control form-control-sm">
                           <option>{{baptised}}</option>
@@ -89,22 +62,10 @@
                         {% endif %}
                       {% endfor %}
                     </select>
-                  </div> 
-                  <div class="col-6 padAll">
-                    <select name="member_status" class="form-control form-control-sm">
-                          <option>{{member_status}}</option>
-                      {% for rw in d %}
-                        {% if rw.category == 'member_status' %}
-                          <option value="{{rw.name}}">{{rw.name}}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                  </div>             
-                  <div class="col-6">
-                    {{Acctform.image|as_crispy_field:"bootstrap"}}
                   </div>
                  <div class="col-6 padAll">
-                    <input type="hidden" class="form-control input-sm" value="{{m_id}}" name="user">
+                  <input type="hidden" class="form-control input-sm" value="{{root}}" name="root">
+                    <input type="hidden" class="form-control input-sm" value="{{root}}" name="user">
                     <button type="submit" class="btn btn-lg btn-info">Save</button>
                 </div>
                 <div class="col-6 padAll">

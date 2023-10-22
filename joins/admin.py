@@ -36,16 +36,6 @@ class AcctModelAdmin(admin.ModelAdmin):
 admin.site.register(t_acct, AcctModelAdmin)
 
 
-class AcctAttributesAdmin(admin.ModelAdmin):
-    list_display = ["root", "gender", "timestamp"]
-
-    class Meta:
-        model = t_acct_attributes
-
-
-admin.site.register(t_acct_attributes, AcctAttributesAdmin)
-
-
 class AttriModelAdmin(admin.ModelAdmin):
     list_display = ["id", "department", "level", "status", "timestamp"]
 

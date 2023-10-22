@@ -7,16 +7,16 @@
   <div class="row">
     <div class="col-3">
      {% if image %}
-      <center><img src="/media/{{image}}" height="80"  class="rounded"></center>
+      <center><img src="{% static '/media/' %}{{image}}" height="80"  class="rounded"></center>
       {% else %}
       <center><img src="{% if gender == 'Female' %}{% static '/img/avatar4.png' %}{% else %}{% static '/img/avatar1.png' %}{% endif %} " height="80"  class="rounded"></center>
       {% endif %}
       </div>
       <div class="col-9 padAll" style="text-transform: uppercase !important;">
-        <h5><button class="btn btn-md btn-default" style="text-transform: uppercase !important;">{{fname}} 
-                {% if not lname %}
+        <h5><button class="btn btn-md btn-default" style="text-transform: uppercase !important;">{{first_name}} 
+                {% if not last_name %}
                 {% else %}
-              {{lname}}
+              {{last_name}}
               {% endif %}</button>
             </h5>
       </div>

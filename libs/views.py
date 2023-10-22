@@ -298,7 +298,7 @@ def member_details(request, id):
     grp = t_group.objects.filter(rootid=id).order_by("-id")
     grp_list = t_dictionary.objects.all().order_by("name")
 
-    edit_inst = get_object_or_404(t_acct_attributes, root=id)
+    edit_inst = get_object_or_404(t_acct, root=id)
     member = get_object_or_404(User, id=edit_inst.root)
     payments = t_payment.objects.filter(rootid=id, commitment="Cash").order_by("-id")
     pledge = t_payment.objects.filter(rootid=id, commitment="Pledge").order_by("-id")
@@ -381,8 +381,9 @@ def member_details(request, id):
         "lftlinks": lftlinks,
         "Acctform": Acctform,
         "Payform": Payform,
-        "fname": member.first_name,
-        "lname": member.last_name,
+        "root": edit_inst.root,
+        "first_name": member.first_name,
+        "last_name": member.last_name,
         "gender": edit_inst.gender,
         "phone": edit_inst.phone,
         # "email": edit_inst.email,

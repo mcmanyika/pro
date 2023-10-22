@@ -23,18 +23,20 @@
                 <div class="container">
                     <div class="row">
                         {% if transactions %}
-                        <div class="col-md-3"><strong>Purpose</strong></div>
+                        <div class="col-md-2"><strong>Purpose</strong></div>
                             <div class="col-md-1"><strong>BOND</strong></div>
                             <div class="col-md-1"><strong>USD</strong></div>
                             <div class="col-md-1"><strong>RAND</strong></div>
                             <div class="col-md-1"><strong>PULA</strong></div>
+                            <div class="col-md-1"><strong>DIRHAMS</strong></div>
                             <div class="col-md-5"><strong>Timestamp</strong></div>
                         {% for rw in transactions %}
-                            <div class="col-md-3">{{rw.PURPOSE}}</div>
+                            <div class="col-md-2">{{rw.PURPOSE}}</div>
                             <div class="col-md-1">{{rw.BOND}}</div>
                             <div class="col-md-1">{{rw.USD}}</div>
                             <div class="col-md-1">{{rw.RAND}}</div>
                             <div class="col-md-1">{{rw.PULA}}</div>
+                            <div class="col-md-1">{{rw.DIRHAMS}}</div>
                             <div class="col-md-5">{{rw.TIMESTAMP}}</div>
                         {% endfor %}
                         {% endif %}

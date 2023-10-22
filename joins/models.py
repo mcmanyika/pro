@@ -66,31 +66,11 @@ class Email(models.Model):
 
 
 class t_acct(models.Model):
-    g = (("Female", "Female"), ("Male", "Male"))
-    fname = models.CharField(max_length=20)
-    lname = models.CharField(max_length=20, null=True, blank=True)
-    gender = models.CharField(max_length=10, choices=g, null=True, blank=True)
-    dob = models.DateField(default="2019-01-01", null=True, blank=True)
-    marital_status = models.CharField(default="", max_length=20)
-    image = models.FileField(upload_to=upload_location, null=True, blank=True)
-    phone = models.CharField(max_length=25, default="", null=True, blank=True)
-    zone = models.CharField(max_length=20, default="IOC")
-    department = models.CharField(max_length=20, default="")
-    member_status = models.CharField(max_length=20, default="Church Member")
-    baptised = models.CharField(max_length=30, default="Yes")
-    email = models.EmailField(null=True, blank=True)
-    user = models.IntegerField(default=1)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-
-    def __unicode__(self):
-        return "t_acct {}".format(self.id)
-
-
-class t_acct_attributes(models.Model):
     GENDER = (("Female", "Female"), ("Male", "Male"))
     root = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fname = models.CharField(max_length=10, null=True, blank=True)
+    lname = models.CharField(max_length=10, null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER, null=True, blank=True)
     dob = models.DateField(default="2019-01-01", null=True, blank=True)
     marital_status = models.CharField(default="", max_length=20)

@@ -34,7 +34,7 @@ class AcctForm(forms.ModelForm):
             "fname",
             "lname",
             "gender",
-            "user",
+            # "user_id",
         ]
 
 
@@ -42,23 +42,6 @@ yim = [(i, str(i)) for i in range(1, 26)]
 
 
 class AcctForm2(forms.ModelForm):
-    fname = forms.CharField(
-        max_length=30,
-        required=False,
-        widget=forms.TextInput(
-            attrs={"class": "form-control form-control-sm", "placeholder": "First Name"}
-        ),
-        label=False,
-    )
-    lname = forms.CharField(
-        max_length=30,
-        required=False,
-        widget=forms.TextInput(
-            attrs={"class": "form-control form-control-sm", "placeholder": "Last Name"}
-        ),
-        label=False,
-    )
-
     phone = forms.CharField(
         max_length=30,
         required=False,
@@ -70,13 +53,6 @@ class AcctForm2(forms.ModelForm):
         ),
         label=False,
     )
-    email = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={"class": "form-control form-control-sm", "placeholder": "Email"}
-        ),
-        label=False,
-    )
     department = forms.CharField(
         required=False,
         widget=forms.TextInput(
@@ -84,22 +60,18 @@ class AcctForm2(forms.ModelForm):
         ),
         label=False,
     )
-    # years_in_ministry = forms.TypedChoiceField(choices=yim, coerce=int, label=True)
 
     class Meta:
         model = t_acct
         fields = (
-            "fname",
-            "lname",
+            "root",
+            "user",
             "gender",
+            "dob",
             "phone",
-            "email",
-            "zone",
             "department",
             "member_status",
             "baptised",
-            "image",
-            "user",
         )
 
 

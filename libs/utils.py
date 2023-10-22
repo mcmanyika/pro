@@ -15,9 +15,9 @@ def fetch_members():
     members = connection.cursor()
     members.cursor.execute(
         """Select
-            aa.root AS id, au.username, au.first_name AS fname, au.last_name AS lname, aa.gender, aa.phone
-            FROM auth_User au 
-            INNER JOIN joins_t_acct_attributes aa ON aa.root = au.id
+            aa.root AS id, au.username, au.first_name, au.last_name, aa.gender, aa.phone
+            FROM auth_user au 
+            INNER JOIN joins_t_acct aa ON aa.root = au.id
             """
     )
 

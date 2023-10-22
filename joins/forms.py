@@ -2,7 +2,7 @@ from django import forms
 from django.core.files.images import get_image_dimensions
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from joins.models import UserProfile, t_acct_attributes
+from joins.models import UserProfile, t_acct
 from siteInfo.models import *
 from django import *
 from django.contrib.auth import authenticate, get_user_model, login, logout
@@ -241,7 +241,7 @@ class UserAttributeForm(forms.ModelForm):
     )
 
     class Meta:
-        model = t_acct_attributes
+        model = t_acct
         fields = [
             "root",
             "user",
