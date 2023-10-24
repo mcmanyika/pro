@@ -118,7 +118,9 @@ def transaction(request, id):
     onceoff = t_dictionary.objects.filter(category="onceoff")
     d = t_dictionary.objects.all().order_by("id")
     rw = t_dict.objects.all().order_by("name")
+
     instance = get_object_or_404(t_acct, root=id)
+
     member = get_object_or_404(User, id=instance.root)
     rendered = 0
     total = 0
@@ -133,7 +135,7 @@ def transaction(request, id):
         "Payform": Payform,
         "d": d,
         "rw": rw,
-        "m_id": instance.root,
+        "member_id": instance.root,
         "first_name": member.first_name,
         "last_name": member.last_name,
         # "image": instance.image,
@@ -154,9 +156,9 @@ def all_receipts(request, id):
             a.first_name, 
             a.last_name, p.currency as currency, 
             p.amount as amount, p.purpose, p.commitment as commitment
-            FROM libs_t_payment p
-            INNER JOIN auth_user a ON a.id = p.rootid
-            WHERE p.rootid = %s  
+            FROM finance_t_payment p
+            INNER JOIN auth_user a ON a.id = p.root
+            WHERE p.root = %s  
             order by p.id desc""",
         [id],
     )
@@ -169,15 +171,15 @@ def all_receipts(request, id):
 
 
 def receipt(request, id):
-    t = t_payment.objects.raw(
+    receipt = t_payment.objects.raw(
         """SELECT p.id, 
                             a.first_name, 
                             a.last_name, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
-                            FROM libs_t_payment p
-                            INNER JOIN auth_User a ON a.id = p.rootid
+                            FROM finance_t_payment p
+                            INNER JOIN auth_user a ON a.id = p.rootid
                             WHERE p.rootid = %s  
-                            order by p.id desc limit 1""",
+                            order by p.pk desc limit 1""",
         [id],
     )
 
@@ -186,15 +188,15 @@ def receipt(request, id):
                             a.first_name, 
                             a.last_name, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
-                            FROM libs_t_payment p
-                            INNER JOIN auth_User a ON a.id = p.rootid
+                            FROM finance_t_payment p
+                            INNER JOIN auth_user a ON a.id = p.rootid
                             WHERE p.id = %s  
                             order by p.id desc""",
         [id],
     )
 
     context = {
-        "rc": t,
+        "rc": receipt,
         "all_rec": all_rec,
         "client_id": id,
     }
@@ -205,10 +207,10 @@ def receipt(request, id):
 def single_rec(request, id):
     single_rec = t_payment.objects.raw(
         """SELECT p.id, a.id as acct_id,
-                            a.first_name as fname, 
-                            a.last_name as lname, p.currency as currency, 
+                            a.first_name, 
+                            a.last_name, p.currency as currency, 
                             p.amount as amount, p.purpose, p.commitment as commitment
-                            FROM libs_t_payment p
+                            FROM finance_t_payment p
                             INNER JOIN auth_user a ON a.id = p.rootid
                             WHERE p.id = %s  
                             order by p.id desc""",
@@ -306,7 +308,7 @@ def filter_trans(request):
             sum(case when p.currency = 'PULA' then p.id else 0 end) as PULA,
             sum(case when p.currency = 'Dirhams' then p.id else 0 end) as DIRHAMS,
             p.timestamp as TIMESTAMP
-            FROM libs_t_payment p
+            FROM finance_t_payment p
                 WHERE p.timestamp BETWEEN %s AND %s
             GROUP BY p.purpose
             """,
@@ -347,7 +349,7 @@ def filter_income_head(self):
         """Select
                             p.currency as currency, sum(p.amount) as amount, p.purpose as purpose, 
                             p.commitment as commitment
-                            FROM libs_t_payment p
+                            FROM finance_t_payment p
                             Group By p.currency, purpose, commitment
                             """
     )
@@ -377,7 +379,7 @@ def csv_view(request):
                             a.first_name, 
                             a.last_name, p.currency as currency, p.amount as amount, p.purpose, 
                             p.commitment as commitment
-                            FROM libs_t_payment p
+                            FROM finance_t_payment p
                             INNER JOIN auth_User a ON a.id = p.rootid
                             ORDER BY -p.id 
                             """

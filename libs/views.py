@@ -21,6 +21,7 @@ from siteInfo.views import *
 from libs.forms import *
 from libs.views import *
 from finance.models import *
+from finance.forms import *
 from libs.utils import *
 
 
@@ -307,7 +308,7 @@ def member_details(request, id):
     t.cursor.execute(
         """Select
             sum(p.amount) as amount
-            FROM libs_t_payment p
+            FROM finance_t_payment p
             Where p.rootid = %s and p.commitment = 'Cash'""",
         [id],
     )
@@ -320,7 +321,7 @@ def member_details(request, id):
     pt.cursor.execute(
         """Select
             sum(p.amount) as amount
-            FROM libs_t_payment p
+            FROM finance_t_payment p
             Where p.rootid = %s AND p.commitment = 'Pledge'""",
         [id],
     )
@@ -382,6 +383,7 @@ def member_details(request, id):
         "Acctform": Acctform,
         "Payform": Payform,
         "root": edit_inst.root,
+        "member_id": member.pk,
         "first_name": member.first_name,
         "last_name": member.last_name,
         "gender": edit_inst.gender,
@@ -432,7 +434,7 @@ def allmembers(request):
         """Select p.id,
             a.fname as fname, 
             a.lname as lname, p.currency as currency, p.amount as amount, p.purpose, p.commitment as commitment
-            FROM libs_t_payment p
+            FROM finance_t_payment p
             INNER JOIN joins_t_acct a ON a.id = p.rootid
             ORDER BY -p.id LIMIT 4
             """
@@ -444,7 +446,7 @@ def allmembers(request):
     s.cursor.execute(
         """Select
             sum(p.amount) as amount, p.purpose as purpose, p.currency
-            FROM libs_t_payment p
+            FROM finance_t_payment p
             WHERE p.currency = 'USD'
             Group By purpose
             """

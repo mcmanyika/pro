@@ -26,7 +26,7 @@
   {% if user_p.department == 'finance' or user.is_superuser  %}
   <a class="nav-item nav-link" id="nav-contributions-tab" data-toggle="tab" href="#nav-contributions" role="tab" aria-controls="nav-contributions" aria-selected="false">Contributions</a>
   <a class="nav-item nav-link" id="nav-pledge-tab" data-toggle="tab" href="#nav-pledge" role="tab" aria-controls="nav-pledge" aria-selected="false">Pledges</a>
-  <a class="nav-item nav-link btn-success"  href="{% url 'transaction' m_id %}" role="tab" aria-controls="nav-family" aria-selected="false">Give</a>
+  <a class="nav-item nav-link btn-success"  href="{% url 'transaction' member_id %}" role="tab" aria-controls="nav-family" aria-selected="false">Give</a>
   {% endif %}
   <a class="nav-item nav-link" id="nav-group-tab" data-toggle="tab" href="#nav-group" role="tab" aria-controls="nav-group" aria-selected="false">Groups</a>
 </nav>
@@ -111,7 +111,7 @@
         <div class="col-md-8 padAll">
           <div class="col-md-12">
             {% if not pledge %}
-            <center style="font-size: 16px">{{fname}} {{lname}}'s account has no outstanding <strong>Pledges</strong></center>
+            <center style="font-size: 16px">{{first_name}} {{last_name}}'s account has no outstanding <strong>Pledges</strong></center>
             {% else %}
           <table id="myPledges" width="100%">
                   <tr class="header">
@@ -194,7 +194,7 @@
                             {% endif %}
                         </center>
                         </td>
-                        <td>{{rw.fname}} {{rw.lname}}</td>
+                        <td>{{rw.first_name}} {{rw.last_name}}</td>
                         <td style="text-transform: capitalize;">{{rw.relationship}}</td>
                       </tr>
                       {% endfor %}

@@ -24,7 +24,7 @@
       <div class="col-md-12" style="padding-top: 10px;">  
        <form  method="post" name="payform" id="payform"  action="" enctype="multipart/form-data">{% csrf_token %}
               <div class="padAll">
-                <input type="hidden" class="form-control" name="rootid" value="{{m_id}}">
+                <input type="text" class="form-control" name="rootid" value="{{member_id}}">
                 <div class="col-md-4 padAll"><strong>Currency</strong></div>
                 <div class="col-md-4">
                 </div>

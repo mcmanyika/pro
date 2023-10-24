@@ -75,48 +75,6 @@ class AcctForm2(forms.ModelForm):
         )
 
 
-class PaymentForm(forms.ModelForm):
-    class Meta:
-        model = t_payment
-        fields = [
-            "rootid",
-            "currency",
-            "amount",
-            "purpose",
-            "commitment",
-            "ref",
-            "user",
-        ]
-
-
-class SeedPaymentForm(forms.ModelForm):
-    class Meta:
-        model = t_payment
-        fields = [
-            "currency",
-            "amount",
-            "purpose",
-            "commitment",
-            "ref",
-            "user",
-        ]
-
-
-class PledgePayment(forms.ModelForm):
-    class Meta:
-        model = t_payment
-        fields = [
-            "rootid",
-            "pledgeid",
-            "currency",
-            "amount",
-            "purpose",
-            "commitment",
-            "ref",
-            "user",
-        ]
-
-
 class StationaryForm(forms.ModelForm):
     class Meta:
         model = t_stationary
