@@ -1,6 +1,6 @@
 <div class="row">
             
-    <div class="col-md-6" style="padding-top: 20px">
+    <div class="col-sm-12 col-md-6" style="padding-top: 20px">
 
       <a  href="#addMember" data-toggle="modal" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>New Member</a>
       {% if user_p.department == 'finance' or user.is_superuser  %}
@@ -17,7 +17,7 @@
       <!-- <a data-toggle="modal"  href="#attendance" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Attendance</a> -->
     </div>
 
-    <div class="col-md-6" style=" padding-top: 20px">
+    <div class="col-sm-12 col-md-6" style=" padding-top: 20px">
       <!-- <a href="#users" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Users</a> -->
 
       {% if user_p.department == 'finance' or user.is_superuser  %}

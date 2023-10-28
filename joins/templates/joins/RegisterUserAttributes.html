@@ -3,30 +3,106 @@
 {% load crispy_forms_tags %}
 
  {% block content %}
+ <style>
+    .form-group div {
+        padding: 3px 0; /* This applies 1px padding to the top and bottom of each div */
+    }
+</style>
+    
  <div class="row">
     <div class="col-md-6  col-md-offset-3 ">
         <div class="panel panel-login">
             <div class="panel-heading">
-
                     <div class="panel-body">
-                    <form class="form" method="POST" action="">{% csrf_token %}
-                        <div class="form-group">
-                            <input type="hidden" value="{{request.user.id}}" name="root">
-                            <input type="hidden" value="{{request.user.id}}" name="user">
-                            {{form.gender}}
-                            {{form.dob}}
-                            {{form.marital_status}}
-                            {{form.phone}}
-                            {{form.member_status}}
-                            {{form.baptised}}
+                        <div>
+                            <h4>Personal Information</h4>
                         </div>
-                        <div class="col-sm-6 ">
-                            <input type="submit" class="form-control btn btn-login" value="Save">
-                        </div>
-                     </form>
+                        <form class="form" method="POST" action="">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div>
+                                    <input type="hidden" value="{{request.user.id}}" name="root">
+                                </div>
+                                <div>
+                                    <input type="hidden" value="{{request.user.id}}" name="user">
+                                </div>
+                                <div>
+                                    <select name="gender" class="form-control">
+                                        <option value="">Whats your gender</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="date" name="dob" class="form-control">
+                                </div>
+                                <div>
+                                    <select name="marital_status" class="form-control">
+                                        <option value="">Whats your marital status</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    {{form.phone}}
+                                </div>
+                                <div>
+                                    <select name="member_status" class="form-control">
+                                        <option value="">Whats your church membership status</option>
+                                        <option value="Church Member">Church Member</option>
+                                        <option value="Visitor">Visitor</option>
+                                        <option value="New Convert">New Convert</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <select name="baptised" class="form-control">
+                                        <option value="Yes am Baptised">Yes am Baptised</option>
+                                        <option value="Not Baptised">Not Baptised</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <input type="submit" class="form-control btn btn-login btn-success" value="Save">
+                                </div>
+                            </div>
+                        </form>
+                        
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Include this script at the bottom of your HTML page or in the head with `defer` attribute -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dobInput = document.querySelector('input[name="dob"]');
+        const dateDisplay = document.getElementById('formattedDateDisplay');
+    
+        // Placeholder logic
+        if (!dobInput.value) {
+            dobInput.type = "text";
+            dobInput.value = "Date of Birth";
+        }
+    
+        dobInput.addEventListener('focus', function() {
+            if (this.value === "Date of Birth") {
+                this.value = ""; 
+                this.type = "date";
+            }
+        });
+    
+        dobInput.addEventListener('change', function() {
+            let dateValue = new Date(this.value);
+            let formattedDate = (dateValue.getMonth() + 1) + "/" + dateValue.getDate() + "/" + dateValue.getFullYear();
+            
+            // Set the content of the designated area
+            dateDisplay.textContent = formattedDate;
+        });
+    });
+    </script>
+    
+    
+    
 {% endblock %}

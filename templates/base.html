@@ -212,12 +212,12 @@
 </div>
 
 <div id="incomehead" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header bg-dark">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
-       </div>
+      <div class="modal-header bg-dark text-center">
+        <h4>Add Income Head</h4> 
+      </div>
       <div class="modal-body">
         <iframe src="{% url 'add-incomehead' %}" frameborder="0" width="100%"></iframe>
       </div>
@@ -240,11 +240,11 @@
 </div>
 
 <div class="modal fade bd-currency" id="currency" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header bg-dark">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">          Close</button>
+      <div class="modal-header bg-dark text-center">
+       <h4>Add Currency</h4> 
      </div>
       <div class="modal-body" style="color:#000">
         <iframe src="{% url 'add-currency' %}" frameborder="0" width="100%"></iframe>

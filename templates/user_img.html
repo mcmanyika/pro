@@ -16,8 +16,11 @@
 	<div class="col-md-12" style="padding-bottom: 20px">
 		<select name="department" class="form-control form-control-lg">
 			<option>Choose Department</option>
-			<option value="finance">Finance</option>
-			<option value="media">Media</option>
+			<option value="Finance">Finance</option>
+			<option value="Media">Media</option>
+			<option value="Ushering">Ushering</option>
+			<option value="Worship">Worship</option>
+			<option value="Children Ministry">Children's Ministry</option>
 		</select>
 	</div>
 	<div class="col-md-12 padAll">	
@@ -25,7 +28,7 @@
 		{{img_form.avatar|as_crispy_field:"bootstrap"}}
 		<input type="hidden" name="rootid" value="{{user.id}}">
 		<input type="hidden" name="access_level" value="1"><br />
-		<button type="submit" class="btn btn-sm btn-info">Upload Your Image</button>
+		<button type="submit" class="btn btn-sm btn-info">Continue >></button>
 	</div>	
 	</form>
 </div>

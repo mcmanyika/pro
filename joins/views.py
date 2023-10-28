@@ -106,6 +106,7 @@ def user_img(request):
 
 
 def RegisterUserAttributes(request):
+    headings = t_dictionary.objects.all()
     form = UserAttributeForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form = form.save(commit=False)
@@ -115,6 +116,7 @@ def RegisterUserAttributes(request):
 
     context = {
         "form": form,
+        "headings": headings,
     }
     template = "joins/RegisterUserAttributes.html"
 
