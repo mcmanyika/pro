@@ -46,3 +46,21 @@ class t_payment(models.Model):
 
     def __unicode__(self):
         return self.purpose
+
+
+class t_expense(models.Model):
+    payment_from = models.CharField(max_length=50)
+    payment_to = models.CharField(max_length=50)
+    purpose = models.CharField(
+        max_length=10,
+    )
+    unit = models.IntegerField(default="0")
+    unit_cost = models.IntegerField(default="0")
+    total_cost = models.IntegerField(default="0")
+    notes = models.CharField(max_length=200)
+    user = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self):
+        return self.purpose

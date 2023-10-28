@@ -34,3 +34,13 @@ class PaymentModelAdmin(admin.ModelAdmin):
 
 
 admin.site.register(t_payment, PaymentModelAdmin)
+
+
+class ExpenseModelAdmin(admin.ModelAdmin):
+    list_display = ["purpose", "timestamp"]
+
+    class Meta:
+        model = t_expense
+
+
+admin.site.register(t_expense, ExpenseModelAdmin)
