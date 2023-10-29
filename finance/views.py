@@ -124,6 +124,7 @@ def transaction(request, id):
     member = get_object_or_404(User, id=instance.root)
     rendered = 0
     total = 0
+
     Payform = PaymentForm(request.POST or None, request.FILES or None)
     if Payform.is_valid():
         f = Payform.save(commit=False)
@@ -224,6 +225,18 @@ def single_rec(request, id):
         "acct_id": rw.acct_id,
     }
     template = "entry_receipt.html"
+    return render(request, template, context)
+
+
+def add_expense(request):
+    expenseForm = ExpenseForm(request.POST or None, request.FILES or None)
+    if expenseForm.is_valid():
+        form = expenseForm.save(commit=False)
+        form.save()
+        messages.success(request, "Saved")
+
+    context = {"expenseForm": expenseForm}
+    template = "finance/add_expense.html"
     return render(request, template, context)
 
 

@@ -1,0 +1,99 @@
+{% extends "base_b.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block container %}
+<style>
+    .row {
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+    .customlabel {
+        font-size: 16px;
+    } 
+    label{
+        visibility: hidden;
+    }
+</style>
+
+    <div class="col-12">
+    <form method="POST" name="form" id="form" >{% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <label for="payment_from" class="customlabel">Payment From:</label>
+                <input type="text" value="" name="payment_from" class="form-control" placeholder="Payment From" required>
+            </div>
+            <div class="col">
+                <label for="payment_to" class="customlabel">Payment To:</label>
+                <input type="text" value="" name="payment_to" class="form-control" placeholder="Payment To" required>
+            </div>
+        </div>
+        <div>
+            <label for="purpose" class="customlabel">Whats the payment purpose:</label>
+            <input type="text" value="" name="purpose" class="form-control" placeholder="Purpose" required>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="unit" class="customlabel">Number of units:</label>
+                <input type="text" value="" name="unit" class="form-control" placeholder="Unit" required>
+            </div>
+            <div class="col">
+                <label for="unit_cost" class="customlabel">Unit cost:</label>
+                <input type="text" value="" name="unit_cost" class="form-control" placeholder="Unit cost" required>
+            </div>
+            <div class="col">
+                <label for="total_cost" class="customlabel">Total Cost:</label>
+                <input type="text" value="" name="total_cost" class="form-control" placeholder="Total Cost" readonly>
+            </div>
+        </div>
+        <div>
+            <label for="notes" class="customlabel">Notes:</label>
+            <textarea name="notes" class="form-control" placeholder="Enter your notes" rows="4" required></textarea>
+        </div>
+        <div class="col-12">
+            <input type="hidden" name="user" value="{{user.id}}">
+      </div>
+       <div class="col-12" style="padding-left: 0; padding-top: 15px; padding-bottom: 20px;">
+          <button type="submit" class="btn btn-lg btn-info">Save</button>
+      </div>
+      </form>
+      <div id="success-message" class="alert alert-success" style="display: none; padding-top: 20px;">Successfully saved</div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Function to calculate total
+            function calculateTotal() {
+                let unit = parseFloat($("input[name='unit']").val()) || 0;
+                let unit_cost = parseFloat($("input[name='unit_cost']").val()) || 0;
+                let total_cost = unit * unit_cost;
+                $("input[name='total_cost']").val(total_cost.toFixed(2)); // Displaying the result with 2 decimal places
+            }
+        
+            // Attach event listeners
+            $("input[name='unit'], input[name='unit_cost']").on('input', calculateTotal);
+        });
+
+        $(document).ready(function(){
+            $("#form").submit(function(event){
+                event.preventDefault(); // Prevent the form from submitting the traditional way
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'), // Assuming your form's action attribute is set to the right URL
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        // Assuming the server returns a success status
+                        $("#success-message").show(); // Show the success message
+                        $("#form")[0].reset(); // Reset the form fields
+                    },
+                    error: function(data) {
+                        // You can handle errors here if necessary
+                        alert("An error occurred.");
+                    }
+                });
+            });
+        });
+    </script>
+        
+{% endblock %}

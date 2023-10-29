@@ -8,7 +8,7 @@
       <a data-toggle="modal"  href="#seed_payment" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Payments</a>
       
 
-      <a data-toggle="modal" href="#currency"  class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-usd"></span> <br/>Currencies</a>
+      <a data-toggle="modal" href="#currency"  class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-usd"></span> <br/>Currencies</a>
 
     
       <a data-toggle="modal" href="#incomehead"  class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-bookmark"></span> <br/>Payment Purpose</a>            
@@ -20,19 +20,18 @@
     <div class="col-sm-12 col-md-6" style=" padding-top: 20px">
       <!-- <a href="#users" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br/>Users</a> -->
 
-      {% if user_p.department == 'finance' or user.is_superuser  %}
-      <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br/>Reports</a>
-      {% endif %}
+      <a href="#addExpense" data-toggle="modal" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Expenses</a>
       
       <a href="#assets" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br/>Asset Register</a>
 
       {% if user_p.department == 'Media' or user.is_superuser  %}
       <a data-toggle="modal"  href="#upload" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br/>Upload Sermons</a>
       {% endif %}
-      
-      {% if user.is_superuser %} 
-      <a href="#settings" data-toggle="modal" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-cog"></span> <br/>Settings</a>
+
+      {% if user_p.department == 'finance' or user.is_superuser  %}
+      <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br/>Reports</a>
       {% endif %}
+      
     </div>
   
 

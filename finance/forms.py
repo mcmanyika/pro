@@ -54,3 +54,18 @@ class PledgePayment(forms.ModelForm):
             "ref",
             "user",
         ]
+
+
+class ExpenseForm(forms.ModelForm):
+    class Meta:
+        model = t_expense
+        fields = [
+            "payment_from",
+            "payment_to",
+            "purpose",
+            "unit",
+            "unit_cost",
+            "total_cost",
+            "notes",
+            "user",
+        ]

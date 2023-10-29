@@ -17,4 +17,5 @@ urlpatterns = [
     url(r"^seed-payment/", seed_payments, name="seed-payment"),
     url(r"^all-seeds/", all_seeds, name="all-seeds"),
     url(r"^seed/(?P<id>.*)$", seed_receipt, name="seed"),
+    url(r"^add-expense/", add_expense, name="add-expense"),
 ]
