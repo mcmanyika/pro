@@ -174,7 +174,17 @@ def members(request, department):
 
     hlinks = dictfetchall(hlinks)
 
-    queryset_list = t_acct.objects.filter().order_by("-id")
+    # queryset_list = t_acct.objects.filter().order_by("-id")
+    members = connection.cursor()
+    members.cursor.execute(
+        """Select
+            aa.root AS id, au.username, au.first_name, au.last_name, aa.gender, au.email, aa.phone, aa.marital_status, aa.member_status, aa.baptised
+            FROM auth_user au 
+            INNER JOIN joins_t_acct aa ON aa.root = au.id
+            """
+    )
+    queryset_list = dictfetchall(members)
+
     query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(

@@ -80,10 +80,10 @@
         <th style="width:5%;"></th>
         <th style="width:15%;">Full Name</th>
         <th style="width:5%;">Gender</th>
-        <th style="width:10%;">Division</th>
+        <th style="width:10%;">Marital Status</th>
         <th style="width:10%;">Email</th>
-        <th style="width:10%;">Mobile</th>
-        <th style="width:10%;">Site</th>
+        <th style="width:10%;">Phone</th>
+        <th style="width:10%;">Member Status</th>
         
         </tr>
         {% for rw in members %}
@@ -101,15 +101,15 @@
             <!-- <td style="text-transform:capitalize; padding: 10px 0 10px 0"></span>
               <a href="#member{{rw.id}}" data-toggle="modal">{{rw.fname}} {{rw.lname}}</a></td> -->
               <td>
-              <a href="#member{{rw.id}}" data-toggle="modal">{{rw.fname}} 
-              {% if not rw.lname %}
+              <a href="#member{{rw.id}}" data-toggle="modal">{{rw.first_name}} 
+              {% if not rw.last_name %}
                 {% else %}
-              {{rw.lname}}
+              {{rw.last_name}}
               {% endif %}</a></td>
             <td>{{rw.gender}}</td>
-            <td>{% if not rw.division %}
+            <td>{% if not rw.marital_status %}
                 {% else %}
-              {{rw.division}}
+              {{rw.marital_status}}
               {% endif %}</td>
             <td>{% if not rw.email %}
                 {% else %}
@@ -119,7 +119,7 @@
                 {% else %}
               {{rw.phone}}
               {% endif %}</td>
-            <td>{{rw.site}}</td>
+            <td>{{rw.member_status}}</td>
             
           </tr>
       {% endfor %} 
