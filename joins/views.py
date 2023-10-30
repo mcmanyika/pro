@@ -46,12 +46,24 @@ def register_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                user_p = get_object_or_404(UserProfile, rootid=request.user.id)
+                try:
+                    user_p = get_object_or_404(UserProfile, rootid=request.user.id)
+                except Http404:
+                    return redirect("user-img")
+                try:
+                    user_attributes = get_object_or_404(
+                        t_user_attribute, root=request.user.id
+                    )
+
+                except Http404:
+                    return redirect("register-user-attributes")
+
                 if user_p.department == "Media":
                     return HttpResponseRedirect("/allmembers/")
 
                 else:
                     return HttpResponseRedirect("/allmembers/")
+
             else:
                 messages.success(request, "Enter correct username or password")
 
